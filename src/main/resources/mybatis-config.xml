@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+    <!-- 全局配置 -->
+    <settings>
+        <!-- 通过log4j打印SQL语句 -->
+        <setting name="logImpl" value="LOG4J2" />
+        <!-- 禁用 JDBC 支持自动生成主键 -->
+        <setting name="useGeneratedKeys" value="false"/>
+        <!-- 开启自动驼峰命名规则（camel case）映射 -->
+        <setting name="mapUnderscoreToCamelCase" value="true"/>
+    </settings>
+
+    <typeAliases>
+        <!-- 定义实体类的别名 -->
+        <typeAlias alias="user" type="com.tmhi.entity.BaseEntity" />
+        <package name="com.tmhi.entity"/>
+    </typeAliases>
+</configuration>
