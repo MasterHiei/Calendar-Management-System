@@ -1,9 +1,7 @@
-# Description
-+ Help you to manage your schedule.
-+ Provide more details during the Team Projects.
+# CalendarManagement
 + Developed for T.M.H.I Clan.
 
-# About System
+# Description
 + Framework
   + Spring + SpringMVC + Mybatis 
   
