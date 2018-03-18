@@ -7,7 +7,7 @@
   + Spring + SpringMVC + Mybatis 
   
 + UI
-  + Based on EasyUI
+  + EasyUI
   
 + Security support
-  + Authrized by Apache Shiro
+  + Apache Shiro
