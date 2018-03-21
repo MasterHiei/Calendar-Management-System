@@ -7,7 +7,7 @@
   + Spring + SpringMVC + Mybatis 
   
 + UI
-  + EasyUI
+  + Bootstrap v3.3.7
   
 + Security support
   + Apache Shiro
