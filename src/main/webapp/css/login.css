@@ -1,0 +1,70 @@
+body {
+    font-family: "Microsoft YaHei";
+    background: url("../img/background/login.jpg");
+}
+
+.login-form {
+    margin-top: 25%;
+    padding: 0 48px;
+    border-radius: 12px;
+    background: rgba(255,255,255,0.2);
+}
+
+.form-title {
+    text-align: center;
+}
+
+.required {
+    padding-left: 26px;
+}
+
+.fa{
+    display: inline-block;
+    position: relative;
+    top: -23px;
+    left: 8px;
+    color: #ccc;
+}
+
+.label-remember {
+    font-size: 12px;
+}
+
+#rememberCheck {
+    margin: 0 4px 0 0;
+    vertical-align: middle;
+}
+
+#loginBtn {
+    margin-left: 36px;
+}
+
+#registerBtn {
+    margin-right: 36px;
+}
+
+.footer {
+    padding: 10px 0;
+    background: rgba(255,255,255,0.2);
+}
+
+.footer p {
+    margin: 0;
+}
+
+/* modal */
+.modal-header {
+    border: none;
+    border-radius: 6px;
+    background: #54c5ff;
+}
+
+.modal-body {
+    border: none;
+    padding: 30px 15px;
+}
+
+.modal-footer {
+    border: none;
+    padding: 0 15px 15px 15px;
+}

@@ -8,28 +8,29 @@
 
     <!-- 配置shiro的过滤器工厂类，使用web.xml中配置的shiroFilter过滤器 -->
     <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
-        <!-- 调用我们配置的权限管理器 -->
+        <!-- 调用已配置的权限管理器 -->
         <property name="securityManager" ref="securityManager" />
-        <!-- 配置登录页面地址 -->
-        <!--<property name="loginUrl" value="/login.jsp" />
-        &lt;!&ndash; 配置登录成功后的跳转地址。如果用户访问的是非/login地址，则跳转到该地址 &ndash;&gt;
+        <!-- 登录页面地址 -->
+        <property name="loginUrl" value="/login.jsp" />
+        <!-- 登录成功后的跳转地址。如果用户访问的是非/login地址，则跳转到该地址 -->
         <property name="successUrl" value="/calendar.jsp" />
-        &lt;!&ndash; 如果用户请求的资源不在其权限范围内，则跳转到403错误地址 &ndash;&gt;
+        <!-- 如果用户请求的资源不在其权限范围内，则跳转到403错误地址 -->
         <property name="unauthorizedUrl" value="/403_error.jsp" />
         <property name="filters">
             <util:map>
                 <entry key="logout" value-ref="logoutFilter" />
             </util:map>
-        </property>-->
+        </property>
         <!-- WEB过滤器 -->
         <property name="filterChainDefinitions">
             <value>
                 <!-- anon表示此地址不需要任何权限即可访问 -->
-                /login=anon
-                /icon/**=anon
+                /login.jsp*=anon
+                /css/**=anon
+                /fonts/**=anon
                 /js/**=anon
-                /logout=logout
-                <!--所有的请求(除去配置的静态资源请求或请求地址为anon的请求)都要通过登录验证,如果未登录则跳到/login -->
+                /img/background/**=anon
+                <!--除此之外的所有请求都要通过登录验证 -->
                 /** = authc
             </value>
         </property>
