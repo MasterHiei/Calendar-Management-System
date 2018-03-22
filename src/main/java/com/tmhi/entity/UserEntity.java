@@ -3,8 +3,6 @@ package com.tmhi.entity;
 public class UserEntity extends BaseEntity {
     /** 用户 */
     private Integer userId;
-    /** 角色ID */
-    private Integer roleCode;
     /** 用户名 */
     private String userName;
     /** 用户邮箱 */
@@ -24,14 +22,6 @@ public class UserEntity extends BaseEntity {
 
     public void setUserId(Integer userId) {
         this.userId = userId;
-    }
-
-    public Integer getRoleCode() {
-        return roleCode;
-    }
-
-    public void setRoleCode(Integer roleCode) {
-        this.roleCode = roleCode;
     }
 
     public String getUserName() {

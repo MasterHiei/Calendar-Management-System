@@ -13,7 +13,7 @@
     <!-- 自动扫描 @Controller-->
     <context:component-scan base-package="com.tmhi.controller"/>
 
-    <!-- 自动注册DefaultAnnotationHandlerMapping和AnnotationMethodHandlerAdapter -->
+    <!-- 自动注册RequestMappingHandlerMapping和RequestMappingHandlerAdapter -->
     <mvc:annotation-driven />
 
     <!-- 配置spring处理静态资源文件 -->
@@ -57,9 +57,13 @@
 
     <!-- 导入shiro配置文件 -->
     <import resource="classpath:spring-shiro.xml"/>
-    
+
+    <!-- 开启注解实现shiro权限控制 -->
     <bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"
-          depends-on="lifecycleBeanPostProcessor"/>
+          depends-on="lifecycleBeanPostProcessor">
+        <property name="proxyTargetClass" value="true" />
+    </bean>
+    
     <bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
         <property name="securityManager" ref="securityManager"/>
     </bean>

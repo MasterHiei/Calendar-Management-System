@@ -93,6 +93,8 @@
         <property name="sessionDAO" ref="sessionDAO" />
         <property name="sessionIdCookieEnabled" value="true" />
         <property name="sessionIdCookie" ref="sessionIdCookie" />
+        <!-- 取消URL中的sessionId -->
+        <property name="sessionIdUrlRewritingEnabled" value="false" />
     </bean>
 
     <!-- 缓存管理器，使用Ehcache实现 -->

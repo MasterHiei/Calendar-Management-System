@@ -10,7 +10,7 @@ import org.apache.shiro.subject.PrincipalCollection;
 /**
  * Author:       Hiei
  * Date:         2018/03/18
- * Description:  用户域定义实现类
+ * Description:  自定义用户域
  * Modified By:
  */
 public class UserRealm extends AuthorizingRealm{
