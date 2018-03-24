@@ -1,5 +1,6 @@
 package com.tmhi.entity;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 
 /**
@@ -8,7 +9,7 @@ import java.sql.Timestamp;
  * Description:  基础实体类
  * Modified By:  可继承的通用实体
  */
-public class BaseEntity {
+public class BaseEntity implements Serializable {
     /** DELETE_FLAG_0：未删除 */
     public static int DELETE_FLAG_0 = 0;
     /** DELETE_FLAG_1：已删除 */

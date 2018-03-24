@@ -4,7 +4,6 @@
   
   <resultMap id="BaseResultMap" type="user">
     <id column="user_id" jdbcType="INTEGER" property="userId" />
-    <result column="role_code" jdbcType="INTEGER" property="roleCode" />
     <result column="user_name" jdbcType="VARCHAR" property="userName" />
     <result column="mail_address" jdbcType="VARCHAR" property="mailAddress" />
     <result column="user_avatar" jdbcType="VARCHAR" property="userAvatar" />
@@ -19,55 +18,28 @@
     <result column="version" jdbcType="INTEGER" property="version" />
   </resultMap>
   
-  <!-- 动态查询用户信息 -->
-  <sql id="Example_Where_Clause">
-    <where>
-      <foreach collection="oredCriteria" item="criteria" separator="or">
-        <if test="criteria.valid">
-          <trim prefix="(" prefixOverrides="and" suffix=")">
-            <foreach collection="criteria.criteria" item="criterion">
-              <choose>
-                <when test="criterion.noValue">
-                  and ${criterion.condition}
-                </when>
-                <when test="criterion.singleValue">
-                  and ${criterion.condition} #{criterion.value}
-                </when>
-                <when test="criterion.betweenValue">
-                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                </when>
-                <when test="criterion.listValue">
-                  and ${criterion.condition}
-                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
-                    #{listItem}
-                  </foreach>
-                </when>
-              </choose>
-            </foreach>
-          </trim>
-        </if>
-      </foreach>
-    </where>
-  </sql>
-  
   <sql id="Base_Column_List">
-    user_id, role_code, user_name, mail_address, user_avatar, password, password_salt, 
+    user_id, user_name, mail_address, user_avatar, password, password_salt, 
     now_action, delete_flag, create_user_id, create_datetime, update_user_id, update_datetime, 
     version
   </sql>
 
-  <!-- 通过ID查询用户信息 -->
-  <select id="selectUserByID" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+  <!-- 通过用户名查询用户信息 -->
+  <select id="queryUserByName" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from tbl_user
-    where user_id = #{userId,jdbcType=INTEGER}
+    where user_name = #{userName,jdbcType=VARCHAR}
   </select>
 
   <!-- 删除用户信息 -->
-  <delete id="deleteUserByID" parameterType="user">
-    update tbl_user set delete_flag=${@com.tmhi.UserEntity@DELETE_FLAG_1}, update_user_id=#{updateUserId,jdbcType=INTEGER}, 
-    update_datetime=#{updateDatetime,jdbcType=TIMESTAMP}, version=#{version,jdbcType=INTEGER}
+  <delete id="deleteUserByID" parameterType="java.lang.Integer">
+    update tbl_user 
+    set 
+    delete_flag=${@com.tmhi.UserEntity@DELETE_FLAG_1}, 
+    update_user_id=#{updateUserId,jdbcType=INTEGER}, 
+    update_datetime=#{updateDatetime,jdbcType=TIMESTAMP}, 
+    version=#{version,jdbcType=INTEGER}
     where user_id = #{userId,jdbcType=INTEGER}
   </delete>
 
@@ -77,9 +49,6 @@
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="userId != null">
         user_id,
-      </if>
-      <if test="roleCode != null">
-        role_code,
       </if>
       <if test="userName != null">
         user_name,
@@ -121,9 +90,6 @@
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="userId != null">
         #{userId,jdbcType=INTEGER},
-      </if>
-      <if test="roleCode != null">
-        #{roleCode,jdbcType=INTEGER},
       </if>
       <if test="userName != null">
         #{userName,jdbcType=VARCHAR},
@@ -168,9 +134,6 @@
   <update id="updateUserByID" parameterType="user">
   update tbl_user
     <set>
-      <if test="roleCode != null">
-        role_code = #{roleCode,jdbcType=INTEGER},
-      </if>
       <if test="userName != null">
         user_name = #{userName,jdbcType=VARCHAR},
       </if>

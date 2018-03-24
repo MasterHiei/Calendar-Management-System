@@ -13,10 +13,10 @@ import org.springframework.stereotype.Repository;
 public interface UserDao {
 
     /**
-     * 
-     * @param   userId 用户ID
+     * 根据用户名获取用户信息
+     * @param   userName 用户名
      * @return  用户信息
      * @throws  Exception 异常
      */
-    UserEntity selectUserByID(int userId) throws Exception;
+    UserEntity queryUserByName(String userName) throws Exception;
 }
