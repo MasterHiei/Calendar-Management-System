@@ -71,7 +71,7 @@ CREATE TABLE tbl_user(
 
 -- TABLE USER_ROLE --
 CREATE TABLE tbl_user_role(
-  user_name VARCHAR(12) NOT NULL COMMENT '用户名',
+  user_id INTEGER NOT NULL COMMENT '用户ID',
   role_code INTEGER NOT NULL COMMENT '角色ID',
   delete_flag TINYINT NOT NULL COMMENT '删除标记',
   create_user_id INTEGER NOT NULL COMMENT '创建者ID',
@@ -79,5 +79,5 @@ CREATE TABLE tbl_user_role(
   update_user_id INTEGER NOT NULL COMMENT '更新者ID',
   update_datetime TIMESTAMP NOT NULL COMMENT '更新时间',
   version INTEGER NOT NULL COMMENT '版本号',
-  PRIMARY KEY(user_name, role_code)
+  PRIMARY KEY(user_id, role_code)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;

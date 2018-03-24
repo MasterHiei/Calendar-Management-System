@@ -39,12 +39,12 @@ public class UserRealm extends AuthorizingRealm{
     
     /**
      * 添加角色和权限信息
-     * @param userName 用户名
+     * @param userId 用户ID
      * @param info shiro认证对象
      */
-    private void addRoleAndPermission (String userName, SimpleAuthorizationInfo info) throws Exception {
+    private void addRoleAndPermission (int userId, SimpleAuthorizationInfo info) throws Exception {
         // 获取用户的所有角色信息
-        List<RoleEntity> roleList = roleDao.queryRoleByUserName(userName);
+        List<RoleEntity> roleList = roleDao.queryRoleByUserId(userId);
         
         if (Objects.nonNull(roleList) && roleList.size() > 0) {
             for (RoleEntity role : roleList) {
@@ -72,12 +72,16 @@ public class UserRealm extends AuthorizingRealm{
         
         try {
             if (StringUtils.hasText(userName)) {
-                // 实例化shiro认证对象
-                SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
-                // 根据用户ID获取角色和权限信息
-                addRoleAndPermission(userName, info);
-                // 返回shiro认证对象
-                return info;
+                // 根据用户名获取用户信息
+                UserEntity user = userDao.queryUserByName(userName);
+                if (Objects.nonNull(user)) {
+                    // 实例化shiro认证对象
+                    SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
+                    // 根据用户ID获取角色和权限信息
+                    addRoleAndPermission(user.getUserId(), info);
+                    
+                    return info;
+                }
             }
         } catch (Exception ex) {
             return null;

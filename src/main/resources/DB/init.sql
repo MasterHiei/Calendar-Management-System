@@ -121,17 +121,17 @@ VALUES (
 
 -- INIT TABLE USER_ROLE --
 INSERT INTO tbl_user_role (
-  user_name, role_code,
+  user_id, role_code,
   delete_flag, create_user_id, create_datetime,
   update_user_id, update_datetime, version
 ) VALUES (10000001, 1, 0, 10000001, current_timestamp, 10000001, current_timestamp, 1);
 INSERT INTO tbl_user_role (
-  user_name, role_code,
+  user_id, role_code,
   delete_flag, create_user_id, create_datetime,
   update_user_id, update_datetime, version
 ) VALUES (10000001, 2, 0, 10000001, current_timestamp, 10000001, current_timestamp, 1);
 INSERT INTO tbl_user_role (
-  user_name, role_code,
+  user_id, role_code,
   delete_flag, create_user_id, create_datetime,
   update_user_id, update_datetime, version
 ) VALUES (10000001, 3, 0, 10000001, current_timestamp, 10000001, current_timestamp, 1);

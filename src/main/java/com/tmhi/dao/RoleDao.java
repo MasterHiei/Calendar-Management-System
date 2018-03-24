@@ -14,9 +14,9 @@ public interface RoleDao {
     
     /**
      * 根据用户获取用户角色信息
-     * @param   userName 用户名
+     * @param   userId 用户ID
      * @return  用户角色信息
      * @throws  Exception 异常
      */
-    List<RoleEntity> queryRoleByUserName (String userName) throws Exception;
+    List<RoleEntity> queryRoleByUserId (int userId) throws Exception;
 }
