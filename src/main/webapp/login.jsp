@@ -5,12 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TMHI-日程管理</title>
 
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/lib/bootstrap.min.css">
+    <link rel="stylesheet" href="css/lib/font-awesome.min.css">
     <link rel="stylesheet" href="css/login.css">
 
-    <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
-    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/lib/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript" src="js/lib/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/common.js"></script>
     <script type="text/javascript" src="js/login.js"></script>
 </head>
 <body>
@@ -23,11 +24,11 @@
                 </div>
                 <div class="form-group">
                     <input type="text" class="form-control required" id="userName" placeholder="请输入用户名...">
-                    <i class="fa fa-user fa-lg"></i>
+                    <i class="fa fa-user fa-lg user-fa"></i>
                 </div>
                 <div class="form-group">
                     <input type="password" class="form-control required" id="password" placeholder="请输入密码...">
-                    <i class="fa fa-lock fa-lg"></i>
+                    <i class="fa fa-lock fa-lg user-fa"></i>
                 </div>
                 <div class="form-group">
                     <label for="rememberCheck" class="label-remember">

@@ -19,12 +19,14 @@ public class BaseEntity implements Serializable {
     private String deleteFlag;
     /** 创建者 */
     private String createUserId;
-    /** 创建日期*/
+    /** 创建日期 */
     private Timestamp createDatetime;
     /** 更新者 */
     private String updateUserId;
-    /** 更新日期*/
+    /** 更新日期 */
     private Timestamp updateDatetime;
+    /** 版本号 */
+    private int version;
 
     public String getDeleteFlag() {
         return deleteFlag;
@@ -64,5 +66,13 @@ public class BaseEntity implements Serializable {
 
     public void setUpdateDatetime(Timestamp updateDatetime) {
         this.updateDatetime = updateDatetime;
+    }
+
+    public int getVersion() {
+        return version;
+    }
+
+    public void setVersion(int version) {
+        this.version = version;
     }
 }

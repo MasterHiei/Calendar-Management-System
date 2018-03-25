@@ -79,7 +79,7 @@ public class UserRealm extends AuthorizingRealm{
                     SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
                     // 根据用户ID获取角色和权限信息
                     addRoleAndPermission(user.getUserId(), info);
-                    
+                    // 返回shiro认证对象
                     return info;
                 }
             }
@@ -104,10 +104,13 @@ public class UserRealm extends AuthorizingRealm{
                 ByteSource passwordSalt = ByteSource.Util.bytes(user.getPasswordSalt());
                 // 创建并返回shiro认证对象
                 return new SimpleAuthenticationInfo(user.getUserName(), user.getPassword(), passwordSalt, getName());
+            } else {
+                throw new UnknownAccountException();
             }
+        }catch (UnknownAccountException uaex) {
+            throw new AuthenticationException("unknown");
         } catch (Exception ex) {
-            return null;
+            throw new AuthenticationException();
         }
-        return null;
     }
 }

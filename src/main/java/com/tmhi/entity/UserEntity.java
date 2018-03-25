@@ -1,7 +1,7 @@
 package com.tmhi.entity;
 
 public class UserEntity extends BaseEntity {
-    /** 用户 */
+    /** 用户ID*/
     private Integer userId;
     /** 用户名 */
     private String userName;

@@ -25,7 +25,7 @@
         <property name="filterChainDefinitions">
             <value>
                 <!-- anon表示此地址不需要任何权限即可访问 -->
-                /login.jsp*=anon
+                /login*=anon
                 /css/**=anon
                 /fonts/**=anon
                 /js/**=anon
@@ -118,8 +118,12 @@
         <property name="arguments" ref="securityManager" />
     </bean>
 
+    <!-- 凭证匹配器 -->
+    <bean id="credentialsMatcher" class="com.tmhi.realm.matcher.UserCredentialsMatcher" />
+
     <!-- Realm实现 -->
     <bean id="userRealm" class="com.tmhi.realm.UserRealm">
+        <property name="credentialsMatcher" ref="credentialsMatcher"/>
         <property name="cachingEnabled" value="true" />
         <property name="authenticationCachingEnabled" value="true" />
         <property name="authenticationCacheName" value="authenticationCache" />
