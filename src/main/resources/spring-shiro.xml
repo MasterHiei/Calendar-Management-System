@@ -119,7 +119,11 @@
     </bean>
 
     <!-- 凭证匹配器 -->
-    <bean id="credentialsMatcher" class="com.tmhi.realm.matcher.UserCredentialsMatcher" />
+    <bean id="credentialsMatcher" class="org.apache.shiro.authc.credential.HashedCredentialsMatcher" >
+        <property name="hashAlgorithmName" value="SHA-256" />
+        <property name="storedCredentialsHexEncoded" value="true" />
+        <property name="hashIterations" value="3" />
+    </bean>
 
     <!-- Realm实现 -->
     <bean id="userRealm" class="com.tmhi.realm.UserRealm">

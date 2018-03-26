@@ -1,12 +1,11 @@
 package com.tmhi.controller;
 
-import com.tmhi.entity.UserEntity;
 import com.tmhi.form.LoginForm;
 import com.tmhi.service.CommonLogic;
 import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.authc.*;
+import org.apache.shiro.crypto.hash.Sha256Hash;
 import org.apache.shiro.subject.Subject;
-import org.apache.shiro.authc.AuthenticationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -37,41 +36,45 @@ public class LoginController {
         // 定义返回值
         Map<String, String> jsonMap = new HashMap<>();
         
-        // 输入验证(Server)
+        // Server输入验证（非空验证）
         if (!StringUtils.hasText(input.getUserName()) || !StringUtils.hasText(input.getPassword())) {
             jsonMap.put("type", "error");
             jsonMap.put("message", "请输入用户名或密码。");
             return CommonLogic.getJSONFromObject(jsonMap);
         }
+        // Server输入验证（密码长度验证）
+        if (input.getPassword().length() > 16) {
+            jsonMap.put("type", "error");
+            jsonMap.put("message", "请输入16位以内的密码。");
+            return CommonLogic.getJSONFromObject(jsonMap);
+        }
 
         // 获取shiro subject
         Subject subject = SecurityUtils.getSubject();
-        
-        try {
-            // shiro登录验证
-            subject.login(new UsernamePasswordToken(input.getUserName(), input.getPassword()));
 
+        try {
+            // 生成用户Token
+            UsernamePasswordToken token = new UsernamePasswordToken(input.getUserName(), input.getPassword());
+            // RememberMe
+            token.setRememberMe(input.getRememberMe() == 1);
+            // shiro登录验证
+            subject.login(token);
+            
             // 验证成功
             jsonMap.put("type", "success");
             jsonMap.put("url", "calendar.jsp");
-        } catch (AuthenticationException aex) {
-            // TODO 密码验证异常处理
-            aex.printStackTrace();
-            // 验证失败
-            switch (aex.getMessage()) {
-                case "unknown":
-                    jsonMap.put("type", "message");
-                    jsonMap.put("message", "对不起，您输入的用户名不存在。");
-                    break;
-                case "db":
-                    jsonMap.put("type", "error");
-                    jsonMap.put("url", "error.jsp");
-                    break;
-                default:
-                    jsonMap.put("type", "error");
-                    jsonMap.put("url", "error.jsp");
-                    break;    
-            }
+        } catch (UnknownAccountException uaex) {
+            // 账户不存在
+            jsonMap.put("type", "message");
+            jsonMap.put("message", "对不起，您输入的用户名不存在。");
+        } catch (IncorrectCredentialsException icex) {
+            // 密码不匹配
+            jsonMap.put("type", "message");
+            jsonMap.put("message", "对不起，您输入的密码不正确。");
+        } catch (Exception ex) {
+            // 其他异常
+            jsonMap.put("type", "error");
+            jsonMap.put("url", "error.jsp");
         }
         return CommonLogic.getJSONFromObject(jsonMap);
     }

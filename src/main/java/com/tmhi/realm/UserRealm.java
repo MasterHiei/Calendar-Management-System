@@ -103,12 +103,10 @@ public class UserRealm extends AuthorizingRealm{
                 // 获取数据库中的盐值
                 ByteSource passwordSalt = ByteSource.Util.bytes(user.getPasswordSalt());
                 // 创建并返回shiro认证对象
-                return new SimpleAuthenticationInfo(user.getUserName(), user.getPassword(), passwordSalt, getName());
+                return new SimpleAuthenticationInfo(user, user.getPassword(), passwordSalt, getName());
             } else {
-                throw new UnknownAccountException();
+                return null;
             }
-        }catch (UnknownAccountException uaex) {
-            throw new AuthenticationException("unknown");
         } catch (Exception ex) {
             throw new AuthenticationException();
         }

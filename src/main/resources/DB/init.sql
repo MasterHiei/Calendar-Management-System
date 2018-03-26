@@ -115,7 +115,7 @@ INSERT INTO tbl_user (
 ) 
 VALUES (
   'Hiei', 'Hiei@test.com', 'img/avatar/default/default-avatar.png',
-  'f55ff16f66f43360266b95db6f8fec01d76031054306ae4a4b380598f6cfd114', '1', NULL,
+  '81a144df4a93b6477c4a4e0036382d5486688298cdee73d23b8d9a08c6ff229c', 'b', NULL,
   0, 10000001, current_timestamp, 10000001, current_timestamp, 1
 );
 
