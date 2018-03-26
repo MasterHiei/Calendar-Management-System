@@ -12,7 +12,7 @@ public class LoginForm {
     /** 用户密码 */
     private String password;
     /** 记住我 */
-    private int rememberMe;
+    private Integer rememberMe;
 
     public String getUserName() {
         return userName;
@@ -30,11 +30,11 @@ public class LoginForm {
         this.password = password;
     }
 
-    public int getRememberMe() {
+    public Integer getRememberMe() {
         return rememberMe;
     }
 
-    public void setRememberMe(int rememberMe) {
+    public void setRememberMe(Integer rememberMe) {
         this.rememberMe = rememberMe;
     }
 }

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * Author:       Hiei
@@ -56,7 +57,7 @@ public class LoginController {
             // 生成用户Token
             UsernamePasswordToken token = new UsernamePasswordToken(input.getUserName(), input.getPassword());
             // RememberMe
-            token.setRememberMe(input.getRememberMe() == 1);
+            token.setRememberMe(Objects.nonNull(input.getRememberMe()));
             // shiro登录验证
             subject.login(token);
             
