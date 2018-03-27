@@ -6,7 +6,21 @@ $(function () {
         if (checkInput()) {
             doLogin();
         }
-    })
+    });
+    
+    // 用户注册
+    $('#registerBtn').on('click', function () {
+        var params = {
+            header : '公告',
+            body : '用户注册功能将于系统正式上线后开放。',
+            footer : 'alert',
+            confirmFunc : function () {
+                $('#dynamicModal').modal('hide');
+            }
+        };
+        // 动态生成模态框
+        doDynamicModalShow(params);
+    });
 });
 
 // 登录处理

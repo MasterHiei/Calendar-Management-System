@@ -4,7 +4,6 @@ import com.tmhi.form.LoginForm;
 import com.tmhi.service.CommonLogic;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
-import org.apache.shiro.crypto.hash.Sha256Hash;
 import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;

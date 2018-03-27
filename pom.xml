@@ -299,7 +299,7 @@
           <linebreakpos>-1</linebreakpos>
           <!-- 压缩之前先执行聚合文件操作 -->
           <preProcessAggregates>true</preProcessAggregates>
-          <!-- 压缩后保存文件后缀 无后缀 -->
+          <!-- 压缩后保存文件后缀：无后缀 -->
           <nosuffix>true</nosuffix>
           <!-- 源目录，即需压缩的根目录 -->
           <sourceDirectory>src/main/webapp</sourceDirectory>

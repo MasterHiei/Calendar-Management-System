@@ -17,17 +17,17 @@
 <body>
 <div class="container">
     <div class="form row">
-        <div class="form-horizontal col-md-offset-4">
-            <div class="col-md-7 login-form">
+        <div class="form-horizontal col-md-offset-3">
+            <div class="col-md-8 login-form">
                 <div class="form-group">
                     <h3 class="form-title">用户登录</h3>
                 </div>
                 <div class="form-group">
-                    <input type="text" class="form-control required" id="userName" placeholder="请输入用户名...">
+                    <input type="text" class="form-control form-input" id="userName" placeholder="请输入用户名...">
                     <i class="fa fa-user fa-lg user-fa"></i>
                 </div>
                 <div class="form-group">
-                    <input type="password" class="form-control required" id="password" placeholder="请输入密码...">
+                    <input type="password" class="form-control form-input" id="password" placeholder="请输入密码...">
                     <i class="fa fa-lock fa-lg user-fa"></i>
                 </div>
                 <div class="form-group">
@@ -36,9 +36,8 @@
                     </label>
                 </div>
                 <div class="form-group">
-                    <button type="button" class="btn btn-success col-md-3 pull-left" id="loginBtn">登&nbsp;录</button>
-                    <button type="button" class="btn btn-danger col-md-3 pull-right" id="registerBtn" 
-                            data-toggle="modal" data-target="#forbiddenAlert">注&nbsp;册</button>
+                    <button type="button" class="btn btn-success col-md-2 pull-left" id="loginBtn">登&nbsp;录</button>
+                    <button type="button" class="btn btn-danger col-md-2 pull-right" id="registerBtn">注&nbsp;册</button>
                 </div>
             </div>
         </div>
@@ -51,23 +50,16 @@
     </div>
 </footer>
 
-<div class="modal fade" id="forbiddenAlert" tabindex="-1" role="dialog" 
-     aria-labelledby="forbiddenAlertTitle" aria-hidden="true" data-backdrop="static">
+<div class="modal fade" id="dynamicModal" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                    &times;
-                </button>
-                <strong>
-                    <p class="modal-title h3" id="forbiddenAlertTitle">提示</p>
-                </strong>
+                <p class="modal-title h3"></p>
             </div>
-            <div class="modal-body">
-                用户注册功能将在系统正式上线后开放。
-            </div>
+            <div class="modal-body"></div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-dismiss="modal">确认</button>
+                <button type="button" class="btn btn-danger" id="modalCancelBtn">取消</button>
+                <button type="button" class="btn btn-primary" id="modalConfirmBtn">确认</button>
             </div>
         </div>
     </div>
