@@ -62,7 +62,7 @@ public class LoginController {
             
             // 验证成功
             jsonMap.put("type", "success");
-            jsonMap.put("url", "calendar.jsp");
+            jsonMap.put("url", "calendar.do");
         } catch (UnknownAccountException uaex) {
             // 账户不存在
             jsonMap.put("type", "message");
@@ -74,7 +74,7 @@ public class LoginController {
         } catch (Exception ex) {
             // 其他异常
             jsonMap.put("type", "error");
-            jsonMap.put("url", "error.jsp");
+            jsonMap.put("url", "404.do");
         }
         return CommonLogic.getJSONFromObject(jsonMap);
     }

@@ -33,20 +33,25 @@ function doLogin () {
             rememberMe : $('#rememberCheck').prop('checked') ? 1 : null
         }),
         beforeSend : function () {
+            $('#loginBtn').attr('disabled', true);
             $('#loginBtn').html('<i class="fa fa-spinner fa-pulse"></i>');
         },
         success : function (jsonStr) {
+            // 将返回值转换为JSON对象
             var jsonObj = $.parseJSON(jsonStr);
-
+            // 处理返回值
             if (jsonObj['type'] === 'success') {
-                doDynamicFormSubmit({'action' : jsonObj['url'], 'mode' : 'init'});
+                // 跳转至目标页面
+                doDynamicFormSubmit({'action' : jsonObj['url']});
             } else if (jsonObj['type'] === 'message') {
-                // TODO Bootstrap警告框
-                alert(jsonObj['message']);
+                // 显示提示信息
+                doAlertModalShow(jsonObj['message']);
                 // 恢复按钮状态
                 $('#loginBtn').html('登&nbsp;录');
+                $('#loginBtn').attr('disabled', false);
             } else if (jsonObj['type'] === 'error') {
-                doDynamicFormSubmit({'action' : jsonObj['url'], 'mode' : 'init'});
+                // 跳转至错误页面
+                doDynamicFormSubmit({'action' : jsonObj['url']});
             }
         }
     };
@@ -58,20 +63,20 @@ function doLogin () {
 function checkInput () {
     // 用户名空值验证
     if (!$('#userName').val()) {
-        // TODO Bootstrap警告框
-        alert("请输入用户名。");
+        // 显示提示信息
+        doAlertModalShow('请输入用户名。');
         return false;
     }
     // 密码空值验证
     if (!$('#password').val()) {
-        // TODO Bootstrap警告框
-        alert("请输入密码。");
+        // 显示提示信息
+        doAlertModalShow('请输入密码。');
         return false;
     }
     // 密码长度验证
     if ($('#password').val().length > 16) {
-        // TODO Bootstrap警告框
-        alert("请输入16位以内的密码。");
+        // 显示提示信息
+        doAlertModalShow('请输入16位以内的密码。');
         return false;
     }
     return true;

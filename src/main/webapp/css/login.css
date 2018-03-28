@@ -1,5 +1,5 @@
 body {
-    font-family: "Microsoft YaHei";
+    font-family: 'Microsoft YaHei';
     background: url("../img/background/login.jpg") fixed no-repeat;
     background-size: cover;
 }
@@ -8,7 +8,7 @@ body {
     margin-top: 30%;
     padding: 12px 48px;
     border-radius: 12px;
-    background: rgba(255,255,255,0.2);
+    background: rgba(255, 255, 255, 0.2);
 }
 
 .form-title {
@@ -51,30 +51,4 @@ body {
 
 .footer p {
     margin: 0;
-}
-
-/* modal */
-.modal-dialog {
-    margin: 10% auto auto auto;
-    width: 460px;
-}
-
-.modal-header {
-    border: none;
-    border-radius: 6px;
-    background: #54c5ff;
-}
-
-.modal-body {
-    border: none;
-    padding: 30px 15px;
-}
-
-.modal-footer {
-    border: none;
-    padding: 0 15px 15px 15px;
-}
-
-#modalConfirmBtn {
-    margin-left: 8%;
 }

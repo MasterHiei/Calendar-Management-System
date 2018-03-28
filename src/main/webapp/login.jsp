@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="css/lib/bootstrap.min.css">
     <link rel="stylesheet" href="css/lib/font-awesome.min.css">
     <link rel="stylesheet" href="css/login.css">
+    <link rel="stylesheet" href="css/modal.css">
 
     <script type="text/javascript" src="js/lib/jquery-3.3.1.min.js"></script>
     <script type="text/javascript" src="js/lib/bootstrap.min.js"></script>
@@ -43,26 +44,7 @@
         </div>
     </div>
 </div>
-
-<footer class="footer navbar-fixed-bottom ">
-    <div class="container text-center">
-        <p><strong>TYPE-MOON Heavy Industries Fleet &copy;</strong><br><small>All Rights Reserved.</small></p>
-    </div>
-</footer>
-
-<div class="modal fade" id="dynamicModal" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <p class="modal-title h3"></p>
-            </div>
-            <div class="modal-body"></div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger" id="modalCancelBtn">取消</button>
-                <button type="button" class="btn btn-primary" id="modalConfirmBtn">确认</button>
-            </div>
-        </div>
-    </div>
-</div>
+<%@include file="footer.jsp"%>
+<%@include file="modal.jsp"%>
 </body>
 </html>

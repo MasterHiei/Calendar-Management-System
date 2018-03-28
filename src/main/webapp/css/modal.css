@@ -1,0 +1,25 @@
+/* modal */
+.modal-dialog {
+    margin: 10% auto auto auto;
+    width: 460px;
+}
+
+.modal-header {
+    border: none;
+    border-radius: 6px;
+    background: #54c5ff;
+}
+
+.modal-body {
+    border: none;
+    padding: 30px 15px;
+}
+
+.modal-footer {
+    border: none;
+    padding: 0 15px 15px 15px;
+}
+
+#modalConfirmBtn {
+    margin-left: 8%;
+}

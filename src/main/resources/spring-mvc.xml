@@ -18,7 +18,7 @@
 
     <!-- 配置spring处理静态资源文件 -->
     <!-- 把静态资源文件映射到ResourceHttpRequestHandler进行处理 -->
-    <mvc:resources mapping="/images/**" location="/img/" />
+    <mvc:resources mapping="/img/**" location="/img/" />
     <mvc:resources mapping="/css/**" location="/css/" />
     <mvc:resources mapping="/js/**" location="/js/" />
 
@@ -42,7 +42,7 @@
     <!-- 定义跳转的文件的前后缀 ，视图模式配置 -->
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix" value="/"/>
-        <property name="suffix" value=".jsp"/>
+        <property name="suffix" value=".html"/>
     </bean>
 
     <!-- 文件上传配置 -->

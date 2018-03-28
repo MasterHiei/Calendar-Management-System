@@ -4,7 +4,10 @@ function doAjax (params) {
     var ajaxParams = {
         type : 'POST',
         contentType : 'application/json;charset=utf8',
-        dataType : 'JSON'
+        dataType : 'JSON',
+        error : function () {
+            doDynamicFormSubmit({'action' : '404.do'});
+        }
     };
     // 动态添加Ajax属性
     for (var key in params) {
@@ -65,6 +68,21 @@ function doDynamicModalShow(params) {
     }
     // 显示模态框
     $('#dynamicModal').modal('show');
+}
+
+// 提示信息用模态框
+function doAlertModalShow(body) {
+    // 显示提示信息
+    var params = {
+        header : '提示',
+        body : body,
+        footer : 'alert',
+        confirmFunc : function () {
+            $('#dynamicModal').modal('hide');
+        }
+    };
+    // 动态生成模态框
+    doDynamicModalShow(params);
 }
 
 // 删除指定元素
