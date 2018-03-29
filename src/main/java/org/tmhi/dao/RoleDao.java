@@ -1,6 +1,6 @@
-package com.tmhi.dao;
+package org.tmhi.dao;
 
-import com.tmhi.entity.RoleEntity;
+import org.tmhi.model.entity.RoleEntity;
 
 import java.util.List;
 

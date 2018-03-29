@@ -1,6 +1,6 @@
-package com.tmhi.dao;
+package org.tmhi.dao;
 
-import com.tmhi.entity.UserEntity;
+import org.tmhi.model.entity.UserEntity;
 import org.springframework.stereotype.Repository;
 
 /**

@@ -1,7 +1,7 @@
-package com.tmhi.controller;
+package org.tmhi.controller;
 
-import com.tmhi.form.LoginForm;
-import com.tmhi.service.CommonLogic;
+import org.tmhi.model.form.LoginForm;
+import org.tmhi.service.CommonLogic;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.subject.Subject;

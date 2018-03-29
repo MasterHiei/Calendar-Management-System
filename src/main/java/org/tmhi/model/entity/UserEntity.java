@@ -1,4 +1,4 @@
-package com.tmhi.entity;
+package org.tmhi.model.entity;
 
 public class UserEntity extends BaseEntity {
     /** 用户ID*/

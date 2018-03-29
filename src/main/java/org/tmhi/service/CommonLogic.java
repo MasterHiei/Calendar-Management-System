@@ -1,4 +1,4 @@
-package com.tmhi.service;
+package org.tmhi.service;
 
 import java.util.Map;
 

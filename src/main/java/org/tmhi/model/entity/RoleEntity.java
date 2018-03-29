@@ -1,4 +1,4 @@
-package com.tmhi.entity;
+package org.tmhi.model.entity;
 
 public class RoleEntity extends BaseEntity {
     /** 角色ID */

@@ -16,9 +16,9 @@
 
     <typeAliases>
         <!-- 定义实体类的别名 -->
-        <typeAlias alias="user" type="com.tmhi.entity.UserEntity" />
-        <typeAlias alias="role" type="com.tmhi.entity.RoleEntity" />
-        <typeAlias alias="auth" type="com.tmhi.entity.AuthEntity" />
-        <package name="com.tmhi.entity"/>
+        <typeAlias alias="user" type="org.tmhi.model.entity.UserEntity" />
+        <typeAlias alias="role" type="org.tmhi.model.entity.RoleEntity" />
+        <typeAlias alias="auth" type="org.tmhi.model.entity.AuthEntity" />
+        <package name="org.tmhi.model.entity"/>
     </typeAliases>
 </configuration>

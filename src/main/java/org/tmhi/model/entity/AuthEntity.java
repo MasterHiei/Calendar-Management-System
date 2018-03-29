@@ -1,4 +1,4 @@
-package com.tmhi.entity;
+package org.tmhi.model.entity;
 
 public class AuthEntity extends BaseEntity {
     /** 权限ID */

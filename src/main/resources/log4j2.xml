@@ -20,7 +20,7 @@
             </Policies>
         </RollingFile>
 
-        <RollingFile name="RollingFileError" fileName="log/system_error.log"
+        <RollingFile name="RollingFileError" fileName="logs/system_error.log"
                      filePattern="log/$${date:yyyy-MM}/error-%d{yyyy-MM-dd}.log.gz">
             <ThresholdFilter level="ERROR"/>
             <PatternLayout pattern="[%d{yyyy-MM-dd HH:mm:ss:SSS}] [%p] - %m%n"/>
@@ -49,11 +49,11 @@
 
     <loggers>
         <!-- SQL附加器logger -->
-        <logger name="com.tmhi.dao" level="DEBUG" additivity="false">
+        <logger name="org.tmhi.dao" level="DEBUG" additivity="false">
             <appender-ref ref="sqlPrint"/>
         </logger>
 
-        <root level="info">
+        <root level="DEBUG">
             <appender-ref ref="sqlPrint" />
         </root>
     </loggers>

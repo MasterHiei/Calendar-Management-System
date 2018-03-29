@@ -1,6 +1,6 @@
-package com.tmhi.dao;
+package org.tmhi.dao;
 
-import com.tmhi.entity.AuthEntity;
+import org.tmhi.model.entity.AuthEntity;
 
 import java.util.List;
 

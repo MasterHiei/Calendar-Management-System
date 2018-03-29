@@ -1,4 +1,4 @@
-package com.tmhi.service;
+package org.tmhi.service;
 
 /**
  * Author:       Hiei
@@ -6,5 +6,5 @@ package com.tmhi.service;
  * Description:
  * Modified By:
  */
-public interface UserService {
+public class UserServiceImpl implements UserService {
 }

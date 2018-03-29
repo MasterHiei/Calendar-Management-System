@@ -1,11 +1,11 @@
-package com.tmhi.realm;
+package org.tmhi.realm;
 
-import com.tmhi.dao.AuthDao;
-import com.tmhi.dao.RoleDao;
-import com.tmhi.dao.UserDao;
-import com.tmhi.entity.AuthEntity;
-import com.tmhi.entity.RoleEntity;
-import com.tmhi.entity.UserEntity;
+import org.tmhi.dao.AuthDao;
+import org.tmhi.dao.RoleDao;
+import org.tmhi.dao.UserDao;
+import org.tmhi.model.entity.AuthEntity;
+import org.tmhi.model.entity.RoleEntity;
+import org.tmhi.model.entity.UserEntity;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationException;
 import org.apache.shiro.authz.AuthorizationInfo;
