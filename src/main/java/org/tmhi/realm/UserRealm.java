@@ -84,7 +84,7 @@ public class UserRealm extends AuthorizingRealm{
                 }
             }
         } catch (Exception ex) {
-            return null;
+            throw new AuthorizationException(ex.getMessage());
         }
         return null;
     }
@@ -108,7 +108,7 @@ public class UserRealm extends AuthorizingRealm{
                 return null;
             }
         } catch (Exception ex) {
-            throw new AuthenticationException();
+            throw new AuthorizationException(ex.getMessage());
         }
     }
 }

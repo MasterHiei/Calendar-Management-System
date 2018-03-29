@@ -23,7 +23,7 @@ import java.util.Objects;
  * Modified By:
  */
 @Controller
-public class LoginController {
+public class LoginController extends BaseController {
     
     /**
      * 用户登录
@@ -33,6 +33,8 @@ public class LoginController {
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     @ResponseBody
     public String Login(@RequestBody LoginForm input) {
+        // 输出日志
+        LOGGER.error("用户登录");
         // 定义返回值
         Map<String, String> jsonMap = new HashMap<>();
         
@@ -63,6 +65,8 @@ public class LoginController {
             // 验证成功
             jsonMap.put("type", "success");
             jsonMap.put("url", "calendar.do");
+            // 输出日志
+            LOGGER.error("用户登录成功");
         } catch (UnknownAccountException uaex) {
             // 账户不存在
             jsonMap.put("type", "message");
@@ -75,6 +79,8 @@ public class LoginController {
             // 其他异常
             jsonMap.put("type", "error");
             jsonMap.put("url", "404.do");
+            // 输出日志
+            LOGGER.error("用户登录异常：", ex);
         }
         return CommonLogic.getJSONFromObject(jsonMap);
     }
