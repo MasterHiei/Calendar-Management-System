@@ -4,6 +4,7 @@
         
         <!-- 控制台附加器 -->
         <Console name="Console" target="SYSTEM_OUT">
+            <ThresholdFilter level="INFO" onMatch="ACCEPT" onMismatch="DENY"/>
             <PatternLayout pattern="[%d{yyyy-MM-dd HH:mm:ss:SSS}] [%p] - %m%n" />
         </Console>
 
@@ -16,38 +17,37 @@
         <RollingFile name="RollingInfo" fileName="C:/Users/ruhrg/Documents/My Project/CalendarManagement/logs/info.log" 
                      filePattern="C:/Users/ruhrg/Documents/My Project/CalendarManagement/logs/info/info-%d{yyyy-MM-dd}.log.gz" >
             <Filters>
-                <ThresholdFilter level="WARN" onMatch="DENY" onMismatch="NEUTRAL"/>
-                <ThresholdFilter level="INFO" onMatch="ACCEPT" onMismatch="DENY"/>
+                <ThresholdFilter level="INFO" onMatch="DENY" onMismatch="DENY"/>
             </Filters>
             <PatternLayout pattern="[%d{yyyy-MM-dd HH:mm:ss:SSS}] [%p] - %m%n"/>
             <Policies>
                 <!-- 按日期分离日志 -->
-                <TimeBasedTriggeringPolic interval="1" modulate="false" />
-                <!-- 日志文件最大保留数 -->
-                <DefaultRolloverStrategy fileIndex="max" max="90"/>
+                <TimeBasedTriggeringPolicy interval="1" modulate="false" />
             </Policies>
+            <!-- 日志文件最大保留数 -->
+            <DefaultRolloverStrategy fileIndex="max" max="90"/>
         </RollingFile>
 
-        <!-- ERROR级别日志输出格式 -->
+        <!-- WARN及以上级别日志输出格式 -->
         <RollingFile name="RollingError" fileName="C:/Users/ruhrg/Documents/My Project/CalendarManagement/logs/error.log" 
                      filePattern="C:/Users/ruhrg/Documents/My Project/CalendarManagement/logs/error/error%d{yyyy-MM-dd}.log.gz" >
             <Filters>
-                <ThresholdFilter level="ERROR" onMatch="ACCEPT" onMismatch="DENY"/>
+                <ThresholdFilter level="WARN" onMatch="ACCEPT" onMismatch="DENY"/>
             </Filters>
             <PatternLayout pattern="[%d{yyyy-MM-dd HH:mm:ss:SSS}] [%p] - %m%n"/>
             <Policies>
                 <!-- 按日期分离日志 -->
-                <TimeBasedTriggeringPolic interval="1" modulate="false" />
-                <!-- 日志文件最大保留数 -->
-                <DefaultRolloverStrategy fileIndex="max" max="90"/>
+                <TimeBasedTriggeringPolicy interval="1" modulate="false" />
             </Policies>
+            <!-- 日志文件最大保留数 -->
+            <DefaultRolloverStrategy fileIndex="max" max="90"/>
         </RollingFile>
         
     </Appenders>
 
     <Loggers>
         <!-- ROOT LOGGER -->
-        <Root level="INFO" >
+        <Root level="ALL" >
             <AppenderRef ref="Console"/>
             <AppenderRef ref="RollingInfo"/>
             <AppenderRef ref="RollingError" />
