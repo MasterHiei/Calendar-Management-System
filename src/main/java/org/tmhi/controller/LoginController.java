@@ -1,7 +1,7 @@
 package org.tmhi.controller;
 
 import org.tmhi.model.form.LoginForm;
-import org.tmhi.service.CommonLogic;
+import org.tmhi.service.CommonService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.subject.Subject;
@@ -19,7 +19,7 @@ import java.util.Objects;
 /**
  * Author:       Hiei
  * Date:         2018/03/17
- * Description:
+ * Description:  登录界面Controller
  * Modified By:
  */
 @Controller
@@ -34,7 +34,7 @@ public class LoginController extends BaseController {
     @ResponseBody
     public String Login(@RequestBody LoginForm input) {
         // 输出日志
-        LOGGER.error("用户登录");
+        LOGGER.info("用户登录");
         // 定义返回值
         Map<String, String> jsonMap = new HashMap<>();
         
@@ -42,13 +42,13 @@ public class LoginController extends BaseController {
         if (!StringUtils.hasText(input.getUserName()) || !StringUtils.hasText(input.getPassword())) {
             jsonMap.put("type", "error");
             jsonMap.put("message", "请输入用户名或密码。");
-            return CommonLogic.getJSONFromObject(jsonMap);
+            return CommonService.getJSONFromObject(jsonMap);
         }
         // Server输入验证（密码长度验证）
         if (input.getPassword().length() > 16) {
             jsonMap.put("type", "error");
             jsonMap.put("message", "请输入16位以内的密码。");
-            return CommonLogic.getJSONFromObject(jsonMap);
+            return CommonService.getJSONFromObject(jsonMap);
         }
 
         // 获取shiro subject
@@ -66,7 +66,7 @@ public class LoginController extends BaseController {
             jsonMap.put("type", "success");
             jsonMap.put("url", "calendar.do");
             // 输出日志
-            LOGGER.error("用户登录成功");
+            LOGGER.info("用户登录成功");
         } catch (UnknownAccountException uaex) {
             // 账户不存在
             jsonMap.put("type", "message");
@@ -82,6 +82,6 @@ public class LoginController extends BaseController {
             // 输出日志
             LOGGER.error("用户登录异常：", ex);
         }
-        return CommonLogic.getJSONFromObject(jsonMap);
+        return CommonService.getJSONFromObject(jsonMap);
     }
 }

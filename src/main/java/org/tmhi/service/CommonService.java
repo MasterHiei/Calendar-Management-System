@@ -8,7 +8,7 @@ import java.util.Map;
  * Description:  用于定义通用方法
  * Modified By:
  */
-public class CommonLogic {
+public class CommonService {
     /**
      * 将对象序列化为JSON格式
      * @param map 序列化对象

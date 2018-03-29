@@ -12,5 +12,5 @@ import org.slf4j.LoggerFactory;
 public class BaseController {
     
     /** 创建logger对象 */
-    public final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
+    protected final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
 }
