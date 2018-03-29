@@ -1,61 +1,76 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configuration status="info">
-    <appenders>
+<configuration status="OFF">
+    <Appenders>
+        <Properties>
+            <property name="log_pattern">[%d{yyyy-MM-dd HH:mm:ss:SSS}] [%p] - %m%n</property>
+            <property name="log_path">/logs/</property>
+            <property name="info_log">${log_path}/info.log</property>
+            <property name="error_log">${log_path}/error.log</property>
+            <property name="rollin_info_log">${log_path}/info/info%d{yyyy-MM-dd}.log.gz</property>
+            <property name="rolling_error_log">${log_path}/error/error%d{yyyy-MM-dd}.log.gz</property>
+        </Properties>
+        
         <!-- 控制台附加器 -->
-        <console name="Console" target="SYSTEM_OUT">
-            <PatternLayout pattern="[%d{yyyy-MM-dd HH:mm:ss:SSS}] [%p] - %l - %m%n"/>
-        </console>
-
-        <!-- 设置日志格式并配置日志压缩格式(eg: info-2017-02-12.log.gz) -->
-        <RollingFile name="RollingFileInfo" fileName="log/system_info.log"
-                     filePattern="log/$${date:yyyy-MM}/info-%d{yyyy-MM-dd}.log.gz">
-            <Filters>
-                <ThresholdFilter level="INFO"/>
-                <ThresholdFilter level="WARN" onMatch="DENY" onMismatch="NEUTRAL"/>
-            </Filters>
-            <PatternLayout pattern="[%d{yyyy-MM-dd HH:mm:ss:SSS}] [%p] - %m%n"/>
-            <Policies>
-                <TimeBasedTriggeringPolicy/>
-                <SizeBasedTriggeringPolicy size="20 MB"/>
-            </Policies>
-        </RollingFile>
-
-        <RollingFile name="RollingFileError" fileName="logs/system_error.log"
-                     filePattern="log/$${date:yyyy-MM}/error-%d{yyyy-MM-dd}.log.gz">
-            <ThresholdFilter level="ERROR"/>
-            <PatternLayout pattern="[%d{yyyy-MM-dd HH:mm:ss:SSS}] [%p] - %m%n"/>
-            <Policies>
-                <TimeBasedTriggeringPolicy/>
-                <SizeBasedTriggeringPolicy size="20 MB"/>
-            </Policies>
-        </RollingFile>
-    </appenders>
-
-    <loggers>
-        <!-- 默认logger -->
-        <root level="info">
-            <appender-ref ref="Console"/>
-            <appender-ref ref="RollingFileInfo"/>
-            <appender-ref ref="RollingFileError" />
-        </root>
-    </loggers>
-
-    <appenders>
-        <!-- SQL相关附加器 -->
-        <Console name="sqlPrint" target="SYSTEM_OUT">
-            <PatternLayout pattern="%d{HH:mm:ss} [%t] %-5level %logger{36} - %msg%n" />
+        <Console name="Console" target="SYSTEM_OUT">
+            <ThresholdFilter level="INFO" onMatch="ACCEPT" onMismatch="ACCEPT" />
+            <PatternLayout pattern="${log_pattern}" />
         </Console>
-    </appenders>
 
-    <loggers>
-        <!-- SQL附加器logger -->
-        <logger name="org.tmhi.dao" level="DEBUG" additivity="false">
-            <appender-ref ref="sqlPrint"/>
-        </logger>
+        <!-- INFO级别日志输出格式 -->
+        <RollingFile name="RollingInfo" fileName="${info_log}" filePattern="${rollin_info_log}" >
+            <Filters>
+                <ThresholdFilter level="WARN" onMatch="DENY" onMismatch="NEUTRAL"/>
+                <ThresholdFilter level="INFO" onMatch="ACCEPT" onMismatch="NEUTRAL"/>
+            </Filters>
+            <PatternLayout pattern="${log_pattern}"/>
+            <Policies>
+                <!-- 按日期分离日志 -->
+                <TimeBasedTriggeringPolic interval="1" modulate="false" />
+                <!-- 日志文件最大保留数 -->
+                <DefaultRolloverStrategy fileIndex="max" max="90"/>
+            </Policies>
+        </RollingFile>
 
-        <root level="DEBUG">
-            <appender-ref ref="sqlPrint" />
-        </root>
-    </loggers>
+        <!-- ERROR级别日志输出格式 -->
+        <RollingFile name="RollingError" fileName="${error_log}" filePattern="${rolling_error_log}" >
+            <Filters>
+                <ThresholdFilter level="WARN" onMatch="ACCEPT" onMismatch="NEUTRAL"/>
+            </Filters>
+            <PatternLayout pattern="${log_pattern}"/>
+            <Policies>
+                <!-- 按日期分离日志 -->
+                <TimeBasedTriggeringPolic interval="1" modulate="false" />
+                <!-- 日志文件最大保留数 -->
+                <DefaultRolloverStrategy fileIndex="max" max="90"/>
+            </Policies>
+        </RollingFile>
+    </Appenders>
+
+    <Loggers>
+        <!-- 控制台附加器logger -->
+        <Root level="info">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="RollingInfo"/>
+            <AppenderRef ref="RollingError" />
+        </Root>
+    </Loggers>
+
+    <!-- Mybatis附加器 -->
+    <Appenders>
+        <Console name="sqlPrint" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{HH:mm:ss} [%t] %-5level %l - %msg%n" />
+        </Console>
+    </Appenders>
+
+    <Loggers>
+        <!-- Mybatis附加器logger -->
+        <Logger name="org.tmhi.dao" level="DEBUG" additivity="false">
+            <AppenderRef ref="sqlPrint"/>
+        </Logger>
+
+        <Root level="DEBUG">
+            <AppenderRef ref="sqlPrint" />
+        </Root>
+    </Loggers>
 
 </configuration>
