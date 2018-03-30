@@ -24,13 +24,18 @@
                 <!-- 按日期分离日志 -->
                 <TimeBasedTriggeringPolicy interval="1" modulate="false" />
             </Policies>
-            <!-- 日志文件最大保留数 -->
-            <DefaultRolloverStrategy fileIndex="max" max="90"/>
+            <!-- 日志文件最大保留时间 -->
+            <DefaultRolloverStrategy>
+                <Delete basePath="C:/Users/ruhrg/Documents/My Project/CalendarManagement/logs/" maxDepth="Integer.MAX_VALUE">
+                    <IfFileName glob="*/info-*.log.gz" />
+                    <IfLastModified age="90d" />
+                </Delete>
+            </DefaultRolloverStrategy>
         </RollingFile>
 
         <!-- WARN及以上级别日志输出格式 -->
         <RollingFile name="RollingError" fileName="C:/Users/ruhrg/Documents/My Project/CalendarManagement/logs/error.log" 
-                     filePattern="C:/Users/ruhrg/Documents/My Project/CalendarManagement/logs/error/error%d{yyyy-MM-dd}.log.gz" >
+                     filePattern="C:/Users/ruhrg/Documents/My Project/CalendarManagement/logs/error/error-%d{yyyy-MM-dd}.log.gz" >
             <Filters>
                 <ThresholdFilter level="WARN" onMatch="ACCEPT" onMismatch="DENY"/>
             </Filters>
@@ -39,8 +44,13 @@
                 <!-- 按日期分离日志 -->
                 <TimeBasedTriggeringPolicy interval="1" modulate="false" />
             </Policies>
-            <!-- 日志文件最大保留数 -->
-            <DefaultRolloverStrategy fileIndex="max" max="90"/>
+            <!-- 日志文件最大保留时间 -->
+            <DefaultRolloverStrategy>
+                <Delete basePath="C:/Users/ruhrg/Documents/My Project/CalendarManagement/logs/" maxDepth="Integer.MAX_VALUE">
+                    <IfFileName glob="*/error-*.log.gz" />
+                    <IfLastModified age="90d" />
+                </Delete>
+            </DefaultRolloverStrategy>
         </RollingFile>
         
     </Appenders>
