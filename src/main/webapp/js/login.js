@@ -12,7 +12,7 @@ $(function () {
     $('#registerBtn').on('click', function () {
         var params = {
             header : '公告',
-            body : '用户注册功能将于系统正式上线后开放。',
+            body : '用户注册功能将于系统正式上线后开放',
             footer : 'alert',
             confirmFunc : function () {
                 $('#dynamicModal').modal('hide');
@@ -64,19 +64,19 @@ function checkInput () {
     // 用户名空值验证
     if (!$('#userName').val()) {
         // 显示提示信息
-        doAlertModalShow('请输入用户名。');
+        doAlertModalShow('请输入用户名');
         return false;
     }
     // 密码空值验证
     if (!$('#password').val()) {
         // 显示提示信息
-        doAlertModalShow('请输入密码。');
+        doAlertModalShow('请输入密码');
         return false;
     }
     // 密码长度验证
-    if ($('#password').val().length > 16) {
+    if ($('#password').val().length > 16 || $('#password').val().length < 6) {
         // 显示提示信息
-        doAlertModalShow('请输入16位以内的密码。');
+        doAlertModalShow('请输入长度为6-16位的密码');
         return false;
     }
     return true;

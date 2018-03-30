@@ -17,7 +17,8 @@
         <RollingFile name="RollingInfo" fileName="C:/Users/ruhrg/Documents/My Project/CalendarManagement/logs/info.log" 
                      filePattern="C:/Users/ruhrg/Documents/My Project/CalendarManagement/logs/info/info-%d{yyyy-MM-dd}.log.gz" >
             <Filters>
-                <ThresholdFilter level="INFO" onMatch="DENY" onMismatch="DENY"/>
+                <ThresholdFilter level="WARN" onMatch="DENY" onMismatch="NEUTRAL"/>
+                <ThresholdFilter level="INFO" onMatch="ACCEPT" onMismatch="DENY"/>
             </Filters>
             <PatternLayout pattern="[%d{yyyy-MM-dd HH:mm:ss:SSS}] [%p] - %m%n"/>
             <Policies>

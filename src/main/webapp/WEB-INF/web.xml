@@ -48,6 +48,7 @@
   <context-param>
     <param-name>contextConfigLocation</param-name>
     <param-value>
+      classpath:spring-mvc.xml
       classpath:spring-mybatis.xml
       classpath:spring-shiro.xml
     </param-value>

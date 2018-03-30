@@ -1,5 +1,6 @@
 package org.tmhi.controller;
 
+import lombok.experimental.PackagePrivate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -9,8 +10,9 @@ import org.slf4j.LoggerFactory;
  * Description:  Controller基类
  * Modified By:
  */
+@PackagePrivate
 public class BaseController {
     
-    /** 创建logger对象 */
-    protected final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
+    /** logger处理相关类 */
+    final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
 }

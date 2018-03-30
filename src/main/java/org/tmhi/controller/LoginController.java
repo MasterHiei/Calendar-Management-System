@@ -1,16 +1,19 @@
 package org.tmhi.controller;
 
-import org.tmhi.model.form.LoginForm;
-import org.tmhi.service.CommonService;
 import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authc.*;
+import org.apache.shiro.authc.IncorrectCredentialsException;
+import org.apache.shiro.authc.UnknownAccountException;
+import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.StringUtils;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.tmhi.model.form.LoginForm;
+import org.tmhi.util.CommonUtils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -32,23 +35,18 @@ public class LoginController extends BaseController {
      */
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     @ResponseBody
-    public String Login(@RequestBody LoginForm input) {
+    public String Login(@RequestBody @Validated LoginForm input, BindingResult result) {
         // 输出日志
         LOGGER.info("用户登录");
         // 定义返回值
         Map<String, String> jsonMap = new HashMap<>();
         
-        // Server输入验证（非空验证）
-        if (!StringUtils.hasText(input.getUserName()) || !StringUtils.hasText(input.getPassword())) {
-            jsonMap.put("type", "error");
-            jsonMap.put("message", "请输入用户名或密码。");
-            return CommonService.getJSONFromObject(jsonMap);
-        }
-        // Server输入验证（密码长度验证）
-        if (input.getPassword().length() > 16) {
-            jsonMap.put("type", "error");
-            jsonMap.put("message", "请输入16位以内的密码。");
-            return CommonService.getJSONFromObject(jsonMap);
+        // Validated输入验证
+        if (result.hasErrors()) {
+            // 验证未通过，返回最初的错误信息
+            jsonMap.put("type", "message");
+            jsonMap.put("message", result.getAllErrors().get(0).getDefaultMessage());
+            return CommonUtils.getJSONFromObject(jsonMap);
         }
 
         // 获取shiro subject
@@ -82,6 +80,6 @@ public class LoginController extends BaseController {
             // 输出日志
             LOGGER.error("用户登录异常：", ex);
         }
-        return CommonService.getJSONFromObject(jsonMap);
+        return CommonUtils.getJSONFromObject(jsonMap);
     }
 }
