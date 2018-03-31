@@ -10,25 +10,25 @@
                         http://www.springframework.org/schema/mvc
                         http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd">
 
-    <!-- SpringMVC容器中只扫描 @Controller-->
-    <context:component-scan base-package="org.tmhi.controller" use-default-filters="false" >
+    <!-- 自定义SpringMVC容器扫描粒度-->
+    <context:component-scan base-package="org.tmhi" use-default-filters="false" >
         <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+        <context:include-filter type="annotation" expression="org.springframework.web.bind.annotation.ControllerAdvice"/>
     </context:component-scan>
-
-    <!-- 自动注册RequestMappingHandlerMapping和RequestMappingHandlerAdapter -->
-    <mvc:annotation-driven />
 
     <!-- 配置spring处理静态资源文件 -->
     <!-- 把静态资源文件映射到ResourceHttpRequestHandler进行处理 -->
     <mvc:resources mapping="/img/**" location="/img/" />
     <mvc:resources mapping="/css/**" location="/css/" />
     <mvc:resources mapping="/js/**" location="/js/" />
+    <mvc:resources mapping="/fonts/**" location="/fonts/" />
 
     <!-- 激活注解所需要的bean -->
     <context:annotation-config />
 
-    <!--避免IE执行AJAX后，返回JSON时出现下载文件 -->
+    <!-- 启动注解 -->
     <mvc:annotation-driven>
+        <!-- 自动使用FastJson将Ajax返回值转换为JSON对象 -->
         <mvc:message-converters>
             <bean class="com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter">
                 <property name="supportedMediaTypes">

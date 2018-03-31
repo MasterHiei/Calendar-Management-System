@@ -36,9 +36,7 @@ function doLogin () {
             $('#loginBtn').attr('disabled', true);
             $('#loginBtn').html('<i class="fa fa-spinner fa-pulse"></i>');
         },
-        success : function (jsonStr) {
-            // 将返回值转换为JSON对象
-            var jsonObj = $.parseJSON(jsonStr);
+        success : function (jsonObj) {
             // 处理返回值
             if (jsonObj['type'] === 'success') {
                 // 跳转至目标页面
@@ -64,19 +62,19 @@ function checkInput () {
     // 用户名空值验证
     if (!$('#userName').val()) {
         // 显示提示信息
-        doAlertModalShow('请输入用户名');
+        doAlertModalShow('请输入用户名。');
         return false;
     }
     // 密码空值验证
     if (!$('#password').val()) {
         // 显示提示信息
-        doAlertModalShow('请输入密码');
+        doAlertModalShow('请输入密码。');
         return false;
     }
     // 密码长度验证
     if ($('#password').val().length > 16 || $('#password').val().length < 6) {
         // 显示提示信息
-        doAlertModalShow('请输入长度为6-16位的密码');
+        doAlertModalShow('请输入长度为6-16位的密码。');
         return false;
     }
     return true;
