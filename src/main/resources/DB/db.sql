@@ -25,6 +25,8 @@ CREATE TABLE tbl_role(
   PRIMARY KEY(role_code)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
+ALTER TABLE tbl_role ADD INDEX delete_flag ( delete_flag );
+
 -- TABLE AUTH --
 CREATE TABLE tbl_auth(
   auth_code INTEGER NOT NULL COMMENT '权限ID',
@@ -37,6 +39,8 @@ CREATE TABLE tbl_auth(
   version INTEGER NOT NULL COMMENT '版本号',
   PRIMARY KEY(auth_code)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+ALTER TABLE tbl_auth ADD INDEX delete_flag ( delete_flag );
 
 -- TABLE ROLE_AUTH --
 CREATE TABLE tbl_role_auth(
@@ -51,11 +55,14 @@ CREATE TABLE tbl_role_auth(
   PRIMARY KEY(role_code, auth_code)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
+ALTER TABLE tbl_role_auth ADD INDEX auth_code ( auth_code );
+ALTER TABLE tbl_role_auth ADD INDEX delete_flag ( delete_flag );
+
 -- TABLE USER --
 CREATE TABLE tbl_user(
   user_id INTEGER AUTO_INCREMENT COMMENT '用户ID',
-  user_name VARCHAR(12) UNIQUE NOT NULL COMMENT '用户名',
-  mail_address VARCHAR(50) UNIQUE COMMENT '用户邮箱',
+  user_name VARCHAR(12) NOT NULL COMMENT '用户名',
+  mail_address VARCHAR(50) COMMENT '用户邮箱',
   user_avatar VARCHAR(50) NOT NULL DEFAULT 'img/avatar/default/default-avatar.png' COMMENT '用户头像',
   password VARCHAR(64) NOT NULL COMMENT '用户密码',
   password_salt VARCHAR(64) NOT NULL COMMENT '密码盐值',
@@ -69,6 +76,10 @@ CREATE TABLE tbl_user(
   PRIMARY KEY(user_id)
 ) ENGINE=InnoDB AUTO_INCREMENT=10000001 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
+ALTER TABLE tbl_user ADD UNIQUE INDEX user_name ( user_name );
+ALTER TABLE tbl_user ADD UNIQUE INDEX mail_address ( mail_address );
+ALTER TABLE tbl_user ADD INDEX delete_flag ( delete_flag );
+
 -- TABLE USER_ROLE --
 CREATE TABLE tbl_user_role(
   user_id INTEGER NOT NULL COMMENT '用户ID',
@@ -81,3 +92,6 @@ CREATE TABLE tbl_user_role(
   version INTEGER NOT NULL COMMENT '版本号',
   PRIMARY KEY(user_id, role_code)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+ALTER TABLE tbl_user_role ADD INDEX role_code ( role_code );
+ALTER TABLE tbl_user_role ADD INDEX delete_flag ( delete_flag );

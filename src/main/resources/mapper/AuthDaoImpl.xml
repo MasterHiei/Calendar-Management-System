@@ -27,7 +27,9 @@
     (
       select auth_code 
       from tbl_role_auth
-      where role_code = #{roleCode,jdbcType=INTEGER}
+      where role_code = #{roleCode,jdbcType=INTEGER},
+      and delete_flag=${@org.tmhi.BaseEntity@DELETE_FLAG_0}
     )
+    and delete_flag=${@org.tmhi.BaseEntity@DELETE_FLAG_0}
   </select>
 </mapper>
