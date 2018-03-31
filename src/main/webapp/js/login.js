@@ -43,7 +43,7 @@ function doLogin () {
                 doDynamicFormSubmit({'action' : jsonObj['url']});
             } else if (jsonObj['type'] === 'message') {
                 // 显示提示信息
-                doAlertModalShow(jsonObj['message']);
+                doAlertModalShow(jsonObj['code']);
                 // 恢复按钮状态
                 $('#loginBtn').html('登&nbsp;录');
                 $('#loginBtn').attr('disabled', false);
@@ -62,20 +62,20 @@ function checkInput () {
     // 用户名空值验证
     if (!$('#userName').val()) {
         // 显示提示信息
-        doAlertModalShow('请输入用户名。');
+        doAlertModalShow('E001-0001');
         return false;
     }
     // 密码空值验证
     if (!$('#password').val()) {
         // 显示提示信息
-        doAlertModalShow('请输入密码。');
+        doAlertModalShow('E001-0002');
         return false;
     }
     // 密码长度验证
-    if ($('#password').val().length > 16 || $('#password').val().length < 6) {
+    /*if ($('#password').val().length > 16 || $('#password').val().length < 6) {
         // 显示提示信息
-        doAlertModalShow('请输入长度为6-16位的密码。');
+        doAlertModalShow('E001-0003');
         return false;
-    }
+    }*/
     return true;
 }

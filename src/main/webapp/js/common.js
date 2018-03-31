@@ -71,11 +71,11 @@ function doDynamicModalShow(params) {
 }
 
 // 提示信息用模态框
-function doAlertModalShow(body) {
+function doAlertModalShow(code) {
     // 显示提示信息
     var params = {
         header : '提示',
-        body : body,
+        body : message[code],
         footer : 'alert',
         confirmFunc : function () {
             $('#dynamicModal').modal('hide');

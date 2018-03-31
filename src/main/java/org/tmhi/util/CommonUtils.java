@@ -3,7 +3,7 @@ package org.tmhi.util;
 /**
  * Author:       Hiei
  * Date:         2018/03/18
- * Description:  用于定义通用方法
+ * Description:  用于封装通用方法
  * Modified By:
  */
 public class CommonUtils {

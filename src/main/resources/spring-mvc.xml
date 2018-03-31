@@ -47,6 +47,7 @@
         <property name="suffix" value=".jsp"/>
     </bean>
 
+    <!-- 加载properties配置文件 -->
     <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
         <property name="ignoreUnresolvablePlaceholders" value="true"/>
         <property name="ignoreResourceNotFound" value="true"/>
@@ -54,7 +55,6 @@
         <property name="locations">
             <list>
                 <value>classpath:properties/jdbc.properties</value>
-                <value>classpath:properties/messages.properties</value>
             </list>
         </property>
     </bean>
@@ -71,11 +71,6 @@
         <property name="useCodeAsDefaultMessage" value="true" />
         <property name="defaultEncoding" value="UTF-8"/>
         <property name="cacheSeconds" value="60"/>
-        <property name="basenames" >
-            <list>
-                <value>properties/messages</value>
-            </list>
-        </property>
     </bean>
 
     <!-- 文件上传配置 -->

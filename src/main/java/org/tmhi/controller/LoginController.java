@@ -44,7 +44,7 @@ public class LoginController extends BaseController {
         if (result.hasErrors()) {
             // 验证未通过，返回最初的错误信息
             jsonMap.put("type", "message");
-            jsonMap.put("message", result.getAllErrors().get(0).getDefaultMessage());
+            jsonMap.put("code", result.getAllErrors().get(0).getDefaultMessage());
             return jsonMap;
         }
 
