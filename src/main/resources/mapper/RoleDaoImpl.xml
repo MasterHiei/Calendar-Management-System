@@ -28,8 +28,8 @@
       select role_code 
       from tbl_user_role
       where user_id = #{userId,jdbcType=INTEGER},
-      and delete_flag=${@org.tmhi.BaseEntity@DELETE_FLAG_0}
+      and delete_flag=${@org.tmhi.model.entity.BaseEntity@DELETE_FLAG_0}
     )
-    and delete_flag=${@org.tmhi.BaseEntity@DELETE_FLAG_0}
+    and delete_flag=${@org.tmhi.model.entity.BaseEntity@DELETE_FLAG_0}
   </select>
 </mapper>

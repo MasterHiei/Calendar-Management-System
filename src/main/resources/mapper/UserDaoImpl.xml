@@ -29,20 +29,20 @@
     select 
     <include refid="Base_Column_List" />
     from tbl_user
-    where user_name = #{userName,jdbcType=VARCHAR},
-    and delete_flag=${@org.tmhi.BaseEntity@DELETE_FLAG_0}
+    where user_name = #{userName,jdbcType=VARCHAR}
+    and delete_flag=${@org.tmhi.model.entity.BaseEntity@DELETE_FLAG_0}
   </select>
 
   <!-- 删除用户信息 -->
   <delete id="deleteUserByID" parameterType="java.lang.Integer">
     update tbl_user 
     set 
-    delete_flag=${@org.tmhi.BaseEntity@DELETE_FLAG_1}, 
+    delete_flag=${@org.tmhi.model.entity.BaseEntity@DELETE_FLAG_1}, 
     update_user_id=#{updateUserId,jdbcType=INTEGER}, 
     update_datetime=#{updateDatetime,jdbcType=TIMESTAMP}, 
     version=#{version,jdbcType=INTEGER}
-    where user_id = #{userId,jdbcType=INTEGER}, 
-    and delete_flag=${@org.tmhi.BaseEntity@DELETE_FLAG_0}
+    where user_id = #{userId,jdbcType=INTEGER}
+    and delete_flag=${@org.tmhi.model.entity.BaseEntity@DELETE_FLAG_0}
   </delete>
 
   <!-- 创建用户信息 -->
