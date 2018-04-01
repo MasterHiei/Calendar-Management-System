@@ -3,7 +3,7 @@
 + Developed for T.M.H.I Clan.
 
 # Description
-+ Project Manager
++ Project Management
   + Apache Maven v3.5.0
 
 + Base Framework
