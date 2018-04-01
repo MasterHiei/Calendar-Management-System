@@ -3,11 +3,15 @@
 + Developed for T.M.H.I Clan.
 
 # Description
-+ Framework
++ Project Manager
+  + Apache Maven v3.5.0
+
++ Base Framework
   + Spring + SpringMVC + Mybatis 
   
-+ UI
++ Front-End
   + Bootstrap v3.3.7
+  + Font Awesome v4.7.0
   
 + Security support
   + Apache Shiro
