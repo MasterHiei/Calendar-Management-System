@@ -1,6 +1,6 @@
 # CalendarManagement
 + Help you and your team to manage the project schedule.
-+ Developed for T.M.H.I Clan.
++ Developed for T.M.H.I.F.
 
 # Description
 + Project Management
