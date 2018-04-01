@@ -6,5 +6,5 @@ package org.tmhi.controller;
  * Description:  日历界面Controller
  * Modified By:
  */
-public class CalendarController extends BaseController {
+public class CalendarController {
 }

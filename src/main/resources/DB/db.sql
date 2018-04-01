@@ -67,6 +67,7 @@ CREATE TABLE tbl_user(
   password VARCHAR(64) NOT NULL COMMENT '用户密码',
   password_salt VARCHAR(64) NOT NULL COMMENT '密码盐值',
   now_action VARCHAR(128) COMMENT '当前状态',
+  current_login_datetime TIMESTAMP COMMENT '最近登录时间',
   delete_flag TINYINT NOT NULL COMMENT '删除标记',
   create_user_id INTEGER NOT NULL COMMENT '创建者ID',
   create_datetime TIMESTAMP NOT NULL COMMENT '创建时间',

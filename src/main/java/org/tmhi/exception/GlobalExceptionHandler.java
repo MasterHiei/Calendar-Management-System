@@ -1,4 +1,4 @@
-package org.tmhi.util.exception;
+package org.tmhi.exception;
 
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;

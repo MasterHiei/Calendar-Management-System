@@ -10,6 +10,7 @@
     <result column="password" jdbcType="VARCHAR" property="password" />
     <result column="password_salt" jdbcType="VARCHAR" property="passwordSalt" />
     <result column="now_action" jdbcType="VARCHAR" property="nowAction" />
+    <result column="current_login_datetime" jdbcType="TIMESTAMP" property="currentLoginDatetime" />
     <result column="delete_flag" jdbcType="INTEGER" property="deleteFlag" />
     <result column="create_user_id" jdbcType="INTEGER" property="createUserId" />
     <result column="create_datetime" jdbcType="TIMESTAMP" property="createDatetime" />
@@ -19,9 +20,8 @@
   </resultMap>
   
   <sql id="Base_Column_List">
-    user_id, user_name, mail_address, user_avatar, password, password_salt, 
-    now_action, delete_flag, create_user_id, create_datetime, update_user_id, update_datetime, 
-    version
+    user_id, user_name, mail_address, user_avatar, password, password_salt, now_action, current_login_datetime, 
+    delete_flag, create_user_id, create_datetime, update_user_id, update_datetime, version
   </sql>
 
   <!-- 通过用户名查询用户信息 -->
@@ -70,6 +70,9 @@
       <if test="nowAction != null">
         now_action,
       </if>
+      <if test="currentLoginDatetime != null">
+        current_login_datetime,
+      </if>
       <if test="deleteFlag != null">
         delete_flag,
       </if>
@@ -111,6 +114,9 @@
       <if test="nowAction != null">
         #{nowAction,jdbcType=VARCHAR},
       </if>
+      <if test="currentLoginDatetime != null">
+        #{currentLoginDatetime,jdbcType=TIMESTAMP},
+      </if>
       <if test="deleteFlag != null">
         #{deleteFlag,jdbcType=INTEGER},
       </if>
@@ -133,12 +139,9 @@
   </insert>
 
   <!-- 更新用户信息 -->
-  <update id="updateUserByID" parameterType="user">
+  <update id="updateUserByName" parameterType="user">
   update tbl_user
     <set>
-      <if test="userName != null">
-        user_name = #{userName,jdbcType=VARCHAR},
-      </if>
       <if test="mailAddress != null">
         mail_address = #{mailAddress,jdbcType=VARCHAR},
       </if>
@@ -153,6 +156,9 @@
       </if>
       <if test="nowAction != null">
         now_action = #{nowAction,jdbcType=VARCHAR},
+      </if>
+      <if test="currentLoginDatetime != null">
+        current_login_datetime = #{currentLoginDatetime,jdbcType=TIMESTAMP},
       </if>
       <if test="deleteFlag != null">
         delete_flag = #{deleteFlag,jdbcType=INTEGER},
@@ -174,15 +180,7 @@
       </if>
     </set>
     <where>
-      <if test="userId != null">
-        user_id = #{userId,jdbcType=INTEGER}
-      </if>
-      <if test="userName != null">
-        and user_name = #{userName,jdbcType=VARCHAR}
-      </if>
-      <if test="deleteFlag != null">
-        and delete_flag = #{deleteFlag,jdbcType=INTEGER}
-      </if>
+      user_name = #{userName,jdbcType=VARCHAR}
     </where>
   </update>
 </mapper>

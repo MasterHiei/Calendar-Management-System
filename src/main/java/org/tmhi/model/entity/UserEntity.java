@@ -2,6 +2,8 @@ package org.tmhi.model.entity;
 
 import lombok.Data;
 
+import java.sql.Timestamp;
+
 @Data
 public class UserEntity extends BaseEntity {
     /** 用户ID*/
@@ -18,4 +20,6 @@ public class UserEntity extends BaseEntity {
     private String passwordSalt;
     /** 当前状态 */
     private String nowAction;
+    /** 最近登录时间' */
+    private Timestamp currentLoginDatetime;
 }

@@ -28,14 +28,19 @@ import java.util.Objects;
 public class UserRealm extends AuthorizingRealm{
 
     /** 用户信息相关Dao */
-    @Autowired
     private UserDao userDao;
     /** 角色信息相关Dao */
-    @Autowired
     private RoleDao roleDao;
     /** 权限信息相关Dao */
-    @Autowired
     private AuthDao authDao;
+
+    /** 构造器注入 */
+    @Autowired
+    public UserRealm(UserDao userDao, RoleDao roleDao, AuthDao authDao) {
+        this.userDao = userDao;
+        this.roleDao = roleDao;
+        this.authDao = authDao;
+    }
     
     /**
      * 添加角色和权限信息

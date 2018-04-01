@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * Author:       Hiei
  * Date:         2018/03/31
- * Description:  Servlet Request通用方法
+ * Description:  Servlet Request通用方法封装类
  * Modified By:
  */
 public class RequestUtils {

@@ -109,13 +109,13 @@ INSERT INTO tbl_role_auth (
 
 -- INIT TABLE USER --
 INSERT INTO tbl_user (
-  user_name, mail_address, user_avatar, password, password_salt, now_action,
+  user_name, mail_address, user_avatar, password, password_salt, now_action, current_login_datetime,
   delete_flag, create_user_id, create_datetime,
   update_user_id, update_datetime, version
 ) 
 VALUES (
-  'Hiei', 'Hiei@test.com', 'img/avatar/default/default-avatar.png',
-  '81a144df4a93b6477c4a4e0036382d5486688298cdee73d23b8d9a08c6ff229c', 'b', NULL,
+  'hiei', NULL, 'img/avatar/default/default-avatar.png',
+  '3523a0b70f5d6ce3c1bce5fec9a22d435d9e55532a6840eac79073c5cd08d1ff', 'b', NULL, NULL,
   0, 10000001, current_timestamp, 10000001, current_timestamp, 1
 );
 

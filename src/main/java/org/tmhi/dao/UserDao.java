@@ -13,10 +13,18 @@ import org.springframework.stereotype.Repository;
 public interface UserDao {
 
     /**
-     * 根据用户名获取用户信息
+     * 根据用户名获取用户信息（未删除）
      * @param   userName 用户名
      * @return  用户信息
      * @throws  Exception 异常
      */
     UserEntity queryUserByName(String userName) throws Exception;
+
+    /**
+     * 根据用户名更新用户信息
+     * @param   params 用户名
+     * @return  用户信息
+     * @throws  Exception 异常
+     */
+    int updateUserByName(UserEntity params) throws Exception;
 }
