@@ -14,4 +14,4 @@
   + Font Awesome v4.7.0
   
 + Security support
-  + Apache Shiro
+  + Apache Shiro v1.4.0
