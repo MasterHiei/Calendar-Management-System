@@ -1,5 +1,9 @@
 package org.tmhi.service;
 
+import org.tmhi.model.entity.UserEntity;
+
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * Author:       Hiei
  * Date:         2018/03/17
@@ -9,10 +13,22 @@ package org.tmhi.service;
 public interface UserService {
 
     /**
-     * 更新用户登录时间
-     * 
+     * 用户登录
+     *
+     * @param   request HttpServletRequest
      * @param   userName 用户名
+     * @param   password 用户密码
+     * @return  错误信息代码
      * @throws  Exception 异常
      */
-    void updateUserLoginTime(String userName) throws Exception;
+    String checkLogin(HttpServletRequest request, String userName, String password) throws Exception;
+
+    /**
+     * 根据用户名查询用户信息
+     *
+     * @param   userName 用户名
+     * @return  用户信息
+     * @throws  Exception 异常
+     */
+    UserEntity queryUserByName(String userName) throws Exception;
 }

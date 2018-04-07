@@ -2,13 +2,13 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
        xmlns:context="http://www.springframework.org/schema/context"
-       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:aop="http://www.springframework.org/schema/aop"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
                         http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
                         http://www.springframework.org/schema/context
                         http://www.springframework.org/schema/context/spring-context-4.0.xsd
                         http://www.springframework.org/schema/mvc
-                        http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd">
+                        http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
 
     <!-- 自定义SpringMVC容器扫描粒度-->
     <context:component-scan base-package="org.tmhi" use-default-filters="false" >
@@ -43,9 +43,12 @@
         </mvc:message-converters>
     </mvc:annotation-driven>
 
+    <!-- 启用cglib动态代理 -->
+    <aop:config proxy-target-class="true"/>
+
     <!-- 定义跳转的文件的前后缀 ，视图模式配置 -->
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-        <property name="prefix" value="/"/>
+        <property name="prefix" value="/views/"/>
         <property name="suffix" value=".jsp"/>
     </bean>
 
@@ -61,6 +64,14 @@
         </property>
     </bean>
 
+    <!-- HandlerInterceptor拦截器配置 -->
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/*"/>
+            <bean class="org.tmhi.interceptor.LoginInterceptor"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
+
     <!-- Hibernate Validator -->
     <bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
         <property name="providerClass" value="org.hibernate.validator.HibernateValidator"/>
@@ -70,6 +81,11 @@
 
     <!-- Spring i18n 国际化 -->
     <bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+        <!--<property name="basenames">
+            <list>
+                <value>properties/ValidationMessages</value>
+            </list>
+        </property>-->
         <property name="useCodeAsDefaultMessage" value="true" />
         <property name="defaultEncoding" value="UTF-8"/>
         <property name="cacheSeconds" value="60"/>
@@ -84,17 +100,5 @@
         <!-- 内存中的最大值 -->
         <property name="maxInMemorySize" value="4096"/>
     </bean>
-
-    <!-- 导入shiro配置文件 -->
-    <import resource="classpath:spring-shiro.xml"/>
-
-    <!-- 开启注解实现shiro权限控制 -->
-    <bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"
-          depends-on="lifecycleBeanPostProcessor">
-        <property name="proxyTargetClass" value="true" />
-    </bean>
     
-    <bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
-        <property name="securityManager" ref="securityManager"/>
-    </bean>
 </beans>

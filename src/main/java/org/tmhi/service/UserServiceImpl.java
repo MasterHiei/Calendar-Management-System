@@ -4,8 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.tmhi.dao.UserDao;
+import org.tmhi.facade.SessionFacade;
 import org.tmhi.model.entity.UserEntity;
 import org.tmhi.util.DateConvertUtils;
+import org.tmhi.util.EncryptUtils;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.Objects;
 
 /**
  * Author:       Hiei
@@ -24,19 +29,49 @@ public class UserServiceImpl implements UserService {
     public UserServiceImpl(UserDao userDao) {
         this.userDao = userDao;
     }
-    
+
     @Override
     @Transactional
-    public void updateUserLoginTime(String userName) throws Exception {
+    public String checkLogin(HttpServletRequest request, String userName, String password) 
+            throws Exception {
+        
+        String errorCode = "";
+        
+        // 通过用户名获取用户信息
+        UserEntity user = userDao.queryUserByName(userName);
+        
+        if (Objects.isNull(user)) {
+            // 用户名不存在
+            errorCode = "E001-0004";
+            return errorCode;
+        }
 
-        // 写入参数
+        // 密码验证
+        boolean isEquation = EncryptUtils.equalPassword(password, user.getPassword(), user.getPasswordSalt());
+        
+        if (!isEquation) {
+            // 密码输入错误
+            errorCode = "E001-0005";
+            return errorCode;
+        }
+        // 验证成功，更新用户会话ID和登录时间
         UserEntity params = new UserEntity();
-        params.setUserName(userName);
+        params.setSessionId(request.getSession().getId());
         params.setCurrentLoginDatetime(DateConvertUtils.getNowTimeStamp());
-        // 执行更新
+        params.setUserName(user.getUserName());
+        // 执行更新ww
         if (userDao.updateUserByName(params) != 1) {
             // 更新失败，抛出异常并使事务回滚
-            throw new RuntimeException("用户最近登录时间更新失败。");
+            throw new RuntimeException("用户会话ID和登录时间更新失败。");
         }
+        // 将用户信息存入Session
+        SessionFacade.saveUserSession(request, user);
+        
+        return errorCode;
+    }
+
+    @Override
+    public UserEntity queryUserByName(String userName) throws Exception {
+        return userDao.queryUserByName(userName);
     }
 }

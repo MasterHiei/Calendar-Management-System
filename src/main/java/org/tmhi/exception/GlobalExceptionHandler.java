@@ -1,7 +1,5 @@
 package org.tmhi.exception;
 
-import org.apache.shiro.authc.IncorrectCredentialsException;
-import org.apache.shiro.authc.UnknownAccountException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -25,36 +23,8 @@ public class GlobalExceptionHandler {
     
     /** logger处理类 */
     private static final Logger LOGGER = LoggerFactory.getLogger(GlobalExceptionHandler.class);
-
     /** 前端消息容器 */
     private static Map<String, String> jsonMap = new HashMap<>();
-    
-    /**
-     * shiro账户不存在异常处理
-     * 
-     * @return 客户端响应信息（Map格式）
-     */
-    @ExceptionHandler(UnknownAccountException.class)
-    @ResponseBody
-    public Object HandleUnknownAccountException() {
-        // 账户不存在
-        jsonMap.put("type", "message");
-        jsonMap.put("code", "E001-0004");
-        return jsonMap;
-    }
-    /**
-     * shiro账户密码未匹配异常处理
-     *
-     * @return 客户端响应信息（Map格式）
-     */
-    @ExceptionHandler(IncorrectCredentialsException.class)
-    @ResponseBody
-    public Object HandleIncorrectCredentialsException() {
-        // 账户不存在
-        jsonMap.put("type", "message");
-        jsonMap.put("code", "E001-0005");
-        return jsonMap;
-    }
 
     /**
      * 默认异常处理
@@ -65,18 +35,21 @@ public class GlobalExceptionHandler {
     @ResponseBody
     public Object HandleDefaultException(HttpServletRequest request, Exception ex) {
         
+        // 获取request请求的IP地址
+        String ip = RequestUtils.getIPAddress(request);
+        
         // 记录错误日志
-        LOGGER.error("系统异常：", ex);
+        LOGGER.error(ip + "- 系统异常：", ex);
         
         // 判断是否为Ajax请求
         if (RequestUtils.isAjaxRequest(request)) {
             // 创建Ajax响应对象并返回
             jsonMap.put("type", "error");
-            jsonMap.put("url", "404.do");
+            jsonMap.put("url", "404.html");
             return jsonMap;
         } else {
             // 普通请求直接跳转至错误页面
-            return new ModelAndView("redirect:/404.do");
+            return new ModelAndView("redirect:/404.html");
         }
     }
 }

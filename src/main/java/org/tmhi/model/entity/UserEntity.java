@@ -6,8 +6,11 @@ import java.sql.Timestamp;
 
 @Data
 public class UserEntity extends BaseEntity {
+    
     /** 用户ID*/
     private Integer userId;
+    /** 权限ID */
+    private Integer authCode;
     /** 用户名 */
     private String userName;
     /** 用户邮箱 */
@@ -20,6 +23,8 @@ public class UserEntity extends BaseEntity {
     private String passwordSalt;
     /** 当前状态 */
     private String nowAction;
+    /** 会话ID */
+    private String sessionId;
     /** 最近登录时间' */
     private Timestamp currentLoginDatetime;
 }

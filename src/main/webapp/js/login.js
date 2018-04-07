@@ -26,7 +26,7 @@ $(function () {
 // 登录处理
 function doLogin () {
     var params = {
-        url : 'login.do',
+        url : 'doLogin.html',
         data : JSON.stringify({
             userName : $('#userName').val(),
             password : $('#password').val(),
@@ -38,7 +38,7 @@ function doLogin () {
         },
         success : function (jsonObj) {
             // 处理返回值
-            if (jsonObj['type'] === 'success') {
+            if (jsonObj['type'] === 'transition') {
                 // 跳转至目标页面
                 doDynamicFormSubmit({'action' : jsonObj['url']});
             } else if (jsonObj['type'] === 'message') {

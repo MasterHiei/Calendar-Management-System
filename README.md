@@ -12,6 +12,3 @@
 + Front-End
   + Bootstrap v3.3.7
   + Font Awesome v4.7.0
-  
-+ Security support
-  + Apache Shiro v1.4.0

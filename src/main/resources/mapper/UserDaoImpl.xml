@@ -4,12 +4,14 @@
   
   <resultMap id="BaseResultMap" type="user">
     <id column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="auth_code" jdbcType="INTEGER" property="authCode" />
     <result column="user_name" jdbcType="VARCHAR" property="userName" />
     <result column="mail_address" jdbcType="VARCHAR" property="mailAddress" />
     <result column="user_avatar" jdbcType="VARCHAR" property="userAvatar" />
     <result column="password" jdbcType="VARCHAR" property="password" />
     <result column="password_salt" jdbcType="VARCHAR" property="passwordSalt" />
     <result column="now_action" jdbcType="VARCHAR" property="nowAction" />
+    <result column="session_id" jdbcType="VARCHAR" property="sessionId" />
     <result column="current_login_datetime" jdbcType="TIMESTAMP" property="currentLoginDatetime" />
     <result column="delete_flag" jdbcType="INTEGER" property="deleteFlag" />
     <result column="create_user_id" jdbcType="INTEGER" property="createUserId" />
@@ -20,7 +22,7 @@
   </resultMap>
   
   <sql id="Base_Column_List">
-    user_id, user_name, mail_address, user_avatar, password, password_salt, now_action, current_login_datetime, 
+    user_id, auth_code, user_name, mail_address, user_avatar, password, password_salt, now_action, session_id, current_login_datetime, 
     delete_flag, create_user_id, create_datetime, update_user_id, update_datetime, version
   </sql>
 
@@ -52,6 +54,9 @@
       <if test="userId != null">
         user_id,
       </if>
+      <if test="authCode != null">
+        auth_code,
+      </if>
       <if test="userName != null">
         user_name,
       </if>
@@ -69,6 +74,9 @@
       </if>
       <if test="nowAction != null">
         now_action,
+      </if>
+      <if test="sessionId != null">
+        session_id,
       </if>
       <if test="currentLoginDatetime != null">
         current_login_datetime,
@@ -96,6 +104,9 @@
       <if test="userId != null">
         #{userId,jdbcType=INTEGER},
       </if>
+      <if test="authCode != null">
+        #{authCode,jdbcType=INTEGER},
+      </if>
       <if test="userName != null">
         #{userName,jdbcType=VARCHAR},
       </if>
@@ -113,6 +124,9 @@
       </if>
       <if test="nowAction != null">
         #{nowAction,jdbcType=VARCHAR},
+      </if>
+      <if test="sessionId != null">
+        #{sessionId,jdbcType=VARCHAR},
       </if>
       <if test="currentLoginDatetime != null">
         #{currentLoginDatetime,jdbcType=TIMESTAMP},
@@ -156,6 +170,9 @@
       </if>
       <if test="nowAction != null">
         now_action = #{nowAction,jdbcType=VARCHAR},
+      </if>
+      <if test="sessionId != null">
+        session_id = #{sessionId,jdbcType=VARCHAR},
       </if>
       <if test="currentLoginDatetime != null">
         current_login_datetime = #{currentLoginDatetime,jdbcType=TIMESTAMP},
