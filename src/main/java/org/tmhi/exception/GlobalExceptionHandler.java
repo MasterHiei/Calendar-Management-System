@@ -23,8 +23,6 @@ public class GlobalExceptionHandler {
     
     /** logger处理类 */
     private static final Logger LOGGER = LoggerFactory.getLogger(GlobalExceptionHandler.class);
-    /** 前端消息容器 */
-    private static Map<String, String> jsonMap = new HashMap<>();
 
     /**
      * 默认异常处理
@@ -34,6 +32,9 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(Exception.class)
     @ResponseBody
     public Object HandleDefaultException(HttpServletRequest request, Exception ex) {
+        
+        // 前端消息容器 
+         Map<String, String> jsonMap = new HashMap<>();
         
         // 获取request请求的IP地址
         String ip = RequestUtils.getIPAddress(request);

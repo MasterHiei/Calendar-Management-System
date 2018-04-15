@@ -4,6 +4,7 @@ import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.NotBlank;
+import java.io.Serializable;
 
 /**
  * Author:       Hiei
@@ -12,7 +13,7 @@ import javax.validation.constraints.NotBlank;
  * Modified By:
  */
 @Data
-public class LoginForm {
+public class LoginForm implements Serializable {
     
     /** 用户名 */
     @NotBlank(message = "E001-0001")

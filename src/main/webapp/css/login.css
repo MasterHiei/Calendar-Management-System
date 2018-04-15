@@ -43,12 +43,3 @@ body {
 .pull-right {
     margin-right: 10%;
 }
-
-.footer {
-    padding: 10px 0;
-    background: rgba(255,255,255,0.2);
-}
-
-.footer p {
-    margin: 0;
-}

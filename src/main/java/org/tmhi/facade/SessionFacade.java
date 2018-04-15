@@ -4,6 +4,7 @@ import org.tmhi.model.dto.UserSessionDto;
 import org.tmhi.model.entity.UserEntity;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.Objects;
 
 /**
@@ -31,13 +32,17 @@ public class SessionFacade {
     }
 
     /**
-     * 将用户信息存入Session
+     * 取出Session中保存的用户信息
      *
      * @param request HttpServletRequest
      * @return  UserSessionDto（若Session信息不存在则返回NULL）
      */
     public static UserSessionDto getUserSession(HttpServletRequest request) {
-        Object userSession = request.getSession(false).getAttribute(USER_SESSION_NAME);
+        HttpSession session = request.getSession(false);
+        if (Objects.isNull(session)) {
+            return null;
+        }
+        Object userSession = session.getAttribute(USER_SESSION_NAME);
         return Objects.isNull(userSession) ? null : (UserSessionDto) userSession;
     }
 }

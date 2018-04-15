@@ -1,6 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<footer class="footer navbar-fixed-bottom ">
-    <div class="container text-center">
-        <p><strong>TYPE-MOON Heavy Industries Fleet &copy;</strong><br><small>All Rights Reserved.</small></p>
-    </div>
-</footer>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/footer.css">
+<div class="footer navbar-fixed-bottom text-center">
+    <p><strong>TYPE-MOON Heavy Industries Fleet</strong><br><small>All Rights Reserved.</small></p>
+</div>

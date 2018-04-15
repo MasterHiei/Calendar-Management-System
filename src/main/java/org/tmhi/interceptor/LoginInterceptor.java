@@ -21,7 +21,7 @@ import java.util.Objects;
 /**
  * Author:       Hiei
  * Date:         2018/04/06
- * Description:
+ * Description:  用户登录状态检测用拦截器
  * Modified By:
  */
 public class LoginInterceptor implements HandlerInterceptor {
@@ -84,7 +84,7 @@ public class LoginInterceptor implements HandlerInterceptor {
                         response.getWriter().print(CommonUtils.convertObjectToJSONString(jsonMap));
                     } else {
                         // 重定向至重复登录错误页面
-                        response.sendRedirect("/error/multiLoginError.jsp");
+                        response.sendRedirect("error/multiLoginError.html");
                     }
                     return false;
                 }
@@ -101,7 +101,7 @@ public class LoginInterceptor implements HandlerInterceptor {
                     response.getWriter().print(CommonUtils.convertObjectToJSONString(jsonMap));
                 } else {
                     // 重定向至登录页面
-                    response.sendRedirect("/login.jsp");
+                    response.sendRedirect("login.html");
                 }
                 return false;
             }
