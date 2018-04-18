@@ -158,9 +158,34 @@ p {
 }
 
 .fa-fw-lg {
+    font-size: 28px;
+}
+
+.fa-fw-md {
+    font-size: 24px;
+}
+
+.fa-fw-nm {
     font-size: 20px;
 }
 
-#now-date {
-    font-weight: bold;
+#now-date a, #to-today a {
+    padding-top: 10px;
+}
+
+#now-date span, #to-today span, #periods-selected span {
+    font-size: 18px;
+}
+
+.menu-text {
+    font-size: 16px;
+}
+
+#periods-month {
+    padding-left: 23px;
+}
+
+#periods-month, #periods-list {
+    padding-top: 10px;
+    padding-bottom: 10px;
 }

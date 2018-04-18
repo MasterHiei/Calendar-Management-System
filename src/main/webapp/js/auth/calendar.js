@@ -2,40 +2,35 @@ $(function () {
    'use strict';
    
     $(document).ready(function () {
-        // 获取参数
-        var params = {
-            targetYear : Number($('#targetYear').val()),
-            targetMonth : Number($('#targetMonth').val()),
-            targetDay : Number($('#targetDay').val()),
-            firstDayOfWeek : Number($('#firstDayOfWeek').val()),
-            lengthOfMonth : Number($('#lengthOfMonth').val()),
-            lengthOfPrevMonth : Number($('#lengthOfPrevMonth').val()),
-            isToday : $('#isToday').val()
-        };
         // 设置页面日期
-        setDate(params);
+        setDate();
     });
     
-    // 切换月份
-    $('#prev-month').on('click', function () {
+    // 切换月份（上一月）
+    $('#to-prev-month').on('click', function () {
         doDateChange('prev');
+    });
+
+    // 切换月份（下一月）
+    $('#to-next-month').on('click', function () {
+        doDateChange('next');
     });
     
 });
 
 // 设置页面日期
-function setDate(params) {
+function setDate() {
     // 获取参数
-    var targetYear = params['targetYear'],
-        targetMonth = params['targetMonth'],
-        targetDay = params['targetDay'],
-        firstDayOfWeek = params['firstDayOfWeek'],
-        lengthOfMonth = params['lengthOfMonth'],
-        lengthOfPrevMonth = params['lengthOfPrevMonth'],
-        isToday = params['isToday'];
+    var targetYear = Number($('#targetYear').val()),
+        targetMonth = Number($('#targetMonth').val()),
+        targetDay = Number($('#targetDay').val()),
+        firstDayOfWeek = Number($('#firstDayOfWeek').val()),
+        lengthOfMonth = Number($('#lengthOfMonth').val()),
+        lengthOfPrevMonth = Number($('#lengthOfPrevMonth').val()),
+        isToday = Number($('#isToday').val());
     
     // 显示当前日期
-    $('#now-date').text(targetYear + '年' + targetMonth + '月' + targetDay + '日');
+    $('#now-date span').text(targetYear + '年' + targetMonth + '月');
     
     // 获取月初星期数
     var dayOfWeek = '';
@@ -70,13 +65,13 @@ function setDate(params) {
 
     // 设置第一周的日期
     var prevDayTD = firstDayTD;
-    for (var i = firstDayOfWeek; i > 1; i--) {
+    for (var i = firstDayOfWeek; i > 0; i--) {
         prevDayTD = prevDayTD.prev();
         prevDayTD.find('.date-line').text(lengthOfPrevMonth);
         lengthOfPrevMonth--;
     }
     var nextDayTD = firstDayTD;
-    for (var j = firstDayOfWeek === 7 ? 1 : firstDayOfWeek; j < 7; j++) {
+    for (var j = firstDayOfWeek === 7 ? 0 : firstDayOfWeek; j < 6; j++) {
         day++;
         nextDayTD = nextDayTD.next();
         nextDayTD.find('.date-line').text(day);
@@ -84,7 +79,7 @@ function setDate(params) {
     
     // 设置剩余周的日期
     for (var k = 2; k < 7; k++) {
-        var targetTD = $('tr[lineNo=' + k + ']').find(dayOfWeek);
+        var targetTD = $('tr[lineNo=' + k + ']').find('.sun');
         for (var l = 0; l < 7; l++) {
             var isMonthRolling = false;
             if (day < lengthOfMonth) {
@@ -95,8 +90,12 @@ function setDate(params) {
             }
             targetTD.find('.date-line').text(day);
             
-            if (isToday === '1' && !isMonthRolling && day === targetDay) {
-                targetTD.find('.date-line').addClass('badge');
+            if (isToday === '1') {
+                if (!isMonthRolling && day === targetDay) {
+                    targetTD.find('.date-line').addClass('badge');
+                }
+            } else {
+                $('.badge').removeClass('badge');
             }
             
             targetTD = targetTD.next();
@@ -108,27 +107,26 @@ function setDate(params) {
 function doDateChange(mode) {
     var params = {
         url : 'doDateChange.html',
-        date : JSON.stringify({
+        data : {
             targetYear : $('#targetYear').val(),
             targetMonth : $('#targetMonth').val(),
-            targetDay : $('#targetDay').val(),
+            targetDay : '01',
             mode : mode
-        }),
+        },
         success : function (jsonObj) {
             // 处理返回值
             if (jsonObj['type'] === 'success') {
                 // 获取参数
-                var params = {
-                    targetYear : jsonObj['targetYear'],
-                    targetMonth : jsonObj['targetMonth'],
-                    targetDay : jsonObj['targetDay'],
-                    firstDayOfWeek : jsonObj['firstDayOfWeek'],
-                    lengthOfMonth : jsonObj['lengthOfMonth'],
-                    lengthOfPrevMonth : jsonObj['lengthOfPrevMonth'],
-                    isToday : jsonObj['isToday']
-                };
+                var data = $.parseJSON(jsonObj['data']);
+                $('#targetYear').val(data['targetYear']);
+                $('#targetMonth').val(data['targetMonth']);
+                $('#targetDay').val(data['targetDay']);
+                $('#firstDayOfWeek').val(data['firstDayOfWeek']);
+                $('#lengthOfMonth').val(data['lengthOfMonth']);
+                $('#lengthOfPrevMonth').val(data['lengthOfPrevMonth']);
+                $('#isToday').val(data['isToday']);
                 // 设置日期
-                setDate(params);
+                setDate();
             } else if (jsonObj['type'] === 'error') {
                 // 跳转至错误页面
                 doDynamicFormSubmit({'action' : jsonObj['url']});

@@ -16,6 +16,7 @@ public class DateConvertUtils {
 
     /**
      * 获取当前日期
+     * 
      * @return 当前日期（java.sql.Date）
      */
     public static Date getNowSQLDate() {
@@ -24,6 +25,7 @@ public class DateConvertUtils {
 
     /**
      * 获取当前时间
+     * 
      * @return 当前时间（java.sql.Timestamp）
      */
     public static Timestamp getNowTimeStamp() {
@@ -32,6 +34,7 @@ public class DateConvertUtils {
 
     /**
      * 获取当前日期在星期中的天数
+     * 
      * @return 当前日期在星期中的天数
      */
     public static int getDayOfWeek() {
@@ -40,6 +43,7 @@ public class DateConvertUtils {
 
     /**
      * 获取当前日期（字符串格式）
+     * 
      * @return 当前日期（yyyy-MM-dd）
      */
     public static String getTodayString() {
@@ -47,26 +51,44 @@ public class DateConvertUtils {
     }
 
     /**
-     * 获取当月第一天在星期中的天数
-     * @return 当月第一天在星期中的天数
+     * 获取目标月第一天在星期中的天数
+     * 
+     * @param date LocalDate
+     * @return 目标月第一天在星期中的天数
      */
-    public static int getFirstDayOfWeek() {
-        return LocalDate.now().withDayOfMonth(1).getDayOfWeek().getValue();
+    public static int getFirstDayOfWeek(LocalDate date) {
+        return date.withDayOfMonth(1).getDayOfWeek().getValue();
     }
 
     /**
-     * 获取当月最大天数
-     * @return 当月最大天数
+     * 获取目标月最大天数
+     *
+     * @param date LocalDate
+     * @return 目标月最大天数
      */
-    public static int getLengthOfMonth() {
-        return LocalDate.now().lengthOfMonth();
+    public static int getLengthOfMonth(LocalDate date) {
+        return date.lengthOfMonth();
     }
 
     /**
-     * 获取前月最大天数
-     * @return 前月最大天数
+     * 获取目标月前月最大天数
+     *
+     * @param date LocalDate
+     * @return 目标月前月最大天数
      */
-    public static int getLengthOfPrevMonth() {
-        return LocalDate.now().minusMonths(1).lengthOfMonth();
+    public static int getLengthOfPrevMonth(LocalDate date) {
+        return date.minusMonths(1).lengthOfMonth();
+    }
+
+    /**
+     * 根据年月日获取LocalDate
+     *
+     * @param year 年
+     * @param month 月
+     * @param day 日
+     * @return LocalDate
+     */
+    public static LocalDate getLocalDateByYMD(Object year, Object month, Object day) {
+        return LocalDate.of(Integer.valueOf(year.toString()), Integer.valueOf(month.toString()), Integer.valueOf(day.toString()));
     }
 }

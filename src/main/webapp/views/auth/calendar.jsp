@@ -27,25 +27,25 @@
                     </div>
                 </div>
                 <div class="nav navbar-nav navbar-left line-center nav-left-container">
-                    <div class="btn-group navbar-item line-center date-adjust-group" id="prev-month">
-                        <a class="btn btn-default" href="#"><i class="fa fa-angle-left fa-fw fa-fw-lg"></i></a>
+                    <div class="btn-group navbar-item line-center date-adjust-group" id="to-prev-month">
+                        <a class="btn btn-default"><i class="fa fa-angle-left fa-fw fa-fw-lg"></i></a>
                     </div>
                     <div class="btn-group navbar-item line-center date-adjust-group" id="now-date">
-                        </span><a class="btn btn-default" href="#"></a>
+                        <a class="btn btn-default"><span></span></a>
                     </div>
-                    <div class="btn-group navbar-item line-center date-adjust-group" id="next-month">
-                        <a class="btn btn-default" href="#"><i class="fa fa-angle-right fa-fw fa-fw-lg"></i></a>
+                    <div class="btn-group navbar-item line-center date-adjust-group" id="to-next-month">
+                        <a class="btn btn-default"><i class="fa fa-angle-right fa-fw fa-fw-lg"></i></a>
                     </div>
-                    <div class="btn-group navbar-item line-center">
-                        <a class="btn btn-default" id="calendar-show" href="#"><i class="fa fa-calendar fa-fw fa-fw-lg"></i></a>
+                    <div class="btn-group navbar-item line-center" id="to-today">
+                        <a class="btn btn-default"><span>今天</span></a>
                     </div>
                 </div>
                 <div class="nav navbar-nav navbar-right line-center nav-right-container">
                     <div class="btn-group navbar-item">
-                        <a class="btn btn-default" id="periods-selected" href="#" data-toggle="dropdown"><i class="fa fa-calendar-check-o fa-fw fa-fw-lg"></i> 月</a>
+                        <a class="btn btn-default" id="periods-selected" data-toggle="dropdown"><i class="fa fa-calendar-check-o fa-fw fa-fw-md"></i><span> 月</span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="#" id="periods-month"><i class="fa fa-calendar-check-o fa-fw"></i> 月</a></li>
-                            <li><a href="#" id="periods-list"><i class="fa fa-list-alt fa-fw"></i> 列表</a></li>
+                            <li><a id="periods-month"><i class="fa fa-calendar-check-o fa-fw-nm"></i><span class="menu-text"> 月</span></a></li>
+                            <li><a id="periods-list"><i class="fa fa-list-alt fa-fw fa-fw-nm"></i><span class="menu-text"> 列表</span></a></li>
                         </ul>
                     </div>
                     <div class="navbar-item avatar-container">

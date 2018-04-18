@@ -50,7 +50,7 @@ public class GlobalExceptionHandler {
             return jsonMap;
         } else {
             // 普通请求直接跳转至错误页面
-            return new ModelAndView("redirect:/404.html");
+            return new ModelAndView("redirect:/error/404.html");
         }
     }
 }

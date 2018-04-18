@@ -6,12 +6,16 @@ function doAjax (params) {
         contentType : 'application/json;charset=utf8',
         dataType : 'JSON',
         error : function () {
-            doDynamicFormSubmit({'action' : '404.do'});
+            doDynamicFormSubmit({'action' : '404.html'});
         }
     };
     // 动态添加Ajax属性
     for (var key in params) {
-        ajaxParams[key] = params[key];
+        if (key === 'data') {
+            ajaxParams[key] = JSON.stringify(params[key]);
+        } else {
+            ajaxParams[key] = params[key];
+        }
     }
     // 执行Ajax
     $.ajax(ajaxParams);

@@ -27,11 +27,11 @@ $(function () {
 function doLogin () {
     var params = {
         url : 'doLogin.html',
-        data : JSON.stringify({
+        data : {
             userName : $('#userName').val(),
             password : $('#password').val(),
             rememberMe : $('#rememberCheck').prop('checked') ? 1 : null
-        }),
+        },
         beforeSend : function () {
             $('#loginBtn').attr('disabled', true);
             $('#loginBtn').html('<i class="fa fa-spinner fa-pulse"></i>');
