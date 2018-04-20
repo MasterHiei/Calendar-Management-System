@@ -9,10 +9,13 @@
 
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/lib/bootstrap.min.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/lib/font-awesome.min.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/lib/bootstrap-datetimepicker.min.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/auth/calendar.css">
 
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/lib/jquery-3.3.1.min.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/lib/bootstrap.min.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/js/lib/bootstrap-datetimepicker.min.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/js/lib/bootstrap-datetimepicker.zh-CN.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/common.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/auth/calendar.js"></script>
 </head>
@@ -31,7 +34,7 @@
                         <a class="btn btn-default"><i class="fa fa-angle-left fa-fw fa-fw-lg"></i></a>
                     </div>
                     <div class="btn-group navbar-item line-center date-adjust-group" id="now-date">
-                        <a class="btn btn-default"><span></span></a>
+                        <a class="btn btn-default"><span id="date-picker"></span></a>
                     </div>
                     <div class="btn-group navbar-item line-center date-adjust-group" id="to-next-month">
                         <a class="btn btn-default"><i class="fa fa-angle-right fa-fw fa-fw-lg"></i></a>
@@ -42,10 +45,10 @@
                 </div>
                 <div class="nav navbar-nav navbar-right line-center nav-right-container">
                     <div class="btn-group navbar-item">
-                        <a class="btn btn-default" id="periods-selected" data-toggle="dropdown"><i class="fa fa-calendar-check-o fa-fw fa-fw-md"></i><span> 月</span></a>
+                        <a class="btn btn-default" id="periods-selected" data-toggle="dropdown"><i class="fa fa-calendar fa-fw fa-fw-nm"></i><span>&nbsp;月份</span></a>
                         <ul class="dropdown-menu">
-                            <li><a id="periods-month"><i class="fa fa-calendar-check-o fa-fw-nm"></i><span class="menu-text"> 月</span></a></li>
-                            <li><a id="periods-list"><i class="fa fa-list-alt fa-fw fa-fw-nm"></i><span class="menu-text"> 列表</span></a></li>
+                            <li><a id="periods-month"><i class="fa fa-calendar fa-fw-nm"></i><span class="menu-text">&nbsp;&nbsp;月份</span></a></li>
+                            <li><a id="periods-list"><i class="fa fa-list-alt fa-fw fa-fw-nm"></i><span class="menu-text">&nbsp;列表</span></a></li>
                         </ul>
                     </div>
                     <div class="navbar-item avatar-container">

@@ -6,6 +6,23 @@ $(function () {
         setDate();
     });
     
+    // 显示日期选择控件
+    $('#now-date').on('click', function () {
+        $('#date-picker').datetimepicker({
+            format : 'yyyy-mm-dd',
+            startView : 'year',
+            minView : 'year',
+            maxView : 'decade',
+            language : 'zh-CN'
+        }).on('changeMonth', function (ev) {
+            var targetDate = new Date(ev.date);
+            $('#targetYear').val(targetDate.getFullYear());
+            $('#targetMonth').val(targetDate.getMonth() + 1);
+            doDateChange('jump');
+        });
+        $('#date-picker').trigger('click');
+    });
+    
     // 切换月份（上一月）
     $('#to-prev-month').on('click', function () {
         doDateChange('prev');
@@ -14,6 +31,11 @@ $(function () {
     // 切换月份（下一月）
     $('#to-next-month').on('click', function () {
         doDateChange('next');
+    });
+
+    // 切换月份（当前月）
+    $('#to-today').on('click', function () {
+        doDateChange('today');
     });
     
 });
@@ -110,7 +132,7 @@ function doDateChange(mode) {
         data : {
             targetYear : $('#targetYear').val(),
             targetMonth : $('#targetMonth').val(),
-            targetDay : '01',
+            targetDay : '1',
             mode : mode
         },
         success : function (jsonObj) {
@@ -127,6 +149,10 @@ function doDateChange(mode) {
                 $('#isToday').val(data['isToday']);
                 // 设置日期
                 setDate();
+                // 关闭DateTimePicker
+                if (mode === 'jump') {
+                    $('#date-picker').datetimepicker('hide');
+                } 
             } else if (jsonObj['type'] === 'error') {
                 // 跳转至错误页面
                 doDynamicFormSubmit({'action' : jsonObj['url']});

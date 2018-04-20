@@ -125,6 +125,10 @@ public class CalendarController {
         final String MODE_PREV = "prev";
         // 处理模式：次月
         final String MODE_NEXT = "next";
+        // 处理模式：当月
+        final String MODE_TODAY = "today";
+        // 处理模式：跳转
+        final String MODE_JUMP = "jump";
         
         // 返回值
         Map<String, Object> jsonMap = new HashMap<>();
@@ -170,8 +174,14 @@ public class CalendarController {
             case MODE_NEXT:
                 targetDate = targetDate.plusMonths(1);
                 break;
+            case MODE_TODAY:
+                targetDate = LocalDate.now();
+                break;
+            case MODE_JUMP:
+                break;
         }
         
+        // 设置页面参数
         calendarForm.setTargetYear(String.valueOf(targetDate.getYear()));
         calendarForm.setTargetMonth(String.valueOf(targetDate.getMonthValue()));
         calendarForm.setTargetDay(String.valueOf(targetDate.getDayOfMonth()));
