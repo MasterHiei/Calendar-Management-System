@@ -47,8 +47,8 @@
                     <div class="btn-group navbar-item">
                         <a class="btn btn-default" id="periods-selected" data-toggle="dropdown"><i class="fa fa-calendar fa-fw fa-fw-nm"></i><span>&nbsp;月份</span></a>
                         <ul class="dropdown-menu">
-                            <li><a id="periods-month"><i class="fa fa-calendar fa-fw-nm"></i><span class="menu-text">&nbsp;&nbsp;月份</span></a></li>
-                            <li><a id="periods-list"><i class="fa fa-list-alt fa-fw fa-fw-nm"></i><span class="menu-text">&nbsp;列表</span></a></li>
+                            <li id="periods-month"><a><i class="fa fa-calendar fa-fw-nm"></i><span class="menu-text">&nbsp;&nbsp;日历</span></a></li>
+                            <li id="periods-list"><a><i class="fa fa-list-alt fa-fw fa-fw-nm"></i><span class="menu-text">&nbsp;列表</span></a></li>
                         </ul>
                     </div>
                     <div class="navbar-item avatar-container">
@@ -99,6 +99,9 @@
             </c:forEach>
             </tbody>
         </table>
+        <div id="add-schedule">
+            <i class="fa fa-plus fa-create"></i>
+        </div>
     </div>
     <input type="hidden" id="targetYear" value="${calendarForm.targetYear}">
     <input type="hidden" id="targetMonth" value="${calendarForm.targetMonth}">

@@ -181,6 +181,14 @@ public class CalendarController {
                 break;
         }
         
+        // 判断是否为显示本月
+        if (targetDate.getMonthValue() == LocalDate.now().getMonthValue()) {
+            targetDate = LocalDate.now();
+            calendarForm.setIsToday(1);
+        } else {
+            calendarForm.setIsToday(0);
+        }
+        
         // 设置页面参数
         calendarForm.setTargetYear(String.valueOf(targetDate.getYear()));
         calendarForm.setTargetMonth(String.valueOf(targetDate.getMonthValue()));
@@ -188,7 +196,6 @@ public class CalendarController {
         calendarForm.setFirstDayOfWeek(DateConvertUtils.getFirstDayOfWeek(targetDate));
         calendarForm.setLengthOfMonth(DateConvertUtils.getLengthOfMonth(targetDate));
         calendarForm.setLengthOfPrevMonth(DateConvertUtils.getLengthOfPrevMonth(targetDate));
-        calendarForm.setIsToday(1);
 
         jsonMap.put("type", "success");
         jsonMap.put("data" ,CommonUtils.convertObjectToJSONString(calendarForm));

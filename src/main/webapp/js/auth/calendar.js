@@ -20,6 +20,12 @@ $(function () {
             $('#targetMonth').val(targetDate.getMonth() + 1);
             doDateChange('jump');
         });
+        // BUG: Bootstrap icon was unusable. Change to Font Awesome support. 
+        $('.datetimepicker th.prev').empty();
+        $('.datetimepicker th.prev').html('<i class="fa fa-angle-left"></i>');
+        $('.datetimepicker th.next').empty();
+        $('.datetimepicker th.next').html('<i class="fa fa-angle-right"></i>');
+        
         $('#date-picker').trigger('click');
     });
     
@@ -79,24 +85,39 @@ function setDate() {
             dayOfWeek = '.sun';
             break;
     }
+
+    // 移除今日标识
+    $('.badge').removeClass('badge');
     
     var day = 1;
     // 设置月初日期
     var firstDayTD = $('tr[lineNo=1]').find(dayOfWeek);
     firstDayTD.find('.date-line').text(day);
+    
+    // 添加今日标识
+    if (isToday === 1 && day === targetDay) {
+        firstDayTD.find('.date-line').addClass('badge');
+    }
 
-    // 设置第一周的日期
+    // 设置第一周的日期（前月）
     var prevDayTD = firstDayTD;
     for (var i = firstDayOfWeek; i > 0; i--) {
         prevDayTD = prevDayTD.prev();
         prevDayTD.find('.date-line').text(lengthOfPrevMonth);
         lengthOfPrevMonth--;
     }
+    
+    // 设置第一周的日期（本月）
     var nextDayTD = firstDayTD;
     for (var j = firstDayOfWeek === 7 ? 0 : firstDayOfWeek; j < 6; j++) {
         day++;
         nextDayTD = nextDayTD.next();
         nextDayTD.find('.date-line').text(day);
+        
+        // 添加今日标识
+        if (isToday === 1 && day === targetDay) {
+            nextDayTD.find('.date-line').addClass('badge');
+        }
     }
     
     // 设置剩余周的日期
@@ -112,12 +133,11 @@ function setDate() {
             }
             targetTD.find('.date-line').text(day);
             
-            if (isToday === '1') {
+            // 添加今日标识
+            if (isToday === 1) {
                 if (!isMonthRolling && day === targetDay) {
                     targetTD.find('.date-line').addClass('badge');
                 }
-            } else {
-                $('.badge').removeClass('badge');
             }
             
             targetTD = targetTD.next();

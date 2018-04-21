@@ -181,11 +181,41 @@ p {
     font-size: 16px;
 }
 
-#periods-month {
+#periods-month a {
     padding-left: 23px;
 }
 
-#periods-month, #periods-list {
+#periods-month a, #periods-list a {
     padding-top: 10px;
     padding-bottom: 10px;
+}
+
+#periods-month, #periods-list {
+    cursor: pointer;
+}
+
+#add-schedule {
+    height: 56px;
+    width: 56px;
+    border-radius: 50%;
+    background-color: #db4437;
+    position: absolute;
+    bottom: 32px;
+    right: 32px;
+    cursor: pointer;
+}
+
+#add-schedule:hover {
+    background: #d9534f;
+}
+
+.fa-create {
+    font-size: 26px;
+    color: #ffffff;
+    margin: 16px 18px;
+}
+
+.datetimepicker th.switch {
+    padding-top: 4px;
+    padding-bottom: 0;
 }
