@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <html>
 <head>
     <meta charset="UTF-8">
@@ -58,7 +59,7 @@
             </div>
         </nav>
     </div>
-    <div class="body">
+    <div class="table-container">
         <table class="table table-bordered">
             <thead>
             <tr>
@@ -99,17 +100,11 @@
             </c:forEach>
             </tbody>
         </table>
-        <div id="add-schedule">
+        <div id="add-schedule" data-toggle="tooltip" data-placement="left" title="创建新日程">
             <i class="fa fa-plus fa-create"></i>
         </div>
     </div>
-    <input type="hidden" id="targetYear" value="${calendarForm.targetYear}">
-    <input type="hidden" id="targetMonth" value="${calendarForm.targetMonth}">
-    <input type="hidden" id="targetDay" value="${calendarForm.targetDay}">
-    <input type="hidden" id="firstDayOfWeek" value="${calendarForm.firstDayOfWeek}">
-    <input type="hidden" id="lengthOfMonth" value="${calendarForm.lengthOfMonth}">
-    <input type="hidden" id="lengthOfPrevMonth" value="${calendarForm.lengthOfPrevMonth}">
-    <input type="hidden" id="isToday" value="${calendarForm.isToday}">
+    <input type="hidden" id="date">
 </div>
 </body>
 </html>

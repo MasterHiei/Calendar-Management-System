@@ -1,5 +1,6 @@
 package org.tmhi.interceptor;
 
+import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -8,7 +9,6 @@ import org.tmhi.facade.SessionFacade;
 import org.tmhi.model.dto.UserSessionDto;
 import org.tmhi.model.entity.UserEntity;
 import org.tmhi.service.UserService;
-import org.tmhi.util.CommonUtils;
 import org.tmhi.util.RequestUtils;
 
 import javax.servlet.http.HttpServletRequest;
@@ -81,7 +81,7 @@ public class LoginInterceptor implements HandlerInterceptor {
                         jsonMap.put("type", "error");
                         jsonMap.put("url", "multiLoginError.html");
                         // 转换为JSON字符串并返回客户端
-                        response.getWriter().print(CommonUtils.convertObjectToJSONString(jsonMap));
+                        response.getWriter().print(JSONObject.toJSONString(jsonMap));
                     } else {
                         // 重定向至重复登录错误页面
                         response.sendRedirect("error/multiLoginError.html");
@@ -98,7 +98,7 @@ public class LoginInterceptor implements HandlerInterceptor {
                     jsonMap.put("type", "transition");
                     jsonMap.put("url", "login.html");
                     // 转换为JSON字符串并返回客户端
-                    response.getWriter().print(CommonUtils.convertObjectToJSONString(jsonMap));
+                    response.getWriter().print(JSONObject.toJSONString(jsonMap));
                 } else {
                     // 重定向至登录页面
                     response.sendRedirect("login.html");

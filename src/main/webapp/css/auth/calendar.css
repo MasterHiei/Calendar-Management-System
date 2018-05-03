@@ -6,12 +6,14 @@
     width: 100%;
 }
 
-.header {
-    height: 75px;
+.table-container {
+    height: calc(100% - 75px);
+    height: -moz-calc(100% - 75px);
+    height: -webkit-calc(100% - 75px);
 }
 
-.body {
-    height: 92.5%;
+.header {
+    height: 75px;
 }
 
 /* Columns */
@@ -58,6 +60,10 @@
 }
 
 /* other */
+body {
+    font-family: 'Microsoft YaHei', Helvetica, Arial, sans-serif;
+}
+
 table {
     user-select: none;
     -moz-user-select: none;
@@ -65,8 +71,17 @@ table {
     -webkit-user-select: none;
 }
 
+td {
+    padding: 6px 0 0 0 !important;
+    max-width: 80px;
+}
+
 th {
-    border-bottom: none;
+    border-bottom: 1px !important;
+}
+
+tr[lineNo='6'] td {
+    border-bottom: none !important;
 }
 
 p {
@@ -83,11 +98,19 @@ p {
     transform: translateY(-50%);
 }
 
-.logo {
-    font-size: 28px;
+@media (min-width: 768px) {
+    .logo {
+        font-size: 24px
+    }
 }
 
-@media (max-width: 2440px) {
+@media (min-width: 992px) {
+    .logo {
+        font-size: 28px;
+    }
+}
+
+@media (min-width: 1200px) {
     .logo {
         font-size: 36px;
     }
@@ -149,8 +172,9 @@ p {
     border-radius: 50%;
 }
 
-.date-line, .badge {
+.date-line {
     font-size: 14px;
+    margin: 0 0 2px 8px;
 }
 
 .badge {
@@ -200,13 +224,15 @@ p {
     border-radius: 50%;
     background-color: #db4437;
     position: absolute;
-    bottom: 32px;
-    right: 32px;
+    bottom: 24px;
+    right: 24px;
     cursor: pointer;
+    z-index: 9999;
 }
 
 #add-schedule:hover {
     background: #d9534f;
+    z-index: 9999;
 }
 
 .fa-create {
@@ -218,4 +244,34 @@ p {
 .datetimepicker th.switch {
     padding-top: 4px;
     padding-bottom: 0;
+}
+
+.today-td {
+    background-color: #f5f5f5;
+}
+
+.event-sign {
+    margin: 0 8px 4px 0;
+    display: inline-block;
+    height: 8px;
+    width: 8px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.event-div {
+    width: 85%;
+    font-size: 12px;
+    padding: 2px 0 2px 5px;
+    margin: 2px 0 0 2px;
+    z-index: 999;
+}
+
+.event-info {
+    display: inline-block;
+    max-width: 85%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    cursor: pointer;
 }

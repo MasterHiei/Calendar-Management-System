@@ -13,10 +13,10 @@ import java.sql.Timestamp;
  */
 @Data
 public class BaseEntity implements Serializable {
-    /** DELETE_FLAG_0：未删除 */
-    public static final int DELETE_FLAG_0 = 0;
-    /** DELETE_FLAG_1：已删除 */
-    public static final int DELETE_FLAG_1 = 1;
+    /** DELETE_FLAG_NO：未删除 */
+    public static final int DELETE_FLAG_NO = 0;
+    /** DELETE_FLAG_YES：已删除 */
+    public static final int DELETE_FLAG_YES = 1;
     
     /** 删除标记 */
     private Integer deleteFlag;

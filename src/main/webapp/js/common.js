@@ -2,7 +2,6 @@
 function doAjax (params) {
     // 定义Ajax属性
     var ajaxParams = {
-        type : 'POST',
         contentType : 'application/json;charset=utf8',
         dataType : 'JSON',
         error : function () {
@@ -10,8 +9,11 @@ function doAjax (params) {
         }
     };
     // 动态添加Ajax属性
+    if (typeof ajaxParams['type'] === 'undefined') {
+        ajaxParams['type'] = 'POST';
+    }
     for (var key in params) {
-        if (key === 'data') {
+        if (key === 'data' && ajaxParams['type'] === 'POST') {
             ajaxParams[key] = JSON.stringify(params[key]);
         } else {
             ajaxParams[key] = params[key];
@@ -21,17 +23,20 @@ function doAjax (params) {
     $.ajax(ajaxParams);
 }
 
-// 动态生成表单并提交
+// 动态生成表单并提交（默认method=get，可指定为其他提交方式）
 function doDynamicFormSubmit (params) {
     // 如果表单存在则删除表单
     removeElem($('#dynamicForm'));
     // 创建表单
-    $(document.body).append('<form id="dynamicForm" method="post"></form>');
+    $(document.body).append('<form id="dynamicForm" method="POST"></form>');
     // 添加表单元素
     for (var key in params) {
         switch (key) {
             case 'action':
                 $('#dynamicForm').attr('action', params[key]);
+                break;
+            case 'method':
+                $('#dynamicForm').attr('method', params['method']);
                 break;
             default :
                 $('#dynamicForm').append('<input type="hidden" name="' + key + '" value="'+ params[key] +'" />');

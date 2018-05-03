@@ -1,5 +1,6 @@
 package org.tmhi.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,17 +12,17 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.tmhi.facade.SessionFacade;
 import org.tmhi.model.dto.UserSessionDto;
-import org.tmhi.model.entity.UserEntity;
-import org.tmhi.model.enums.AuthEnum;
+import org.tmhi.model.entity.EventEntity;
 import org.tmhi.model.form.CalendarForm;
-import org.tmhi.service.UserService;
-import org.tmhi.util.CommonUtils;
-import org.tmhi.util.DateConvertUtils;
+import org.tmhi.service.EventService;
 import org.tmhi.util.RequestUtils;
 
 import javax.servlet.http.HttpServletRequest;
+import java.sql.Date;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -36,14 +37,18 @@ public class CalendarController {
     
     /** LOGGER */
     private final Logger LOGGER = LoggerFactory.getLogger(CalendarController.class);
+
+
+    /** DateTimeFormatter */
+    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     
-    /** 用户业务逻辑对象 */
-    private UserService userService;
+    /** 事件业务逻辑对象 */
+    private EventService eventService;
 
     /** 构造器注入 */
     @Autowired
-    public CalendarController(UserService userService) {
-        this.userService = userService;
+    public CalendarController(EventService eventService) {
+        this.eventService = eventService;
     }
 
     /**
@@ -51,11 +56,9 @@ public class CalendarController {
      *
      * @param request HttpServletRequest
      * @return ModelAndView
-     * @throws Exception 异常
      */
-    @RequestMapping(value = "calendar.html", method = {RequestMethod.POST, RequestMethod.GET}) 
-    public ModelAndView initCalendar(HttpServletRequest request) 
-            throws Exception {
+    @RequestMapping(value = "calendar.html", method = {RequestMethod.GET})
+    public ModelAndView initCalendar(HttpServletRequest request) {
 
         // 返回值
         ModelAndView mv = new ModelAndView();
@@ -64,141 +67,76 @@ public class CalendarController {
         // 获取request请求的IP地址
         String ip = RequestUtils.getIPAddress(request);
         // 输出日志
-        LOGGER.info(ip + " - 初始化日历页面");
-        
-        // 获取Session中的用户信息
-        UserSessionDto userSessionDto = SessionFacade.getUserSession(request);
-        
-        if (Objects.isNull(userSessionDto)) {
-            // 用户信息不存在，请求重新登录
-            mv.setViewName("login");
-            return mv;
-        }
-        
-        // 根据Session获取数据库中的用户信息
-        UserEntity user = userService.queryUserByName(userSessionDto.getUserName());
-        
-        // 验证用户权限
-        if (!user.getAuthCode().equals(AuthEnum.HIEI.getAuthCode()) 
-                && !user.getAuthCode().equals(AuthEnum.MEMBER.getAuthCode())) {
-            // 权限未通过
-            mv.setViewName("error/403");
-            return mv;
-        }
-        
-        // TODO 获取个人日程表
-        
-        // 设置页面参数
-        CalendarForm calendarForm = new CalendarForm();
-        LocalDate now = LocalDate.now();
-        
-        String today = DateConvertUtils.getTodayString();
-        String[] dateArray = today.split("-");
-        calendarForm.setTargetYear(dateArray[0]);
-        calendarForm.setTargetMonth(dateArray[1]);
-        calendarForm.setTargetDay(dateArray[2]);
-        calendarForm.setFirstDayOfWeek(DateConvertUtils.getFirstDayOfWeek(now));
-        calendarForm.setLengthOfMonth(DateConvertUtils.getLengthOfMonth(now));
-        calendarForm.setLengthOfPrevMonth(DateConvertUtils.getLengthOfPrevMonth(now));
-        calendarForm.setIsToday(1);
-        map.put("calendarForm" ,calendarForm);
-        
+        LOGGER.info(ip + " - 显示日历");
+
+        map.put("calendarForm" ,new CalendarForm());
         mv.addAllObjects(map);
         mv.setViewName("auth/calendar");
         return mv;
     }
-
+    
     /**
-     * 变更日历
+     * 变更日历界面
      *
      * @param request HttpServletRequest
      * @param input 参数               
      * @return Map对象
      * @throws Exception 异常
      */
-    @RequestMapping(value = "doDateChange.html", method = {RequestMethod.POST})
+    @RequestMapping(value = "getEventList.html", method = {RequestMethod.POST})
     @ResponseBody
-    public Map doDateChange(HttpServletRequest request, @RequestBody CalendarForm input) 
+    public Map setCalendar(HttpServletRequest request, @RequestBody CalendarForm input) 
             throws Exception {
-
-        // 处理模式：前月
-        final String MODE_PREV = "prev";
-        // 处理模式：次月
-        final String MODE_NEXT = "next";
-        // 处理模式：当月
-        final String MODE_TODAY = "today";
-        // 处理模式：跳转
-        final String MODE_JUMP = "jump";
         
-        // 返回值
         Map<String, Object> jsonMap = new HashMap<>();
 
         // 获取request请求的IP地址
         String ip = RequestUtils.getIPAddress(request);
-        // 输出日志
-        LOGGER.info(ip + " - 变更日历");
+        LOGGER.info(ip + " - 获取事件列表");
 
         // 获取Session中的用户信息
         UserSessionDto userSessionDto = SessionFacade.getUserSession(request);
-
         if (Objects.isNull(userSessionDto)) {
-            // 用户信息不存在，请求重新登录
             jsonMap.put("type", "error");
             jsonMap.put("url", "login.html");
             return jsonMap;
         }
 
-        // 根据Session获取数据库中的用户信息
-        UserEntity user = userService.queryUserByName(userSessionDto.getUserName());
-
-        // 验证用户权限
-        if (!user.getAuthCode().equals(AuthEnum.HIEI.getAuthCode())
-                && !user.getAuthCode().equals(AuthEnum.MEMBER.getAuthCode())) {
-            // 权限未通过
+        CalendarForm calendarForm = new CalendarForm();
+        
+        if (Objects.isNull(input.getYear()) || Objects.isNull(input.getMonth())) {
             jsonMap.put("type", "error");
-            jsonMap.put("url", "403.html");
+            jsonMap.put("url", "404.html");
             return jsonMap;
         }
 
-        // TODO 获取个人日程表
-
-        // 设置页面参数
-        CalendarForm calendarForm = new CalendarForm();
+        // 计算起始日期和结束日期
+        LocalDate date = LocalDate.of(input.getYear(), input.getMonth(), 1);
+        LocalDate startDate = date;
+        LocalDate endDate = date.withDayOfMonth(date.lengthOfMonth());
         
-        // 日期变更处理
-        LocalDate targetDate = DateConvertUtils.getLocalDateByYMD(input.getTargetYear(), input.getTargetMonth(), input.getTargetDay());
-        switch (input.getMode()) {
-            case MODE_PREV:
-                targetDate = targetDate.minusMonths(1);
-                break;
-            case MODE_NEXT:
-                targetDate = targetDate.plusMonths(1);
-                break;
-            case MODE_TODAY:
-                targetDate = LocalDate.now();
-                break;
-            case MODE_JUMP:
-                break;
-        }
-        
-        // 判断是否为显示本月
-        if (targetDate.getMonthValue() == LocalDate.now().getMonthValue()) {
-            targetDate = LocalDate.now();
-            calendarForm.setIsToday(1);
+        if (date.getDayOfWeek().getValue() < 7) {
+            startDate = date.minusMonths(1).withDayOfMonth(date.minusMonths(1).lengthOfMonth()).minusDays(date.getDayOfWeek().getValue() - 1);
+            endDate = endDate.plusDays((5 * 7) - date.getDayOfWeek().getValue() - date.lengthOfMonth());
         } else {
-            calendarForm.setIsToday(0);
+            endDate = endDate.plusDays((5 * 7) - date.lengthOfMonth());
         }
         
+        // 获取日程列表
+        EventEntity params = new EventEntity();
+        params.setUserId(userSessionDto.getUserId());
+        params.setEventStartDate(Date.valueOf(startDate));
+        params.setEventEndDate(Date.valueOf(endDate));
+        
+        List<EventEntity> eventList = eventService.queryEventByParams(params);
+        
         // 设置页面参数
-        calendarForm.setTargetYear(String.valueOf(targetDate.getYear()));
-        calendarForm.setTargetMonth(String.valueOf(targetDate.getMonthValue()));
-        calendarForm.setTargetDay(String.valueOf(targetDate.getDayOfMonth()));
-        calendarForm.setFirstDayOfWeek(DateConvertUtils.getFirstDayOfWeek(targetDate));
-        calendarForm.setLengthOfMonth(DateConvertUtils.getLengthOfMonth(targetDate));
-        calendarForm.setLengthOfPrevMonth(DateConvertUtils.getLengthOfPrevMonth(targetDate));
-
+        if (Objects.nonNull(eventList) && eventList.size() > 0) {
+            calendarForm.setEventList(eventList);
+        }
+       
         jsonMap.put("type", "success");
-        jsonMap.put("data" ,CommonUtils.convertObjectToJSONString(calendarForm));
+        jsonMap.put("data" ,JSONObject.toJSONString(calendarForm));
         return jsonMap;
     }
 }

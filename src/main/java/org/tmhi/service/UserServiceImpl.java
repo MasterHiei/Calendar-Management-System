@@ -6,16 +6,17 @@ import org.springframework.transaction.annotation.Transactional;
 import org.tmhi.dao.UserDao;
 import org.tmhi.facade.SessionFacade;
 import org.tmhi.model.entity.UserEntity;
-import org.tmhi.util.DateConvertUtils;
 import org.tmhi.util.EncryptUtils;
 
 import javax.servlet.http.HttpServletRequest;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 /**
  * Author:       Hiei
  * Date:         2018/03/17
- * Description:  用户业务逻辑实现类
+ * Description:  用户相关业务逻辑实现类
  * Modified By:
  */
 @Service
@@ -57,7 +58,7 @@ public class UserServiceImpl implements UserService {
         // 验证成功，更新用户会话ID和登录时间
         UserEntity params = new UserEntity();
         params.setSessionId(request.getSession().getId());
-        params.setCurrentLoginDatetime(DateConvertUtils.getNowTimeStamp());
+        params.setCurrentLoginDatetime(Timestamp.valueOf(LocalDateTime.now()));
         params.setUserName(user.getUserName());
         // 执行更新ww
         if (userDao.updateUserByName(params) != 1) {

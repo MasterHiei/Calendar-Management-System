@@ -40,7 +40,7 @@ function doLogin () {
             // 处理返回值
             if (jsonObj['type'] === 'transition') {
                 // 跳转至目标页面
-                doDynamicFormSubmit({'action' : jsonObj['url']});
+                window.location.href = jsonObj['url'];
             } else if (jsonObj['type'] === 'message') {
                 // 显示提示信息
                 doAlertModalShow(jsonObj['code']);

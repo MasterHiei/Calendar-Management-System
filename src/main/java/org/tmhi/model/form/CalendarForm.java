@@ -1,8 +1,10 @@
 package org.tmhi.model.form;
 
 import lombok.Data;
+import org.tmhi.model.entity.EventEntity;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Author:       Hiei
@@ -12,20 +14,10 @@ import java.io.Serializable;
  */
 @Data
 public class CalendarForm implements Serializable {
-    /** 目标日期-年 */
-    private String targetYear;
-    /** 目标日期-月 */
-    private String targetMonth;
-    /** 目标日期-日 */
-    private String targetDay;
-    /** 当前月份第一天在星期中的天数 */
-    private Integer firstDayOfWeek;
-    /** 当月最大天数 */
-    private Integer lengthOfMonth;
-    /** 前月最大天数 */
-    private Integer lengthOfPrevMonth;
-    /** 是否为当前日期 */
-    private Integer isToday;
-    /** 执行模式 */
-    private String mode;
+    /** 目标年份 */
+    private Integer year;
+    /** 目标月份 */
+    private Integer month;
+    /** 事件列表 */
+    private List<EventEntity> eventList;
 }

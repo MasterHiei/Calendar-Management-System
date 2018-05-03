@@ -22,8 +22,8 @@ public interface UserDao {
 
     /**
      * 根据用户名更新用户信息
-     * @param   params 用户名
-     * @return  用户信息
+     * @param   params 参数
+     * @return  影响行数
      * @throws  Exception 异常
      */
     int updateUserByName(UserEntity params) throws Exception;
