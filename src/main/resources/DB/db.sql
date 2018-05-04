@@ -13,8 +13,8 @@ DROP TABLE IF EXISTS tbl_user_event;
 
 -- TABLE ROLE --
 CREATE TABLE tbl_role(
-  role_code INTEGER NOT NULL COMMENT '权限ID',
-  role_name VARCHAR(20) UNIQUE NOT NULL COMMENT '权限名',
+  role_code INTEGER NOT NULL COMMENT '角色ID',
+  role_name VARCHAR(20) UNIQUE NOT NULL COMMENT '角色名',
   PRIMARY KEY(role_code)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
@@ -57,7 +57,7 @@ CREATE TABLE tbl_event(
 -- TABLE USER_EVENT --
 CREATE TABLE tbl_user_event(
   user_id INTEGER COMMENT '用户ID',
-  role_code INTEGER COMMENT '权限ID',
+  role_code INTEGER COMMENT '角色ID',
   event_id INTEGER COMMENT '事件ID',
   PRIMARY KEY(user_id, role_code, event_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;

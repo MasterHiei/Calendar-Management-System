@@ -25,26 +25,27 @@ function doAjax (params) {
 
 // 动态生成表单并提交（默认method=get，可指定为其他提交方式）
 function doDynamicFormSubmit (params) {
+    var dynamicForm = $('#dynamicForm');
     // 如果表单存在则删除表单
-    removeElem($('#dynamicForm'));
+    removeElem(dynamicForm);
     // 创建表单
     $(document.body).append('<form id="dynamicForm" method="POST"></form>');
     // 添加表单元素
     for (var key in params) {
         switch (key) {
             case 'action':
-                $('#dynamicForm').attr('action', params[key]);
+                dynamicForm.attr('action', params[key]);
                 break;
             case 'method':
-                $('#dynamicForm').attr('method', params['method']);
+                dynamicForm.attr('method', params['method']);
                 break;
             default :
-                $('#dynamicForm').append('<input type="hidden" name="' + key + '" value="'+ params[key] +'" />');
+                dynamicForm.append('<input type="hidden" name="' + key + '" value="'+ params[key] +'" />');
                 break;
         }
     }
     // 提交表单
-    $('#dynamicForm').submit();
+    dynamicForm.submit();
 }
 
 // 动态生成模态框
@@ -96,7 +97,7 @@ function doAlertModalShow(code) {
 
 // 删除指定元素
 function removeElem(obj) {
-    if ($(obj).length > 1) {
-        $(obj).remove();
+    if (obj.length > 1) {
+        obj.remove();
     }
 }

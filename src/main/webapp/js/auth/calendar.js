@@ -14,10 +14,11 @@ $(function () {
             startView : 'year',
             minView : 'year',
             maxView : 'decade',
-            language : 'zh-CN'
+            language : 'zh-CN',
+            autoclose : true
         }).on('changeMonth', function (ev) {
-            $('#date').val(ev.date);
-            $('#date-picker').datetimepicker('hide');
+            var date = new Date(ev.date);
+            $('#date').val(date.getFullYear() + '-' + (date.getMonth() + 1) + '-1');
             
             setDate();
             getEventList();
@@ -52,12 +53,21 @@ $(function () {
     // 切换月份（当前月）
     $('#to-today').on('click', function () {
         setDateToNow();
-        
         setDate();
         getEventList();
     });
+
+    // 点击logo时重新获取事件
+    $('.logo > strong').on('click', function () {
+        getEventList();
+    })
     
 });
+
+// 毫秒/天
+const msOfDay = 1000 * 60 * 60 * 24;
+// 最大天数
+const maxDay = 6 * 7;
 
 // 设置页面日期
 function setDate() {
@@ -142,6 +152,8 @@ function getEventList() {
             }
         }
     };
+    // 删除原有事件
+    removeElem($('.event-div'));
     // 执行AJAX
     doAjax(params);
 }
@@ -149,32 +161,56 @@ function getEventList() {
 // 设置事件
 function setEvent(eventList) {
     var date = new Date($('#date').val()),
-        msOfDay = 1000 * 60 * 60 * 24,
-        firstDay = new Date(date - (msOfDay * date.getDay()));
+        firstDay = new Date(date - (msOfDay * date.getDay())),
+        lastDay = new Date(firstDay.getTime() + ((maxDay - 1) * msOfDay));
     
     console.log(eventList);
-    
+
+    // 期间
+    eventList.forEach(function (item) {
+        if (typeof item['eventEndDate'] !== 'undefined') {
+            var eventStartDate = new Date(item['eventStartDate']),
+                eventEndDate = new Date(item['eventEndDate']);
+
+            if (firstDay > eventStartDate) {
+                eventStartDate = firstDay;
+            }
+            if (eventEndDate > lastDay) {
+                eventEndDate = lastDay;
+            }
+
+            var intervalDayStart = Math.ceil((eventStartDate - firstDay) / msOfDay),
+                intervalDayBTW = (eventEndDate - eventStartDate) / msOfDay;
+
+            addEventOfPeriod();
+        }
+    });
+
+    // 单日
     eventList.forEach(function (item) {
         if (typeof item['eventEndDate'] === 'undefined') {
-            // 单日
             var eventStartDate = new Date(item['eventStartDate']),
-                intervalDay = (eventStartDate - firstDay) / msOfDay,
-                lineNo = Math.floor(intervalDay / 7) + 1,
-                className = getClassByDayOfWeek(intervalDay % 7),
+                intervalDayStart = Math.ceil((eventStartDate - firstDay) / msOfDay),
+                lineNo = Math.floor(intervalDayStart / 7) + 1,
+                className = getClassByDayOfWeek(intervalDayStart % 7),
                 targetTD = $('tr[lineNo=' + lineNo + ']').find(className);
 
             addEventOfSingle(targetTD, item);
-        } else {
-            // 期间
         }
     });
 }
 
-// 显示事件
-function addEventOfSingle(targetTD, eventItem) {
-    targetTD.append('<div class="event-div" id="' + eventItem['eventId'] + '"><div class="event-sign"></div><span class="event-info"></span></div>');
-    var targetElem = targetTD.find('#' + eventItem['eventId']);
+// 显示事件（期间）
+function addEventOfPeriod() {
 
+}
+
+// 显示事件（单日）
+function addEventOfSingle(targetTD, eventItem) {
+    targetTD.append('<div class="event-div" id="' + eventItem['eventId'] + '">' +
+        '<div class="event-sign"></div><span class="event-info"></span></div>');
+
+    var targetElem = targetTD.find('#' + eventItem['eventId']);
     targetElem.find(' .event-sign').css('background-color', eventItem['eventColor']);
     
     var startTime = new Date(eventItem['eventStartTime']),
@@ -215,12 +251,12 @@ function setDateToNow() {
 // 获取当月天数
 function getMonthLength(targetDate) {
     var firstDayOfNextMonth = new Date(targetDate.getFullYear(), targetDate.getMonth() + 1, 1);
-    return new Date(firstDayOfNextMonth - (1000 * 60 * 60 * 24)).getDate();
+    return new Date(firstDayOfNextMonth - msOfDay).getDate();
 }
 
 // 获取前月天数
 function getPrevMonthLength(targetDate) {
-    return new Date(targetDate.setDate(1) - (1000 * 60 * 60 * 24)).getDate();
+    return new Date(targetDate.setDate(1) - msOfDay).getDate();
 }
 
 // 判断是否为同年同月的日期
