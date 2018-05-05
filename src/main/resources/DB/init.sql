@@ -105,3 +105,9 @@ INSERT INTO tbl_user_event (
 VALUES (
   10000001, 1, 10000006
 );
+INSERT INTO tbl_user_event (
+  user_id, role_code, event_id
+)
+VALUES (
+  10000001, 1, 10000007
+);
