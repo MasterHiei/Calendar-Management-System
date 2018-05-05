@@ -27,7 +27,7 @@ function doAjax (params) {
 function doDynamicFormSubmit (params) {
     var dynamicForm = $('#dynamicForm');
     // 如果表单存在则删除表单
-    removeElem(dynamicForm);
+    dynamicForm.remove();
     // 创建表单
     $(document.body).append('<form id="dynamicForm" method="POST"></form>');
     // 添加表单元素
@@ -93,11 +93,4 @@ function doAlertModalShow(code) {
     };
     // 动态生成模态框
     doDynamicModalShow(params);
-}
-
-// 删除指定元素
-function removeElem(obj) {
-    if (obj.length > 1) {
-        obj.remove();
-    }
 }

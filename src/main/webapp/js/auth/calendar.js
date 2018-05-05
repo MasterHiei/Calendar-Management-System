@@ -157,7 +157,7 @@ function getEventList() {
         }
     };
     // 删除原有事件
-    removeElem($('.event-div'));
+    $('.event-div').remove();
     // 执行AJAX
     doAjax(params);
 }
@@ -170,21 +170,11 @@ function setEvent(eventList) {
     
     console.log(eventList);
 
-    // 显示事件
+    // 期间（优先显示）
     eventList.forEach(function (item) {
-        var eventStartDate = new Date(item['eventStartDate']),
-            intervalDayStart = Math.ceil((eventStartDate - firstDay) / msOfDay);
-
-        if (typeof item['eventEndDate'] === 'undefined') {
-            // 单日
-            var lineNo = Math.floor(intervalDayStart / 7) + 1,
-                className = getClassByDayOfWeek(intervalDayStart % 7),
-                targetTD = $('tr[lineNo=' + lineNo + ']').find(className);
-
-            addEventOfSingle(targetTD, item);
-        } else {
-            // 期间
-            var eventEndDate = new Date(item['eventEndDate']);
+        if (typeof item['eventEndDate'] !== 'undefined') {
+            var eventStartDate = new Date(item['eventStartDate']),
+                eventEndDate = new Date(item['eventEndDate']);
 
             if (firstDay > eventStartDate) {
                 eventStartDate = firstDay;
@@ -193,7 +183,8 @@ function setEvent(eventList) {
                 eventEndDate = lastDay;
             }
 
-            var intervalDayBTW = (eventEndDate - eventStartDate) / msOfDay,
+            var intervalDayStart = Math.ceil((eventStartDate - firstDay) / msOfDay),
+                intervalDayBTW = (eventEndDate - eventStartDate) / msOfDay,
                 lineNoStart = Math.floor(intervalDayStart / 7) + 1,
                 lineNoEnd = Math.floor(intervalDayBTW / 7) + lineNoStart,
                 classNameStart = getClassByDayOfWeek(intervalDayStart % 7),
@@ -204,6 +195,19 @@ function setEvent(eventList) {
                 endTD = $('tr[lineNo=' + lineNoEnd + ']').find(classNameEnd);
 
             addEventOfPeriod(startTD, endTD, item);
+        }
+    });
+
+    // 单日
+    eventList.forEach(function (item) {
+        if (typeof item['eventEndDate'] === 'undefined') {
+            var eventStartDate = new Date(item['eventStartDate']),
+                intervalDayStart = Math.ceil((eventStartDate - firstDay) / msOfDay),
+                lineNo = Math.floor(intervalDayStart / 7) + 1,
+                className = getClassByDayOfWeek(intervalDayStart % 7),
+                targetTD = $('tr[lineNo=' + lineNo + ']').find(className);
+
+            addEventOfSingle(targetTD, item);
         }
     });
 }
