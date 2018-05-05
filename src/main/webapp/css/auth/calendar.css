@@ -251,20 +251,26 @@ p {
 }
 
 .event-sign {
-    margin: 0 8px 4px 0;
+    margin: 0 8px 5px 0;
     display: inline-block;
     height: 8px;
     width: 8px;
     border-radius: 50%;
-    cursor: pointer;
 }
 
 .event-div {
     width: 85%;
     font-size: 12px;
-    padding: 2px 0 2px 5px;
+    padding: 0 0 0 5px;
     margin: 2px 0 0 2px;
     z-index: 999;
+    cursor: pointer;
+}
+
+.event-period {
+    position: relative;
+    cursor: pointer;
+    z-index: 998 !important;
 }
 
 .event-info {
@@ -273,5 +279,8 @@ p {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    cursor: pointer;
+}
+
+.event-div-tmp {
+    height: 17px;
 }

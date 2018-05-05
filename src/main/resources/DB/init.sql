@@ -29,7 +29,7 @@ INSERT INTO tbl_event (
   event_title, event_location, event_content, event_start_date, event_start_time, event_end_date, event_end_time, event_color
 )
 VALUES (
-  '测试标题1', '测试地点1', '测试内容1', '2018-05-23 ', '00:00', '2018-06-23', '13:00', 'ff0000'
+  '测试标题1', '测试地点1', '测试内容1', '2018-05-23 ', '00:00', '2018-06-08', '13:00', 'ff0000'
 );
 INSERT INTO tbl_event (
   event_title, event_location, event_content, event_start_date, event_start_time, event_end_date, event_end_time, event_color
@@ -42,6 +42,12 @@ INSERT INTO tbl_event (
 )
 VALUES (
   '测试标题22', '测试地点22', '测试内容22', '2018-05-12 ', '8:45', null, '10:00', 'ff0000'
+);
+INSERT INTO tbl_event (
+  event_title, event_location, event_content, event_start_date, event_start_time, event_end_date, event_end_time, event_color
+)
+VALUES (
+  '测试标题3', '测试地点3', '测试内容3', '2018-06-02 ', '14:45', null, '10:00', '32cd32'
 );
 
 -- INIT TABLE USER_EVENT --
@@ -62,4 +68,10 @@ INSERT INTO tbl_user_event (
 )
 VALUES (
   10000001, 1, 10000003
+);
+INSERT INTO tbl_user_event (
+  user_id, role_code, event_id
+)
+VALUES (
+  10000001, 1, 10000004
 );

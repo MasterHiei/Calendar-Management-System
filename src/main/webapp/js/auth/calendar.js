@@ -5,6 +5,10 @@ $(function () {
         setDateToNow();
         setDate();
         getEventList();
+
+        window.addEventListener('resize', function () {
+            resizeEventDiv();
+        })
     });
     
     // 显示日期选择控件
@@ -166,11 +170,21 @@ function setEvent(eventList) {
     
     console.log(eventList);
 
-    // 期间
+    // 显示事件
     eventList.forEach(function (item) {
-        if (typeof item['eventEndDate'] !== 'undefined') {
-            var eventStartDate = new Date(item['eventStartDate']),
-                eventEndDate = new Date(item['eventEndDate']);
+        var eventStartDate = new Date(item['eventStartDate']),
+            intervalDayStart = Math.ceil((eventStartDate - firstDay) / msOfDay);
+
+        if (typeof item['eventEndDate'] === 'undefined') {
+            // 单日
+            var lineNo = Math.floor(intervalDayStart / 7) + 1,
+                className = getClassByDayOfWeek(intervalDayStart % 7),
+                targetTD = $('tr[lineNo=' + lineNo + ']').find(className);
+
+            addEventOfSingle(targetTD, item);
+        } else {
+            // 期间
+            var eventEndDate = new Date(item['eventEndDate']);
 
             if (firstDay > eventStartDate) {
                 eventStartDate = firstDay;
@@ -179,45 +193,82 @@ function setEvent(eventList) {
                 eventEndDate = lastDay;
             }
 
-            var intervalDayStart = Math.ceil((eventStartDate - firstDay) / msOfDay),
-                intervalDayBTW = (eventEndDate - eventStartDate) / msOfDay;
+            var intervalDayBTW = (eventEndDate - eventStartDate) / msOfDay,
+                lineNoStart = Math.floor(intervalDayStart / 7) + 1,
+                lineNoEnd = Math.floor(intervalDayBTW / 7) + lineNoStart,
+                classNameStart = getClassByDayOfWeek(intervalDayStart % 7),
+                weekInterval = (intervalDayStart % 7) + (intervalDayBTW % 7),
+                endDayOfWeek = weekInterval > 6 ? (weekInterval % 6) - 1 : weekInterval,
+                classNameEnd = getClassByDayOfWeek(endDayOfWeek),
+                startTD = $('tr[lineNo=' + lineNoStart + ']').find(classNameStart),
+                endTD = $('tr[lineNo=' + lineNoEnd + ']').find(classNameEnd);
 
-            addEventOfPeriod();
-        }
-    });
-
-    // 单日
-    eventList.forEach(function (item) {
-        if (typeof item['eventEndDate'] === 'undefined') {
-            var eventStartDate = new Date(item['eventStartDate']),
-                intervalDayStart = Math.ceil((eventStartDate - firstDay) / msOfDay),
-                lineNo = Math.floor(intervalDayStart / 7) + 1,
-                className = getClassByDayOfWeek(intervalDayStart % 7),
-                targetTD = $('tr[lineNo=' + lineNo + ']').find(className);
-
-            addEventOfSingle(targetTD, item);
+            addEventOfPeriod(startTD, endTD, item);
         }
     });
 }
 
-// 显示事件（期间）
-function addEventOfPeriod() {
+// 添加事件（期间）
+function addEventOfPeriod(startTD, endTD, eventItem) {
+    var isEnd = false,
+        startLineNo = Number(startTD.parents('tr').attr('lineNo')),
+        endLineNo = Number(endTD.parents('tr').attr('lineNo'));
 
+    endTD.attr('isEnd', '1');
+
+    for (var i = startLineNo; i <= endLineNo; i++) {
+        if (isEnd) return;
+
+        var targetTD = i === startLineNo ? startTD : $('tr[lineNo=' + i + ']').find('.sun'),
+            ergodicTD = targetTD,
+            rangeCoef = 1;
+
+        targetTD.append('<div class="event-div event-period" eventId="' + eventItem['eventId'] + '">' +
+            '<span class="event-info"></span></div>');
+
+        for (var j = 0; j < maxDay; j++) {
+            if (ergodicTD.attr('isEnd') === '1') {
+                isEnd = true;
+                break;
+            }
+
+            ergodicTD.append('<div class="event-div event-div-tmp"></div>');
+            if (ergodicTD.attr('class').indexOf('sat') !== -1) break;
+
+            ergodicTD = ergodicTD.next();
+            rangeCoef++;
+        }
+        var eventDiv = targetTD.find('[eventId=' + eventItem['eventId'] + ']');
+        addEventInfo(eventDiv, eventItem);
+        eventDiv.attr('rangeCoef', rangeCoef);
+        eventDiv.width(rangeCoef * ($(document.body).width() / 7) - 12);
+        eventDiv.css('background-color', eventItem['eventColor']);
+    }
 }
 
-// 显示事件（单日）
+// 添加事件（单日）
 function addEventOfSingle(targetTD, eventItem) {
-    targetTD.append('<div class="event-div" id="' + eventItem['eventId'] + '">' +
+    targetTD.append('<div class="event-div" eventId="' + eventItem['eventId'] + '">' +
         '<div class="event-sign"></div><span class="event-info"></span></div>');
 
-    var targetElem = targetTD.find('#' + eventItem['eventId']);
-    targetElem.find(' .event-sign').css('background-color', eventItem['eventColor']);
-    
+    var eventDiv = targetTD.find('[eventId=' + eventItem['eventId'] + ']');
+    addEventInfo(eventDiv, eventItem);
+    eventDiv.find('.event-sign').css('background-color', eventItem['eventColor']);
+}
+
+// 添加事件信息
+function addEventInfo(eventDiv, eventItem) {
     var startTime = new Date(eventItem['eventStartTime']),
         startHours = startTime.getHours() < 10 ? '0' + startTime.getHours() : startTime.getHours(),
         startMinutes = startTime.getMinutes() < 10 ? '0' + startTime.getMinutes() : startTime.getMinutes();
 
-    targetElem.find('.event-info').text(startHours + ':' + startMinutes + ' ' + eventItem['eventTitle']);
+    eventDiv.find('.event-info').text(startHours + ':' + startMinutes + ' ' + eventItem['eventTitle']);
+}
+
+function resizeEventDiv() {
+    $('.event-period').each(function () {
+        $(this).width(Number($(this).attr('rangeCoef')) * ($(document.body).width() / 7) - 12);
+    });
 }
 
 // 根据星期数（0-6）返回对应class名
