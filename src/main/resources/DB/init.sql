@@ -47,6 +47,24 @@ INSERT INTO tbl_event (
   event_title, event_location, event_content, event_start_date, event_start_time, event_end_date, event_end_time, event_color
 )
 VALUES (
+  '测试标题23', '测试地点23', '测试内容23', '2018-05-12 ', '10:45', null, '12:00', '1e90ff'
+);
+INSERT INTO tbl_event (
+  event_title, event_location, event_content, event_start_date, event_start_time, event_end_date, event_end_time, event_color
+)
+VALUES (
+  '测试标题24', '测试地点24', '测试内容24', '2018-05-12 ', '14:00', null, '15:00', '32cd32'
+);
+INSERT INTO tbl_event (
+  event_title, event_location, event_content, event_start_date, event_start_time, event_end_date, event_end_time, event_color
+)
+VALUES (
+  '测试标题25', '测试地点25', '测试内容25', '2018-05-12 ', '16:15', null, '18:00', 'ff0000'
+);
+INSERT INTO tbl_event (
+  event_title, event_location, event_content, event_start_date, event_start_time, event_end_date, event_end_time, event_color
+)
+VALUES (
   '测试标题3', '测试地点3', '测试内容3', '2018-06-02 ', '14:45', null, '10:00', '32cd32'
 );
 
@@ -74,4 +92,16 @@ INSERT INTO tbl_user_event (
 )
 VALUES (
   10000001, 1, 10000004
+);
+INSERT INTO tbl_user_event (
+  user_id, role_code, event_id
+)
+VALUES (
+  10000001, 1, 10000005
+);
+INSERT INTO tbl_user_event (
+  user_id, role_code, event_id
+)
+VALUES (
+  10000001, 1, 10000006
 );

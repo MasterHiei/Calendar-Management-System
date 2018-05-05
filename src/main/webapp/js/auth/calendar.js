@@ -207,7 +207,24 @@ function setEvent(eventList) {
                 className = getClassByDayOfWeek(intervalDayStart % 7),
                 targetTD = $('tr[lineNo=' + lineNo + ']').find(className);
 
-            addEventOfSingle(targetTD, item);
+            if (targetTD.find('.event-div').length < 3) {
+                targetTD.append('<div class="event-div" eventId="' + item['eventId'] + '">' +
+                    '<div class="event-sign"></div><span class="event-info"></span></div>');
+
+                var eventDiv = targetTD.find('[eventId=' + item['eventId'] + ']');
+                addEventInfo(eventDiv, item);
+                eventDiv.find('.event-sign').css('background-color', item['eventColor']);
+            } else {
+                // 不显示超出部分的事件，改为显示剩余数量
+                var eventMore = targetTD.find('.event-more');
+                if (eventMore.length === 0) {
+                    targetTD.append('<div class="event-more"><span>剩余 1 项</span></div>');
+                } else {
+                    var eventMoreText = eventMore.find('span').text();
+                    eventMore.find('span').text('剩余 ' + (Number(eventMoreText.split(' ')[1]) + 1) + ' 项');
+                }
+            }
+            targetTD.append('<div class="event-hidden">' + JSON.stringify(item) + '</div>');
         }
     });
 }
@@ -250,23 +267,17 @@ function addEventOfPeriod(startTD, endTD, eventItem) {
     }
 }
 
-// 添加事件（单日）
-function addEventOfSingle(targetTD, eventItem) {
-    targetTD.append('<div class="event-div" eventId="' + eventItem['eventId'] + '">' +
-        '<div class="event-sign"></div><span class="event-info"></span></div>');
-
-    var eventDiv = targetTD.find('[eventId=' + eventItem['eventId'] + ']');
-    addEventInfo(eventDiv, eventItem);
-    eventDiv.find('.event-sign').css('background-color', eventItem['eventColor']);
-}
-
 // 添加事件信息
 function addEventInfo(eventDiv, eventItem) {
-    var startTime = new Date(eventItem['eventStartTime']),
-        startHours = startTime.getHours() < 10 ? '0' + startTime.getHours() : startTime.getHours(),
-        startMinutes = startTime.getMinutes() < 10 ? '0' + startTime.getMinutes() : startTime.getMinutes();
+    if (typeof eventItem['eventStartTime'] !== 'undefined') {
+        var startTime = new Date(eventItem['eventStartTime']),
+            startHours = startTime.getHours() < 10 ? '0' + startTime.getHours() : startTime.getHours(),
+            startMinutes = startTime.getMinutes() < 10 ? '0' + startTime.getMinutes() : startTime.getMinutes();
 
-    eventDiv.find('.event-info').text(startHours + ':' + startMinutes + ' ' + eventItem['eventTitle']);
+        eventDiv.find('.event-info').text(startHours + ':' + startMinutes + ' ' + eventItem['eventTitle']);
+    } else {
+        eventDiv.find('.event-info').text(eventItem['eventTitle']);
+    }
 }
 
 function resizeEventDiv() {

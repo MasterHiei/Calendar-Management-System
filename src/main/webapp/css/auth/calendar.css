@@ -283,3 +283,13 @@ p {
 .event-div-tmp {
     height: 17px;
 }
+
+.event-hidden {
+    display: none;
+}
+
+.event-more {
+    font-size: 12px;
+    margin: 2px 0 0 6px;
+    cursor: pointer;
+}
