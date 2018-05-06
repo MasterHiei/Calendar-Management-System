@@ -223,7 +223,7 @@ p {
     width: 56px;
     border-radius: 50%;
     background-color: #db4437;
-    position: absolute;
+    position: fixed;
     bottom: 24px;
     right: 24px;
     cursor: pointer;
@@ -292,4 +292,21 @@ p {
     font-size: 12px;
     margin: 2px 0 0 6px;
     cursor: pointer;
+}
+
+#get-event-alert {
+    display: none;
+    margin: 0;
+    padding: 10px;
+    text-align: center;
+    width: 280px;
+    position: fixed;
+    bottom: 0;
+    left: calc(50% - 140px);
+    left: -moz-calc(50% - 140px);
+    left: -webkit-calc(50% - 140px);
+}
+
+#get-event-alert > span {
+    margin-left: 10px;
 }

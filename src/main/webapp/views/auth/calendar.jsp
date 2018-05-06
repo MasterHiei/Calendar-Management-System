@@ -104,6 +104,10 @@
             <i class="fa fa-plus fa-create"></i>
         </div>
     </div>
+    <div class="alert alert-success" id="get-event-alert">
+        <i class="fa fa-spinner fa-spin"></i>
+        <span>正在获取日程信息</span>
+    </div>
     <input type="hidden" id="date">
 </div>
 </body>

@@ -6,6 +6,7 @@ $(function () {
         setDate();
         getEventList();
 
+        // 使event div宽度自适应屏幕
         window.addEventListener('resize', function () {
             resizeEventDiv();
         })
@@ -134,7 +135,7 @@ function setDate() {
     } 
 }
 
-// 切换日期显示
+// 获取事件列表
 function getEventList() {
     var params = {
         url : 'getEventList.html',
@@ -142,7 +143,14 @@ function getEventList() {
             year : new Date($('#date').val()).getFullYear(),
             month : new Date($('#date').val()).getMonth() + 1
         },
+        beforeSend : function () {
+            $('#get-event-alert').slideToggle();
+        },
         success : function (jsonObj) {
+            // 删除原有事件
+            $('.event-remove').remove();
+            // 隐藏提示框
+            $('#get-event-alert').slideToggle();
             // 处理返回值
             if (jsonObj['type'] === 'success') {
                 // 设置事件
@@ -156,8 +164,6 @@ function getEventList() {
             }
         }
     };
-    // 删除原有事件
-    $('.event-div').remove();
     // 执行AJAX
     doAjax(params);
 }
@@ -167,8 +173,6 @@ function setEvent(eventList) {
     var date = new Date($('#date').val()),
         firstDay = new Date(date - (msOfDay * date.getDay())),
         lastDay = new Date(firstDay.getTime() + ((maxDay - 1) * msOfDay));
-    
-    console.log(eventList);
 
     // 期间（优先显示）
     eventList.forEach(function (item) {
@@ -208,7 +212,7 @@ function setEvent(eventList) {
                 targetTD = $('tr[lineNo=' + lineNo + ']').find(className);
 
             if (targetTD.find('.event-div').length < 3) {
-                targetTD.append('<div class="event-div" eventId="' + item['eventId'] + '">' +
+                targetTD.append('<div class="event-div event-remove" eventId="' + item['eventId'] + '">' +
                     '<div class="event-sign"></div><span class="event-info"></span></div>');
 
                 var eventDiv = targetTD.find('[eventId=' + item['eventId'] + ']');
@@ -218,13 +222,13 @@ function setEvent(eventList) {
                 // 不显示超出部分的事件，改为显示剩余数量
                 var eventMore = targetTD.find('.event-more');
                 if (eventMore.length === 0) {
-                    targetTD.append('<div class="event-more"><span>剩余 1 项</span></div>');
+                    targetTD.append('<div class="event-more event-remove"><span>剩余 1 项</span></div>');
                 } else {
                     var eventMoreText = eventMore.find('span').text();
                     eventMore.find('span').text('剩余 ' + (Number(eventMoreText.split(' ')[1]) + 1) + ' 项');
                 }
             }
-            targetTD.append('<div class="event-hidden">' + JSON.stringify(item) + '</div>');
+            targetTD.append('<div class="event-hidden event-remove">' + JSON.stringify(item) + '</div>');
         }
     });
 }
@@ -244,7 +248,7 @@ function addEventOfPeriod(startTD, endTD, eventItem) {
             ergodicTD = targetTD,
             rangeCoef = 1;
 
-        targetTD.append('<div class="event-div event-period" eventId="' + eventItem['eventId'] + '">' +
+        targetTD.append('<div class="event-div event-period event-remove" eventId="' + eventItem['eventId'] + '">' +
             '<span class="event-info"></span></div>');
 
         for (var j = 0; j < maxDay; j++) {
@@ -253,7 +257,7 @@ function addEventOfPeriod(startTD, endTD, eventItem) {
                 break;
             }
 
-            ergodicTD.append('<div class="event-div event-div-tmp"></div>');
+            ergodicTD.append('<div class="event-div event-div-tmp event-remove"></div>');
             if (ergodicTD.attr('class').indexOf('sat') !== -1) break;
 
             ergodicTD = ergodicTD.next();
@@ -280,6 +284,7 @@ function addEventInfo(eventDiv, eventItem) {
     }
 }
 
+// 重置event div宽度
 function resizeEventDiv() {
     $('.event-period').each(function () {
         $(this).width(Number($(this).attr('rangeCoef')) * ($(document.body).width() / 7) - 12);
