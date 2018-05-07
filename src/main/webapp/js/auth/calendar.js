@@ -3,7 +3,7 @@ $(function () {
    
     $(document).ready(function () {
         setDateToNow();
-        getEventList(IS_INIT_YES);
+        getEventList(USE_SESSION_YES);
 
         // 使event div宽度自适应屏幕
         window.addEventListener('resize', function () {
@@ -24,7 +24,7 @@ $(function () {
             var date = new Date(ev.date);
             $('#date').val(date.getFullYear() + '-' + (date.getMonth() + 1) + '-1');
 
-            getEventList(IS_INIT_NO);
+            getEventList(USE_SESSION_NO);
         });
         // ISSUE: Bootstrap icon was unusable. Change to Font Awesome support. 
         $('.datetimepicker th.prev').empty();
@@ -40,7 +40,7 @@ $(function () {
         var prevMonth = new Date(new Date($('#date').val()).getFullYear(), new Date($('#date').val()).getMonth() - 1, 1);
         $('#date').val(prevMonth.getFullYear() + '-' + (prevMonth.getMonth() + 1) + '-1');
 
-        getEventList(IS_INIT_NO);
+        getEventList(USE_SESSION_NO);
     });
 
     // 切换月份（下一月）
@@ -48,23 +48,23 @@ $(function () {
         var nextMonth = new Date( new Date($('#date').val()).getFullYear(),  new Date($('#date').val()).getMonth() + 1, 1);
         $('#date').val(nextMonth.getFullYear() + '-' + (nextMonth.getMonth() + 1) + '-1');
 
-        getEventList(IS_INIT_NO);
+        getEventList(USE_SESSION_NO);
     });
 
     // 切换月份（当前月）
     $('#to-today').on('click', function () {
         setDateToNow();
-        getEventList(IS_INIT_NO);
+        getEventList(USE_SESSION_NO);
     });
 
     // 点击事件显示详细内容
     $('td').on('click', '.event-div', function () {
-        showEventDetail(IS_INIT_NO);
+        showEventDetail(USE_SESSION_NO);
     });
 
     // 点击logo时重新获取事件列表
     $('.logo > strong').on('click', function () {
-        getEventList(IS_INIT_NO);
+        getEventList(USE_SESSION_NO);
     })
     
 });
@@ -74,9 +74,9 @@ const MS_OF_DAY = 1000 * 60 * 60 * 24;
 // 最大天数
 const MAX_DAY = 6 * 7;
 // 页面初始化
-const IS_INIT_YES = 1;
+const USE_SESSION_YES = 1;
 // 非页面初始化
-const IS_INIT_NO = 0;
+const USE_SESSION_NO = 0;
 
 // 设置页面日期
 function setDate() {
@@ -140,13 +140,13 @@ function setDate() {
 }
 
 // 获取事件列表
-function getEventList(isInit) {
+function getEventList(isUseSession) {
     var params = {
         url : 'getEventList.html',
         data : {
             year : new Date($('#date').val()).getFullYear(),
             month : new Date($('#date').val()).getMonth() + 1,
-            isInit : isInit
+            isUseSession : isUseSession
         },
         beforeSend : function () {
             // 显示提示框

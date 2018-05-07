@@ -15,17 +15,17 @@ import java.util.List;
 @Data
 public class CalendarForm implements Serializable {
 
-    /** 初始化 */
-    public static final Integer IS_INIT_YES = 1;
-    /** 非初始化 */
-    public static final Integer IS_INIT_NO = 0;
+    /** 使用session */
+    public static final Integer USE_SESSION_YES = 1;
+    /** 不使用session */
+    public static final Integer USE_SESSION_NO = 0;
 
     /** 目标年份 */
     private Integer year;
     /** 目标月份 */
     private Integer month;
-    /** 是否为初始化 */
-    private Integer isInit;
+    /** 是否使用session */
+    private Integer isUseSession;
     /** 事件列表 */
     private List<EventEntity> eventList;
 }

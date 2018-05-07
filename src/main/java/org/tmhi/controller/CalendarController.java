@@ -108,7 +108,7 @@ public class CalendarController {
         CalendarSessionDto sessionDto = SessionFacade.getCalendarSession(request);
 
         LocalDate date;
-        if (input.getIsInit().equals(CalendarForm.IS_INIT_YES) && Objects.nonNull(sessionDto)) {
+        if (input.getIsUseSession().equals(CalendarForm.USE_SESSION_YES) && Objects.nonNull(sessionDto)) {
             date = sessionDto.getDate();
         } else {
             date = LocalDate.of(input.getYear(), input.getMonth(), 1);

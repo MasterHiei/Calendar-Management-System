@@ -43,3 +43,7 @@ body {
 .pull-right {
     margin-right: 10%;
 }
+
+#loginBtn, #registerBtn {
+    height: 34px;
+}
