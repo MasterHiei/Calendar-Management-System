@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.tmhi.facade.SessionFacade;
+import org.tmhi.model.dto.CalendarSessionDto;
 import org.tmhi.model.dto.UserSessionDto;
 import org.tmhi.model.entity.EventEntity;
 import org.tmhi.model.form.CalendarForm;
@@ -20,7 +21,6 @@ import org.tmhi.util.RequestUtils;
 import javax.servlet.http.HttpServletRequest;
 import java.sql.Date;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -37,10 +37,6 @@ public class CalendarController {
     
     /** LOGGER */
     private final Logger LOGGER = LoggerFactory.getLogger(CalendarController.class);
-
-
-    /** DateTimeFormatter */
-    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     
     /** 事件业务逻辑对象 */
     private EventService eventService;
@@ -62,15 +58,12 @@ public class CalendarController {
 
         // 返回值
         ModelAndView mv = new ModelAndView();
-        Map<String, Object> map = new HashMap<>();
 
         // 获取request请求的IP地址
         String ip = RequestUtils.getIPAddress(request);
         // 输出日志
         LOGGER.info(ip + " - 显示日历");
 
-        map.put("calendarForm" ,new CalendarForm());
-        mv.addAllObjects(map);
         mv.setViewName("auth/calendar");
         return mv;
     }
@@ -85,7 +78,7 @@ public class CalendarController {
      */
     @RequestMapping(value = "getEventList.html", method = {RequestMethod.POST})
     @ResponseBody
-    public Map setCalendar(HttpServletRequest request, @RequestBody CalendarForm input) 
+    public Map setCalendar(HttpServletRequest request, @RequestBody CalendarForm input)
             throws Exception {
         
         Map<String, Object> jsonMap = new HashMap<>();
@@ -102,16 +95,26 @@ public class CalendarController {
             return jsonMap;
         }
 
-        CalendarForm calendarForm = new CalendarForm();
-        
+        // 输入参数检查
         if (Objects.isNull(input.getYear()) || Objects.isNull(input.getMonth())) {
             jsonMap.put("type", "error");
             jsonMap.put("url", "404.html");
             return jsonMap;
         }
 
+        CalendarForm calendarForm = new CalendarForm();
+
+        // 获取日历session
+        CalendarSessionDto sessionDto = SessionFacade.getCalendarSession(request);
+
+        LocalDate date;
+        if (input.getIsInit().equals(CalendarForm.IS_INIT_YES) && Objects.nonNull(sessionDto)) {
+            date = sessionDto.getDate();
+        } else {
+            date = LocalDate.of(input.getYear(), input.getMonth(), 1);
+        }
+
         // 计算起始日期和结束日期
-        LocalDate date = LocalDate.of(input.getYear(), input.getMonth(), 1);
         LocalDate startDate = date;
         LocalDate endDate = date.withDayOfMonth(date.lengthOfMonth());
         
@@ -134,6 +137,11 @@ public class CalendarController {
         if (Objects.nonNull(eventList) && eventList.size() > 0) {
             calendarForm.setEventList(eventList);
         }
+        calendarForm.setYear(date.getYear());
+        calendarForm.setMonth(date.getMonthValue());
+
+        // 保存/更新session
+        SessionFacade.saveCalendarSession(request, date);
        
         jsonMap.put("type", "success");
         jsonMap.put("data" ,JSONObject.toJSONString(calendarForm));

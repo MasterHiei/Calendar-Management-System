@@ -3,8 +3,7 @@ $(function () {
    
     $(document).ready(function () {
         setDateToNow();
-        setDate();
-        getEventList();
+        getEventList(IS_INIT_YES);
 
         // 使event div宽度自适应屏幕
         window.addEventListener('resize', function () {
@@ -24,9 +23,8 @@ $(function () {
         }).on('changeMonth', function (ev) {
             var date = new Date(ev.date);
             $('#date').val(date.getFullYear() + '-' + (date.getMonth() + 1) + '-1');
-            
-            setDate();
-            getEventList();
+
+            getEventList(IS_INIT_NO);
         });
         // ISSUE: Bootstrap icon was unusable. Change to Font Awesome support. 
         $('.datetimepicker th.prev').empty();
@@ -41,38 +39,44 @@ $(function () {
     $('#to-prev-month').on('click', function () {
         var prevMonth = new Date(new Date($('#date').val()).getFullYear(), new Date($('#date').val()).getMonth() - 1, 1);
         $('#date').val(prevMonth.getFullYear() + '-' + (prevMonth.getMonth() + 1) + '-1');
-        
-        setDate();
-        getEventList();
+
+        getEventList(IS_INIT_NO);
     });
 
     // 切换月份（下一月）
     $('#to-next-month').on('click', function () {
         var nextMonth = new Date( new Date($('#date').val()).getFullYear(),  new Date($('#date').val()).getMonth() + 1, 1);
         $('#date').val(nextMonth.getFullYear() + '-' + (nextMonth.getMonth() + 1) + '-1');
-        
-        setDate();
-        getEventList(); 
+
+        getEventList(IS_INIT_NO);
     });
 
     // 切换月份（当前月）
     $('#to-today').on('click', function () {
         setDateToNow();
-        setDate();
-        getEventList();
+        getEventList(IS_INIT_NO);
     });
 
-    // 点击logo时重新获取事件
+    // 点击事件显示详细内容
+    $('td').on('click', '.event-div', function () {
+        showEventDetail(IS_INIT_NO);
+    });
+
+    // 点击logo时重新获取事件列表
     $('.logo > strong').on('click', function () {
-        getEventList();
+        getEventList(IS_INIT_NO);
     })
     
 });
 
 // 毫秒/天
-const msOfDay = 1000 * 60 * 60 * 24;
+const MS_OF_DAY = 1000 * 60 * 60 * 24;
 // 最大天数
-const maxDay = 6 * 7;
+const MAX_DAY = 6 * 7;
+// 页面初始化
+const IS_INIT_YES = 1;
+// 非页面初始化
+const IS_INIT_NO = 0;
 
 // 设置页面日期
 function setDate() {
@@ -136,27 +140,32 @@ function setDate() {
 }
 
 // 获取事件列表
-function getEventList() {
+function getEventList(isInit) {
     var params = {
         url : 'getEventList.html',
         data : {
             year : new Date($('#date').val()).getFullYear(),
-            month : new Date($('#date').val()).getMonth() + 1
+            month : new Date($('#date').val()).getMonth() + 1,
+            isInit : isInit
         },
         beforeSend : function () {
+            // 显示提示框
             $('#get-event-alert').slideToggle();
         },
         success : function (jsonObj) {
-            // 删除原有事件
-            $('.event-remove').remove();
-            // 隐藏提示框
-            $('#get-event-alert').slideToggle();
             // 处理返回值
             if (jsonObj['type'] === 'success') {
+                var data = $.parseJSON(jsonObj['data']);
+                // 更改日期
+                $('#date').val(data['year'] + '-' + data['month'] + '-1');
+                setDate();
+                // 删除原有事件
+                $('.event-remove').remove();
+                // 隐藏提示框
+                $('#get-event-alert').slideToggle();
                 // 设置事件
-                var eventList = $.parseJSON(jsonObj['data']);
-                if (!$.isEmptyObject(eventList)) {
-                    setEvent(eventList['eventList']);
+                if (!$.isEmptyObject(data)) {
+                    setEvent(data['eventList']);
                 } 
             } else if (jsonObj['type'] === 'error') {
                 // 跳转至错误页面
@@ -171,8 +180,8 @@ function getEventList() {
 // 设置事件
 function setEvent(eventList) {
     var date = new Date($('#date').val()),
-        firstDay = new Date(date - (msOfDay * date.getDay())),
-        lastDay = new Date(firstDay.getTime() + ((maxDay - 1) * msOfDay));
+        firstDay = new Date(date - (MS_OF_DAY * date.getDay())),
+        lastDay = new Date(firstDay.getTime() + ((MAX_DAY - 1) * MS_OF_DAY));
 
     // 期间（优先显示）
     eventList.forEach(function (item) {
@@ -187,8 +196,8 @@ function setEvent(eventList) {
                 eventEndDate = lastDay;
             }
 
-            var intervalDayStart = Math.ceil((eventStartDate - firstDay) / msOfDay),
-                intervalDayBTW = (eventEndDate - eventStartDate) / msOfDay,
+            var intervalDayStart = Math.ceil((eventStartDate - firstDay) / MS_OF_DAY),
+                intervalDayBTW = (eventEndDate - eventStartDate) / MS_OF_DAY,
                 lineNoStart = Math.floor(intervalDayStart / 7) + 1,
                 lineNoEnd = Math.floor(intervalDayBTW / 7) + lineNoStart,
                 classNameStart = getClassByDayOfWeek(intervalDayStart % 7),
@@ -206,7 +215,7 @@ function setEvent(eventList) {
     eventList.forEach(function (item) {
         if (typeof item['eventEndDate'] === 'undefined') {
             var eventStartDate = new Date(item['eventStartDate']),
-                intervalDayStart = Math.ceil((eventStartDate - firstDay) / msOfDay),
+                intervalDayStart = Math.ceil((eventStartDate - firstDay) / MS_OF_DAY),
                 lineNo = Math.floor(intervalDayStart / 7) + 1,
                 className = getClassByDayOfWeek(intervalDayStart % 7),
                 targetTD = $('tr[lineNo=' + lineNo + ']').find(className);
@@ -228,7 +237,8 @@ function setEvent(eventList) {
                     eventMore.find('span').text('剩余 ' + (Number(eventMoreText.split(' ')[1]) + 1) + ' 项');
                 }
             }
-            targetTD.append('<div class="event-hidden event-remove">' + JSON.stringify(item) + '</div>');
+            targetTD.append('<div class="event-hidden event-remove" eventId="' + item['eventId'] + '">'
+                + JSON.stringify(item) + '</div>');
         }
     });
 }
@@ -251,7 +261,7 @@ function addEventOfPeriod(startTD, endTD, eventItem) {
         targetTD.append('<div class="event-div event-period event-remove" eventId="' + eventItem['eventId'] + '">' +
             '<span class="event-info"></span></div>');
 
-        for (var j = 0; j < maxDay; j++) {
+        for (var j = 0; j < MAX_DAY; j++) {
             if (ergodicTD.attr('isEnd') === '1') {
                 isEnd = true;
                 break;
@@ -291,6 +301,14 @@ function resizeEventDiv() {
     });
 }
 
+// 显示事件详细信息
+function showEventDetail(elem) {
+    var eventInfoStr = $(elem).parents('td').find('.event-hidden[eventId=' + $(elem).attr('eventId') + ']').text(),
+        eventInfo = $.parseJSON(eventInfoStr);
+
+    // TODO 显示用模态窗口
+}
+
 // 根据星期数（0-6）返回对应class名
 function getClassByDayOfWeek(dayOfWeek) {
     switch (dayOfWeek) {
@@ -322,12 +340,12 @@ function setDateToNow() {
 // 获取当月天数
 function getMonthLength(targetDate) {
     var firstDayOfNextMonth = new Date(targetDate.getFullYear(), targetDate.getMonth() + 1, 1);
-    return new Date(firstDayOfNextMonth - msOfDay).getDate();
+    return new Date(firstDayOfNextMonth - MS_OF_DAY).getDate();
 }
 
 // 获取前月天数
 function getPrevMonthLength(targetDate) {
-    return new Date(targetDate.setDate(1) - msOfDay).getDate();
+    return new Date(targetDate.setDate(1) - MS_OF_DAY).getDate();
 }
 
 // 判断是否为同年同月的日期

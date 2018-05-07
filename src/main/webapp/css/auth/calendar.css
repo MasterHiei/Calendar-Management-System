@@ -152,7 +152,7 @@ p {
 }
 
 .navbar-item > a:hover {
-    background-color: #adadad;
+    background-color: #cccaca !important;
 }
 
 #periods-selected,  #periods-selected-toggle, .dropdown-toggle {
@@ -194,7 +194,11 @@ p {
 }
 
 #now-date a, #to-today a {
-    padding-top: 10px;
+    margin-top: 4px;
+}
+
+#to-today a {
+    background-color: #d5d5d5;
 }
 
 #now-date span, #to-today span, #periods-selected span {
