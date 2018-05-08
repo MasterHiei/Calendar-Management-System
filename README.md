@@ -1,5 +1,5 @@
 # CalendarManagement
-+ Help you and your team to manage the project schedule.
++ Help you and your team to manage the schedule.
 + Developed for T.M.H.I.F.
 
 # Description
