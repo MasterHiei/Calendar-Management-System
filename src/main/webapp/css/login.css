@@ -47,3 +47,7 @@ body {
 #loginBtn, #registerBtn {
     height: 34px;
 }
+
+#loginBtn > i {
+    font-size: 18px;
+}

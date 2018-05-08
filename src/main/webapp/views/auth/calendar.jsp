@@ -31,17 +31,23 @@
                     </div>
                 </div>
                 <div class="nav navbar-nav navbar-left line-center nav-left-container">
-                    <div class="btn-group navbar-item line-center date-adjust-group" id="to-prev-month">
+                    <div class="btn-group navbar-item line-center date-adjust-group" id="to-prev-month"
+                         data-toggle="tooltip" data-placement="bottom" title="上一月">
                         <a class="btn btn-default"><i class="fa fa-angle-left fa-fw fa-fw-lg"></i></a>
                     </div>
-                    <div class="btn-group navbar-item line-center date-adjust-group" id="now-date">
+                    <div class="btn-group navbar-item line-center date-adjust-group" id="now-date"
+                         data-toggle="tooltip" data-placement="bottom" title="选择月份">
                         <a class="btn btn-default"><span id="date-picker"></span></a>
                     </div>
-                    <div class="btn-group navbar-item line-center date-adjust-group" id="to-next-month">
+                    <div class="btn-group navbar-item line-center date-adjust-group" id="to-next-month"
+                         data-toggle="tooltip" data-placement="bottom" title="下一月">
                         <a class="btn btn-default"><i class="fa fa-angle-right fa-fw fa-fw-lg"></i></a>
                     </div>
-                    <div class="btn-group navbar-item line-center" id="to-today">
-                        <a class="btn btn-default"><span>今天</span></a>
+                    <div class="btn-group navbar-item line-center" id="to-today"
+                         data-toggle="tooltip" data-placement="bottom">
+                        <a class="btn btn-default">
+                            <span>今天</span>
+                        </a>
                     </div>
                 </div>
                 <div class="nav navbar-nav navbar-right line-center nav-right-container">
@@ -107,6 +113,35 @@
     <div class="alert alert-success" id="get-event-alert">
         <i class="fa fa-spinner fa-spin"></i>
         <span>正在获取日程信息</span>
+    </div>
+    <div class="modal fade" id="eventInfoModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="modal-tool">
+                        <a class="edit"><i class="fa fa-edit"></i></a>
+                        <a class="close"><i class="fa fa-times"></i></a>
+                    </div>
+                    <div class="modal-title">
+                        <span class="title h3"></span>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <div class="modal-period">
+                        <span class="period"></span>
+                    </div>
+                    <div class="modal-desc">
+                        <span class="desc"></span>
+                    </div>
+                    <div class="modal-type">
+                        <span class="type"></span>
+                    </div>
+                    <div class="modal-owner">
+                        <span class="owner"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     <input type="hidden" id="date">
 </div>

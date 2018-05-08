@@ -2,8 +2,13 @@ $(function () {
    'use strict';
    
     $(document).ready(function () {
+        // 显示日历
         setDateToNow();
         getEventList(USE_SESSION_YES);
+
+        // 设置今日标签提示信息
+        var today = new Date();
+        $('#to-today').attr('data-original-title', (today.getMonth() + 1) + '月' + today.getDate() + '日');
 
         // 使event div宽度自适应屏幕
         window.addEventListener('resize', function () {
@@ -26,15 +31,15 @@ $(function () {
 
             getEventList(USE_SESSION_NO);
         });
-        // ISSUE: Bootstrap icon was unusable. Change to Font Awesome support. 
+        // ISSUE: Bootstrap icon was unusable. Change to Font Awesome support.
         $('.datetimepicker th.prev').empty();
         $('.datetimepicker th.prev').html('<i class="fa fa-angle-left"></i>');
         $('.datetimepicker th.next').empty();
         $('.datetimepicker th.next').html('<i class="fa fa-angle-right"></i>');
-        
+
         $('#date-picker').trigger('click');
     });
-    
+
     // 切换月份（上一月）
     $('#to-prev-month').on('click', function () {
         var prevMonth = new Date(new Date($('#date').val()).getFullYear(), new Date($('#date').val()).getMonth() - 1, 1);
@@ -65,8 +70,10 @@ $(function () {
     // 点击logo时重新获取事件列表
     $('.logo > strong').on('click', function () {
         getEventList(USE_SESSION_NO);
-    })
-    
+    });
+
+    // 绑定所有提示工具
+    $('[data-toggle="tooltip"]').tooltip();
 });
 
 // 毫秒/天
@@ -82,46 +89,46 @@ const USE_SESSION_NO = 0;
 function setDate() {
     // 定义参数
     var now = new Date(),
-        targetDate = new Date($('#date').val()),
-        firstDayOfWeek = new Date(targetDate.setDate(1)).getDay(),
-        lengthOfMonth = getMonthLength(targetDate),
-        lengthOfPrevMonth = getPrevMonthLength(targetDate),
-        isThisMonth = checkIsSameMonth(targetDate, now);
-    
+        targetDate = new Date($('#date').val());
+
     // 设置导航栏日期标签
     $('#now-date span').text(targetDate.getFullYear() + '年' + (targetDate.getMonth()+ 1)  + '月');
 
     // 移除今日标识
     $('.badge').removeClass('badge');
     $('.today-td').removeClass('today-td');
-    
+
     // 循环设置日期
-    var rollingDate = 1,
-        isMonthRolling = false;
-    
+    var firstDayOfWeek = new Date(targetDate.setDate(1)).getDay(),
+        lengthOfMonth = getMonthLength(targetDate),
+        lengthOfPrevMonth = getPrevMonthLength(targetDate),
+        rollingDate = 1,
+        isMonthRolling = false,
+        isThisMonth = checkIsSameMonth(targetDate, now);
+
     if (firstDayOfWeek > 0) {
         rollingDate = lengthOfPrevMonth - firstDayOfWeek + 1;
         isMonthRolling = true;
     }
     for (var i = 1; i < 7; i++) {
         var targetTD = $('tr[lineNo=' + i + ']').find('.sun');
-        
+
         for (var j = 0; j < 7; j++) {
             if (i === 1 && isMonthRolling && rollingDate > lengthOfPrevMonth) {
                 rollingDate = 1;
                 isMonthRolling = false;
-            } 
-            
+            }
+
             if (i > 1 && !isMonthRolling && rollingDate > lengthOfMonth) {
                 rollingDate = 1;
                 isMonthRolling = true;
-            } 
-            
+            }
+
             if (!isMonthRolling && isThisMonth && rollingDate === now.getDate()) {
                 targetTD.addClass('today-td');
                 targetTD.find('.date-line').addClass('badge');
             }
-                
+
             if (rollingDate === 1) {
                 if (!isMonthRolling) {
                     targetTD.find('.date-line').text(targetDate.getMonth() + 1 + '月1日');
@@ -132,11 +139,11 @@ function setDate() {
             } else {
                 targetTD.find('.date-line').text(rollingDate);
             }
-            
+
             targetTD = targetTD.next();
             rollingDate++;
-        } 
-    } 
+        }
+    }
 }
 
 // 获取事件列表
@@ -166,7 +173,7 @@ function getEventList(isUseSession) {
                 // 设置事件
                 if (!$.isEmptyObject(data)) {
                     setEvent(data['eventList']);
-                } 
+                }
             } else if (jsonObj['type'] === 'error') {
                 // 跳转至错误页面
                 doDynamicFormSubmit({'action' : jsonObj['url']});
@@ -306,7 +313,7 @@ function showEventDetail(elem) {
     var eventInfoStr = $(elem).parents('td').find('.event-hidden[eventId=' + $(elem).attr('eventId') + ']').text(),
         eventInfo = $.parseJSON(eventInfoStr);
 
-    // TODO 显示用模态窗口
+    // TODO
 }
 
 // 根据星期数（0-6）返回对应class名
@@ -326,8 +333,26 @@ function getClassByDayOfWeek(dayOfWeek) {
            return '.fri';
         case 6:
            return '.sat';
-        default:
-            return '';
+    }
+}
+
+// 根据星期数（0-6）返回对应星期名
+function getNameByDayOfWeek(dayOfWeek) {
+    switch (dayOfWeek) {
+        case 0:
+            return '星期日';
+        case 1:
+            return '星期一';
+        case 2:
+            return '星期二';
+        case 3:
+            return '星期三';
+        case 4:
+            return '星期四';
+        case 5:
+            return '星期五';
+        case 6:
+            return '星期六';
     }
 }
 
