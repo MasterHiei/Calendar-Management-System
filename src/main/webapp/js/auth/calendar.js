@@ -66,7 +66,7 @@ $(function () {
 
     // 点击事件显示详细内容
     $('td').on('click', '.event-div', function () {
-        showEventDetail(USE_SESSION_NO);
+        showEventDetail(this);
     });
 
     // 点击logo时重新获取事件列表
@@ -113,7 +113,7 @@ function setDate() {
         isMonthRolling = true;
     }
     for (var i = 1; i < 7; i++) {
-        var targetTD = $('tr[lineNo=' + i + ']').find('.sun');
+        var targetTD = $('#line-' + i).find('.sun');
 
         for (var j = 0; j < 7; j++) {
             if (i === 1 && isMonthRolling && rollingDate > lengthOfPrevMonth) {
@@ -216,8 +216,8 @@ function setEvent(eventList) {
                 weekInterval = (intervalDayStart % 7) + (intervalDayBTW % 7),
                 endDayOfWeek = weekInterval > 6 ? (weekInterval % 6) - 1 : weekInterval,
                 classNameEnd = getClassByDayOfWeek(endDayOfWeek),
-                startTD = $('tr[lineNo=' + lineNoStart + ']').find(classNameStart),
-                endTD = $('tr[lineNo=' + lineNoEnd + ']').find(classNameEnd);
+                startTD = $('#line-' + lineNoStart).find(classNameStart),
+                endTD = $('#line-' + lineNoEnd).find(classNameEnd);
 
             addEventOfPeriod(startTD, endTD, item);
         }
@@ -232,7 +232,7 @@ function setEvent(eventList) {
                 intervalDayStart = Math.ceil((eventStartDate - firstDay) / MS_OF_DAY),
                 lineNo = Math.floor(intervalDayStart / 7) + 1,
                 className = getClassByDayOfWeek(intervalDayStart % 7),
-                targetTD = $('tr[lineNo=' + lineNo + ']').find(className);
+                targetTD = $('#line-' + lineNo).find(className);
 
             if (targetTD.find('.event-div').length < 3) {
                 targetTD.append('<div class="event-div event-remove" eventId="' + item['eventId'] + '">' +
@@ -251,7 +251,7 @@ function setEvent(eventList) {
                     eventMore.find('span').text('剩余 ' + (Number(eventMoreText.split(' ')[1]) + 1) + ' 项');
                 }
             }
-            targetTD.append('<div class="event-hidden event-remove" eventId="' + item['eventId'] + '">'
+            targetTD.append('<div class="event-hidden event-remove" id="' + item['eventId'] + '">'
                 + JSON.stringify(item) + '</div>');
         }
     });
@@ -268,7 +268,7 @@ function addEventOfPeriod(startTD, endTD, eventItem) {
     for (var i = startLineNo; i <= endLineNo; i++) {
         if (isEnd) return;
 
-        var targetTD = i === startLineNo ? startTD : $('tr[lineNo=' + i + ']').find('.sun'),
+        var targetTD = i === startLineNo ? startTD : $('#line-' + i).find('.sun'),
             ergodicTD = targetTD,
             rangeCoef = 1;
 
@@ -298,11 +298,9 @@ function addEventOfPeriod(startTD, endTD, eventItem) {
 // 添加事件信息
 function addEventInfo(eventDiv, eventItem) {
     if (typeof eventItem['eventStartTime'] !== 'undefined') {
-        var startTime = new Date(eventItem['eventStartTime']),
-            startHours = startTime.getHours() < 10 ? '0' + startTime.getHours() : startTime.getHours(),
-            startMinutes = startTime.getMinutes() < 10 ? '0' + startTime.getMinutes() : startTime.getMinutes();
+        var startTime = new Date(eventItem['eventStartTime']);
 
-        eventDiv.find('.event-info').text(startHours + ':' + startMinutes + ' ' + eventItem['eventTitle']);
+        eventDiv.find('.event-info').text(formatToTimeStr(startTime) + ' ' + eventItem['eventTitle']);
     } else {
         eventDiv.find('.event-info').text(eventItem['eventTitle']);
     }
@@ -317,10 +315,37 @@ function resizeEventDiv() {
 
 // 显示事件详细信息
 function showEventDetail(elem) {
-    var eventInfoStr = $(elem).parents('td').find('.event-hidden[eventId=' + $(elem).attr('eventId') + ']').text(),
+    var eventInfoStr = $('#' + $(elem).attr("eventId")).text(),
         eventInfo = $.parseJSON(eventInfoStr);
 
-    // TODO
+    // 显示信息
+    var periodDIV = $('#modal-period'),
+        startDate = new Date(eventInfo['eventStartDate']);
+
+    periodDIV.html('<span id="event-date"></span>');
+
+    if (typeof eventInfo['eventEndDate'] === 'undefined') {
+        // 单日
+        periodDIV.append('<span id="event-time"></span>');
+        $('#event-date').text(startDate.getFullYear() + '年'
+            + (startDate.getMonth() + 1) + '月' + startDate.getDate() + '日');
+
+        if (typeof eventInfo['eventStartTime'] !== 'undefined') {
+            var startTime = new Date(eventInfo['eventStartTime']),
+                endTime = new Date(eventInfo['eventEndTime']);
+            $('#event-time').text(formatToTimeStr(startTime) + ' ~ ' + formatToTimeStr(endTime));
+        } else {
+            // 期间
+            $('#event-time').text('全天');
+        }
+    } else {
+        $('#event-date').text();
+    }
+
+    $('#event-title').text(eventInfo['eventTitle']);
+    $('#event-desc').text(eventInfo['eventContent']);
+
+    $('#eventInfoModal').modal('show');
 }
 
 // 根据星期数（0-6）返回对应class名
@@ -383,4 +408,11 @@ function getPrevMonthLength(targetDate) {
 // 判断是否为同年同月的日期
 function checkIsSameMonth(targetDate, now) {
     return (targetDate.getFullYear() === now.getFullYear() && (targetDate.getMonth() === now.getMonth()));
+}
+
+// 将Date格式化为HH:mm形式的字符串
+function formatToTimeStr(time) {
+    var hours = time.getHours() < 10 ? '0' + time.getHours() : time.getHours(),
+        minutes = time.getMinutes() < 10 ? '0' + time.getMinutes() : time.getMinutes();
+    return hours + ':' + minutes;
 }

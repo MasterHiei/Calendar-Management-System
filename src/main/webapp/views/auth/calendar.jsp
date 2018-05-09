@@ -80,7 +80,7 @@
             </thead>
             <tbody>
             <c:forEach begin="1" end="6" step="1" var="i">
-                <tr class="row-6-md-1" lineNo="${i}">
+                <tr class="row-6-md-1" id="line-${i}" lineNo="${i}">
                     <td class="col-7-md-1 sun">
                         <span class="date-line"></span>
                     </td>
@@ -119,25 +119,24 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <div class="modal-tool">
-                        <a class="edit"><i class="fa fa-edit"></i></a>
-                        <a class="close"><i class="fa fa-times"></i></a>
+                        <div id="event-edit">
+                            <a><i class="fa fa-edit"></i></a>
+                        </div>
+                        <div id="event-close">
+                            <a><i class="fa fa-times"></i></a>
+                        </div>
                     </div>
                     <div class="modal-title">
-                        <span class="title h3"></span>
+                        <span class="h3" id="event-title"></span>
                     </div>
                 </div>
                 <div class="modal-body">
-                    <div class="modal-period">
-                        <span class="period"></span>
+                    <div id="modal-period"></div>
+                    <div id="modal-desc">
+                        <span id="event-desc"></span>
                     </div>
-                    <div class="modal-desc">
-                        <span class="desc"></span>
-                    </div>
-                    <div class="modal-type">
-                        <span class="type"></span>
-                    </div>
-                    <div class="modal-owner">
-                        <span class="owner"></span>
+                    <div id="modal-owner">
+                        <span id="event-owner"></span>
                     </div>
                 </div>
             </div>

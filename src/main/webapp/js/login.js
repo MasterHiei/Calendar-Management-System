@@ -71,4 +71,5 @@ function checkInput () {
         doAlertModalShow('E001-0002');
         return false;
     }
+    return true;
 }

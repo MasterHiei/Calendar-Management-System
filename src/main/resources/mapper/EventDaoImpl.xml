@@ -13,10 +13,12 @@
     <result column="event_end_time" jdbcType="TIME" property="eventEndTime" />
     <result column="event_color" jdbcType="VARCHAR" property="eventColor" />
     <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="user_name" jdbcType="VARCHAR" property="userName" />
   </resultMap>
   
   <sql id="Base_Column_List">
-    e.event_id, e.event_title, e.event_location, e.event_content, e.event_start_date, e.event_start_time, e.event_end_date, e.event_end_time, e.event_color, ue.user_id
+    e.event_id, e.event_title, e.event_location, e.event_content, e.event_start_date, e.event_start_time,
+    e.event_end_date, e.event_end_time, e.event_color, u.user_id, u.user_name
   </sql>
 
   <!-- 动态查询事件信息 -->
@@ -25,6 +27,7 @@
     <include refid="Base_Column_List" />
     from tbl_event e
     inner join tbl_user_event ue on ue.event_id=e.event_id
+    inner join tbl_user u on u.user_id=ue.user_id
     <where>
       <if test="eventId != null">
         e.event_id = #{eventId,jdbcType=INTEGER}

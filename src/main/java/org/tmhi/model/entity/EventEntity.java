@@ -29,4 +29,6 @@ public class EventEntity implements Serializable {
     private String eventColor;
     /** 用户ID */
     private Integer userId;
+    /** 用户名 */
+    private String userName;
 }
