@@ -7,7 +7,7 @@
   + Spring + SpringMVC + Mybatis 
  
 + DataBase
-  + MySQL v5.X
+  + MySQL v5.x
   
 + Project Management
   + Apache Maven v3.5.0
