@@ -43,7 +43,7 @@ public class UserServiceImpl implements UserService {
         
         if (Objects.isNull(user)) {
             // 用户名不存在
-            errorCode = "E001-0004";
+            errorCode = "E001-0003";
             return errorCode;
         }
 
@@ -52,7 +52,7 @@ public class UserServiceImpl implements UserService {
         
         if (!isEquation) {
             // 密码输入错误
-            errorCode = "E001-0005";
+            errorCode = "E001-0004";
             return errorCode;
         }
         // 验证成功，更新用户会话ID和登录时间

@@ -54,10 +54,10 @@ function doDynamicModalShow(params) {
     for (var key in params) {
         switch (key) {
             case 'header':
-                $('.modal-title').html(params[key]);
+                $('.modal-title').text(params[key]);
                 break;
             case 'body':
-                $('.modal-body').html(params[key]);
+                $('.modal-body').text(params[key]);
                 break;
             case 'footer':
                 if (params[key] === 'alert') {

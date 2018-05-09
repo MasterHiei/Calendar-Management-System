@@ -71,11 +71,4 @@ function checkInput () {
         doAlertModalShow('E001-0002');
         return false;
     }
-    // 密码长度验证
-    if ($('#password').val().length > 16 || $('#password').val().length < 6) {
-        // 显示提示信息
-        doAlertModalShow('E001-0003');
-        return false;
-    }
-    return true;
 }

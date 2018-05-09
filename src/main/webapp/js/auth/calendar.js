@@ -32,26 +32,28 @@ $(function () {
             getEventList(USE_SESSION_NO);
         });
         // ISSUE: Bootstrap icon was unusable. Change to Font Awesome support.
-        $('.datetimepicker th.prev').empty();
-        $('.datetimepicker th.prev').html('<i class="fa fa-angle-left"></i>');
-        $('.datetimepicker th.next').empty();
-        $('.datetimepicker th.next').html('<i class="fa fa-angle-right"></i>');
+        $('.datetimepicker').find('.prev').empty()
+            .html('<i class="fa fa-angle-left"></i>');
+        $('.datetimepicker').find('.next').empty()
+            .html('<i class="fa fa-angle-right"></i>');
 
         $('#date-picker').trigger('click');
     });
 
     // 切换月份（上一月）
     $('#to-prev-month').on('click', function () {
-        var prevMonth = new Date(new Date($('#date').val()).getFullYear(), new Date($('#date').val()).getMonth() - 1, 1);
-        $('#date').val(prevMonth.getFullYear() + '-' + (prevMonth.getMonth() + 1) + '-1');
+        var dateElem = $('#date'),
+            prevMonth = new Date(new Date(dateElem.val()).getFullYear(), new Date(dateElem.val()).getMonth() - 1, 1);
+        dateElem.val(prevMonth.getFullYear() + '-' + (prevMonth.getMonth() + 1) + '-1');
 
         getEventList(USE_SESSION_NO);
     });
 
     // 切换月份（下一月）
     $('#to-next-month').on('click', function () {
-        var nextMonth = new Date( new Date($('#date').val()).getFullYear(),  new Date($('#date').val()).getMonth() + 1, 1);
-        $('#date').val(nextMonth.getFullYear() + '-' + (nextMonth.getMonth() + 1) + '-1');
+        var dateElem = $('#date'),
+            nextMonth = new Date( new Date(dateElem.val()).getFullYear(),  new Date(dateElem.val()).getMonth() + 1, 1);
+        dateElem.val(nextMonth.getFullYear() + '-' + (nextMonth.getMonth() + 1) + '-1');
 
         getEventList(USE_SESSION_NO);
     });
@@ -68,7 +70,7 @@ $(function () {
     });
 
     // 点击logo时重新获取事件列表
-    $('.logo > strong').on('click', function () {
+    $('.logo').find('strong').on('click', function () {
         getEventList(USE_SESSION_NO);
     });
 
@@ -92,7 +94,7 @@ function setDate() {
         targetDate = new Date($('#date').val());
 
     // 设置导航栏日期标签
-    $('#now-date span').text(targetDate.getFullYear() + '年' + (targetDate.getMonth()+ 1)  + '月');
+    $('#now-date').find('span').text(targetDate.getFullYear() + '年' + (targetDate.getMonth()+ 1)  + '月');
 
     // 移除今日标识
     $('.badge').removeClass('badge');
@@ -148,11 +150,12 @@ function setDate() {
 
 // 获取事件列表
 function getEventList(isUseSession) {
-    var params = {
+    var date = new Date($('#date').val()),
+        params = {
         url : 'getEventList.html',
         data : {
-            year : new Date($('#date').val()).getFullYear(),
-            month : new Date($('#date').val()).getMonth() + 1,
+            year : date.getFullYear(),
+            month : date.getMonth() + 1,
             isUseSession : isUseSession
         },
         beforeSend : function () {
@@ -191,7 +194,9 @@ function setEvent(eventList) {
         lastDay = new Date(firstDay.getTime() + ((MAX_DAY - 1) * MS_OF_DAY));
 
     // 期间（优先显示）
-    eventList.forEach(function (item) {
+    $.each(eventList ,function () {
+        var item = this;
+
         if (typeof item['eventEndDate'] !== 'undefined') {
             var eventStartDate = new Date(item['eventStartDate']),
                 eventEndDate = new Date(item['eventEndDate']);
@@ -219,7 +224,9 @@ function setEvent(eventList) {
     });
 
     // 单日
-    eventList.forEach(function (item) {
+    $.each(eventList ,function () {
+        var item = this;
+
         if (typeof item['eventEndDate'] === 'undefined') {
             var eventStartDate = new Date(item['eventStartDate']),
                 intervalDayStart = Math.ceil((eventStartDate - firstDay) / MS_OF_DAY),
@@ -303,7 +310,7 @@ function addEventInfo(eventDiv, eventItem) {
 
 // 重置event div宽度
 function resizeEventDiv() {
-    $('.event-period').each(function () {
+    $.each($('.event-period'), function () {
         $(this).width(Number($(this).attr('rangeCoef')) * ($(document.body).width() / 7) - 12);
     });
 }

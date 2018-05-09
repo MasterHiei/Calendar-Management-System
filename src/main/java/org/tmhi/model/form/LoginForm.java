@@ -1,7 +1,6 @@
 package org.tmhi.model.form;
 
 import lombok.Data;
-import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
@@ -21,7 +20,6 @@ public class LoginForm implements Serializable {
     
     /** 用户密码 */
     @NotBlank(message = "E001-0002")
-    @Length(min = 6, max = 16, message = "E001-0003")
     private String password;
     
     /** 记住我 */
