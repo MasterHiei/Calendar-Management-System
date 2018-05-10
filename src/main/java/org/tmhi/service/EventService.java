@@ -1,8 +1,8 @@
 package org.tmhi.service;
 
-import org.tmhi.model.entity.EventEntity;
+import org.tmhi.model.form.CalendarForm;
 
-import java.util.List;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * Author:       Hiei
@@ -13,11 +13,13 @@ import java.util.List;
 public interface EventService {
 
     /**
-     * 根据动态参数查询事件信息
+     * 获取事件信息
      *
-     * @param   params 参数（e.g. eventId, userId, eventStartDatetime, eventEndDatetime）
-     * @return  事件信息集合
+     * @param   request HttpServletRequest
+     * @param   inputForm 日历页面传递的参数
+     * @param   userId 用户ID
+     * @return  日历页面
      * @throws  Exception 异常
      */
-    List<EventEntity> queryEventByParams(EventEntity params) throws Exception;
+    CalendarForm getEventInfo(HttpServletRequest request, CalendarForm inputForm, Long userId) throws Exception;
 }

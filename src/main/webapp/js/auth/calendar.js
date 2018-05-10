@@ -299,7 +299,6 @@ function addEventOfPeriod(startTD, endTD, eventItem) {
 function addEventInfo(eventDiv, eventItem) {
     if (typeof eventItem['eventStartTime'] !== 'undefined') {
         var startTime = new Date(eventItem['eventStartTime']);
-
         eventDiv.find('.event-info').text(formatToTimeStr(startTime) + ' ' + eventItem['eventTitle']);
     } else {
         eventDiv.find('.event-info').text(eventItem['eventTitle']);
@@ -318,7 +317,6 @@ function showEventDetail(elem) {
     var eventInfoStr = $('#' + $(elem).attr("eventId")).text(),
         eventInfo = $.parseJSON(eventInfoStr);
 
-    // 显示信息
     var periodDIV = $('#modal-period'),
         startDate = new Date(eventInfo['eventStartDate']);
 
@@ -344,7 +342,9 @@ function showEventDetail(elem) {
 
     $('#event-title').text(eventInfo['eventTitle']);
     $('#event-desc').text(eventInfo['eventContent']);
+    $('#event-owner').text(eventInfo['eventOwnerName']);
 
+    // 显示事件详细模态框
     $('#eventInfoModal').modal('show');
 }
 

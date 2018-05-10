@@ -10,7 +10,7 @@ import java.sql.Time;
 public class EventEntity implements Serializable {
     
     /** 事件ID */
-    private Integer eventId;
+    private Long eventId;
     /** 事件标题 */
     private String eventTitle;
     /** 事件地点 */
@@ -25,10 +25,12 @@ public class EventEntity implements Serializable {
     private Date eventEndDate;
     /** 事件结束时间 */
     private Time eventEndTime;
-    /** 事件表示颜色*/
+    /** 事件表示颜色 */
     private String eventColor;
+    /** 事件所有者ID */
+    private Integer eventOwnerId;
+    /** 事件所有者名 */
+    private String eventOwnerName;
     /** 用户ID */
-    private Integer userId;
-    /** 用户名 */
-    private String userName;
+    private Long userId;
 }

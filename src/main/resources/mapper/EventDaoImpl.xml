@@ -3,7 +3,7 @@
 <mapper namespace="org.tmhi.dao.EventDao">
   
   <resultMap id="BaseResultMap" type="event">
-    <id column="event_id" jdbcType="INTEGER" property="eventId" />
+    <id column="event_id" jdbcType="BIGINT" property="eventId" />
     <result column="event_title" jdbcType="VARCHAR" property="eventTitle" />
     <result column="event_location" jdbcType="VARCHAR" property="eventLocation" />
     <result column="event_content" jdbcType="VARCHAR" property="eventContent" />
@@ -12,36 +12,30 @@
     <result column="event_end_date" jdbcType="DATE" property="eventEndDate" />
     <result column="event_end_time" jdbcType="TIME" property="eventEndTime" />
     <result column="event_color" jdbcType="VARCHAR" property="eventColor" />
-    <result column="user_id" jdbcType="INTEGER" property="userId" />
-    <result column="user_name" jdbcType="VARCHAR" property="userName" />
+    <result column="event_owner_id" jdbcType="BIGINT" property="eventOwnerId" />
+    <result column="event_owner_name" jdbcType="VARCHAR" property="eventOwnerName" />
   </resultMap>
   
   <sql id="Base_Column_List">
     e.event_id, e.event_title, e.event_location, e.event_content, e.event_start_date, e.event_start_time,
-    e.event_end_date, e.event_end_time, e.event_color, u.user_id, u.user_name
+    e.event_end_date, e.event_end_time, e.event_color, e.event_owner_id
   </sql>
 
-  <!-- 动态查询事件信息 -->
-  <select id="queryEventByParams" parameterType="java.lang.String" resultMap="BaseResultMap">
+  <!-- 查询事件信息 -->
+  <select id="queryEventByParams" parameterType="org.tmhi.model.entity.EventEntity" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
+    , u.user_name as event_owner_name
     from tbl_event e
     inner join tbl_user_event ue on ue.event_id=e.event_id
-    inner join tbl_user u on u.user_id=ue.user_id
+    inner join tbl_user u on u.user_id=e.event_owner_id
     <where>
-      <if test="eventId != null">
-        e.event_id = #{eventId,jdbcType=INTEGER}
-      </if>
-      <if test="userId != null">
-        and ue.user_id = #{userId,jdbcType=INTEGER}
-      </if>
-      <if test="eventStartDate != null and eventEndDate != null">
-        and (
-        (#{eventStartDate,jdbcType=DATE} &lt;= e.event_start_date and e.event_start_date &lt;= #{eventEndDate,jdbcType=DATE})
-        or
-        (#{eventStartDate,jdbcType=DATE} &lt;= e.event_end_date and e.event_end_date &lt;= #{eventEndDate,jdbcType=DATE})
-        )
-      </if>
+      ue.user_id = #{userId,jdbcType=BIGINT}
+      and (
+      (#{eventStartDate,jdbcType=DATE} &lt;= e.event_start_date and e.event_start_date &lt;= #{eventEndDate,jdbcType=DATE})
+      or
+      (#{eventStartDate,jdbcType=DATE} &lt;= e.event_end_date and e.event_end_date &lt;= #{eventEndDate,jdbcType=DATE})
+      )
     </where>
     order by e.event_start_date, e.event_start_time
   </select>

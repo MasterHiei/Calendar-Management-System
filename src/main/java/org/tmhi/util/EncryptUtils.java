@@ -25,7 +25,7 @@ public class EncryptUtils {
      * @param salt 盐值
      * @return 加密字符串 
      */
-    public static String getEncryptedString(String string, String salt) throws Exception {
+    private static String getEncryptedString(String string, String salt) throws Exception {
         
         // 使用java.security.MessageDigest加密
         MessageDigest digest = MessageDigest.getInstance(ALGORITHM);
@@ -38,16 +38,16 @@ public class EncryptUtils {
     /**
      * 用户密码对比
      *
-     * @param input 用户输入的密码
-     * @param target 数据库中的密码
+     * @param inputPWD 用户输入的密码
+     * @param basePWD 数据库中的密码
      * @param salt 用户盐值
      * @return true: 密码一致 false: 密码不一致
      */
-    public static boolean equalPassword(String input, String target, String salt) throws Exception {
+    public static boolean equalPassword(String inputPWD, String basePWD, String salt) throws Exception {
 
         // 加密用户密码
-        String encryptedInput = getEncryptedString(input, salt);
+        String encryptedInput = getEncryptedString(inputPWD, salt);
         // 返回比较结果
-        return encryptedInput.equals(target);
+        return encryptedInput.equals(basePWD);
     }
 }

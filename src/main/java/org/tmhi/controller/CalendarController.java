@@ -11,18 +11,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.tmhi.facade.SessionFacade;
-import org.tmhi.model.dto.CalendarSessionDto;
 import org.tmhi.model.dto.UserSessionDto;
-import org.tmhi.model.entity.EventEntity;
 import org.tmhi.model.form.CalendarForm;
 import org.tmhi.service.EventService;
 import org.tmhi.util.RequestUtils;
 
 import javax.servlet.http.HttpServletRequest;
-import java.sql.Date;
-import java.time.LocalDate;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -102,46 +97,8 @@ public class CalendarController {
             return jsonMap;
         }
 
-        CalendarForm calendarForm = new CalendarForm();
-
-        // 获取日历session
-        CalendarSessionDto sessionDto = SessionFacade.getCalendarSession(request);
-
-        LocalDate date;
-        if (input.getIsUseSession().equals(CalendarForm.USE_SESSION_YES) && Objects.nonNull(sessionDto)) {
-            date = sessionDto.getDate();
-        } else {
-            date = LocalDate.of(input.getYear(), input.getMonth(), 1);
-        }
-
-        // 计算起始日期和结束日期
-        LocalDate startDate = date;
-        LocalDate endDate = date.withDayOfMonth(date.lengthOfMonth());
-        
-        if (date.getDayOfWeek().getValue() < 7) {
-            startDate = date.minusMonths(1).withDayOfMonth(date.minusMonths(1).lengthOfMonth()).minusDays(date.getDayOfWeek().getValue() - 1);
-            endDate = endDate.plusDays((5 * 7) - date.getDayOfWeek().getValue() - date.lengthOfMonth());
-        } else {
-            endDate = endDate.plusDays((5 * 7) - date.lengthOfMonth());
-        }
-        
-        // 获取日程列表
-        EventEntity params = new EventEntity();
-        params.setUserId(userSessionDto.getUserId());
-        params.setEventStartDate(Date.valueOf(startDate));
-        params.setEventEndDate(Date.valueOf(endDate));
-        
-        List<EventEntity> eventList = eventService.queryEventByParams(params);
-        
-        // 设置页面参数
-        if (Objects.nonNull(eventList) && eventList.size() > 0) {
-            calendarForm.setEventList(eventList);
-        }
-        calendarForm.setYear(date.getYear());
-        calendarForm.setMonth(date.getMonthValue());
-
-        // 保存/更新session
-        SessionFacade.saveCalendarSession(request, date);
+        // 获取事件信息并返回至页面
+        CalendarForm calendarForm = eventService.getEventInfo(request, input, userSessionDto.getUserId());
        
         jsonMap.put("type", "success");
         jsonMap.put("data" ,JSONObject.toJSONString(calendarForm));

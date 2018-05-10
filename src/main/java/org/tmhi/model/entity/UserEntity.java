@@ -8,7 +8,7 @@ import java.sql.Timestamp;
 public class UserEntity extends BaseEntity {
     
     /** 用户ID*/
-    private Integer userId;
+    private Long userId;
     /** 用户名 */
     private String userName;
     /** 用户邮箱 */

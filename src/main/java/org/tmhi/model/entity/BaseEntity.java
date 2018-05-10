@@ -3,7 +3,6 @@ package org.tmhi.model.entity;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
 
 /**
  * Author:       Hiei
@@ -18,16 +17,6 @@ public class BaseEntity implements Serializable {
     /** DELETE_FLAG_YES：已删除 */
     public static final int DELETE_FLAG_YES = 1;
     
-    /** 删除标记 */
+    /** 是否删除 */
     private Integer deleteFlag;
-    /** 创建者 */
-    private String createUserId;
-    /** 创建时间 */
-    private Timestamp createDatetime;
-    /** 更新者 */
-    private String updateUserId;
-    /** 更新时间 */
-    private Timestamp updateDatetime;
-    /** 版本号 */
-    private Integer version;
 }
