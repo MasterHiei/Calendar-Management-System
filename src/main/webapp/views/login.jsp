@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/lib/bootstrap.min.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/lib/font-awesome.min.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/login.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/modal.css">
 
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/lib/jquery-3.3.1.min.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/lib/bootstrap.min.js"></script>

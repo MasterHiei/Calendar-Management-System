@@ -6,8 +6,9 @@
 
 .modal-header {
     border: none;
-    border-radius: 6px;
-    background: #54c5ff;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+    background-color: #54c5ff;
 }
 
 .modal-body {

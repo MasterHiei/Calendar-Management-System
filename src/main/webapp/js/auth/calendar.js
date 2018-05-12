@@ -66,7 +66,18 @@ $(function () {
 
     // 点击事件显示详细内容
     $('td').on('click', '.event-div', function () {
+        $(this).addClass('shadow');
         showEventDetail(this);
+    });
+
+    // 点击X关闭事件详细模态框
+    $('#event-close').on('click', function () {
+        $('#eventInfoModal').modal('hide');
+    });
+
+    // 模态框关闭后取消选中阴影效果
+    $('#eventInfoModal').on('hidden.bs.modal', function () {
+        $('.shadow').removeClass('shadow');
     });
 
     // 点击logo时重新获取事件列表
@@ -236,7 +247,7 @@ function setEvent(eventList) {
 
             if (targetTD.find('.event-div').length < 3) {
                 targetTD.append('<div class="event-div event-remove" eventId="' + item['eventId'] + '">' +
-                    '<div class="event-sign"></div><span class="event-info"></span></div>');
+                    '<div class="event-sign"></div><span class="event-info text-hidden"></span></div>');
 
                 var eventDiv = targetTD.find('[eventId=' + item['eventId'] + ']');
                 addEventInfo(eventDiv, item);
@@ -317,16 +328,17 @@ function showEventDetail(elem) {
     var eventInfoStr = $('#' + $(elem).attr("eventId")).text(),
         eventInfo = $.parseJSON(eventInfoStr);
 
-    var periodDIV = $('#modal-period'),
+    var periodDIV = $('#period-c'),
         startDate = new Date(eventInfo['eventStartDate']);
 
     periodDIV.html('<span id="event-date"></span>');
 
     if (typeof eventInfo['eventEndDate'] === 'undefined') {
         // 单日
-        periodDIV.append('<span id="event-time"></span>');
-        $('#event-date').text(startDate.getFullYear() + '年'
-            + (startDate.getMonth() + 1) + '月' + startDate.getDate() + '日');
+        periodDIV.append('<div><span id="event-time"></span></div>');
+        $('#event-date').text(startDate.getFullYear() + '年 '
+            + (startDate.getMonth() + 1) + '月 ' + startDate.getDate() + '日（'
+            + getNameByDayOfWeek(startDate.getDay()) + '）');
 
         if (typeof eventInfo['eventStartTime'] !== 'undefined') {
             var startTime = new Date(eventInfo['eventStartTime']),
@@ -344,6 +356,7 @@ function showEventDetail(elem) {
     $('#event-desc').text(eventInfo['eventContent']);
     $('#event-owner').text(eventInfo['eventOwnerName']);
 
+    $('#event-modal-header').css('background-color', eventInfo['eventColor']);
     // 显示事件详细模态框
     $('#eventInfoModal').modal('show');
 }

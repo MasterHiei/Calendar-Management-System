@@ -243,7 +243,7 @@ p {
     cursor: pointer;
 }
 
-.event-info {
+.text-hidden {
     display: inline-block;
     max-width: 85%;
     white-space: nowrap;
@@ -282,7 +282,115 @@ p {
     margin-left: 10px;
 }
 
+/* 事件详细模态框 */
+.modal-content, .modal-dialog {
+    height: 328px;
+    width: 448px;
+    margin-top: 10%;
+    border: none;
+}
+
 .modal-backdrop {
     opacity: 0 !important;
     filter: alpha(opacity=0) !important;
+}
+
+#event-modal-header {
+    padding: 0;
+    height: 128px;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+}
+
+#event-modal-title {
+    margin-top: 72px;
+    padding: 0 26px 0 60px;
+    color: #ffffff;
+    font-size: 20px;
+}
+
+.modal-tool {
+    margin-left: 24px;
+}
+
+#event-close, #event-edit {
+    float: right;
+    font-size: 18px;
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+#event-edit {
+    margin-top: 6px;
+}
+
+#event-close {
+    margin: 6px 12px 0 6px !important;
+}
+
+#event-close > i, #event-edit > i {
+    position: relative;
+    top: 28%;
+    left: 32%;
+    color: #ffffff;
+}
+
+#event-edit > i {
+    top: 30% !important;
+}
+
+#event-close:hover, #event-edit:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+#modal-period {
+    height: 50px;
+    width: 100%;
+    margin: 10px 0 10px 0;
+}
+
+#modal-period > .body-i {
+    top: -25%;
+}
+
+.body-i {
+    display: inline-block;
+    font-size: 18px;
+    color: #555555;
+    position: relative;
+    left: 1%;
+}
+
+.body-c {
+    display: inline-block;
+    margin-left: 24px;
+    width: 85%;
+}
+
+#event-time {
+    font-size: 12px;
+    color: #757575;
+}
+
+#modal-desc {
+    height: 48px;
+    margin-bottom: 10px;
+}
+
+#modal-desc > .body-i {
+    top: -45%;
+}
+
+#event-desc {
+    width: 100%;
+    padding: 0;
+    border: none;
+    resize: none;
+    white-space: normal !important;
+}
+
+.shadow {
+    box-shadow: 1px 1px 1px 1px #888888;
 }

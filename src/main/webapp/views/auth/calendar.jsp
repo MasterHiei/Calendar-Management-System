@@ -117,26 +117,39 @@
     <div class="modal fade" id="eventInfoModal" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <div class="modal-header">
-                    <div class="modal-tool">
-                        <div id="event-edit">
-                            <a><i class="fa fa-edit"></i></a>
+                <div class="modal-header" id="event-modal-header">
+                    <div>
+                        <div class="modal-tool">
+                            <div id="event-close" data-toggle="tooltip" data-placement="bottom" title="关闭">
+                                <i class="fa fa-times"></i>
+                            </div>
                         </div>
-                        <div id="event-close">
-                            <a><i class="fa fa-times"></i></a>
+                        <div class="modal-tool">
+                            <div id="event-edit" data-toggle="tooltip" data-placement="bottom" title="编辑">
+                                <i class="fa fa-edit"></i>
+                            </div>
                         </div>
                     </div>
-                    <div class="modal-title">
-                        <span class="h3" id="event-title"></span>
+                    <div class="modal-title" id="event-modal-title">
+                        <span id="event-title" class="text-hidden"></span>
                     </div>
                 </div>
                 <div class="modal-body">
-                    <div id="modal-period"></div>
+                    <div id="modal-period">
+                        <div class="body-i" id="period-i"><i class="fa fa-calendar"></i></div>
+                        <div class="body-c" id="period-c"></div>
+                    </div>
                     <div id="modal-desc">
-                        <span id="event-desc"></span>
+                        <div class="body-i"><i class="fa fa-file-text-o"></i></div>
+                        <div class="body-c">
+                            <textarea id="event-desc" class="text-hidden" disabled rows="2"></textarea>
+                        </div>
                     </div>
                     <div id="modal-owner">
-                        <span id="event-owner"></span>
+                        <div class="body-i"><i class="fa fa-user"></i></div>
+                        <div class="body-c">
+                            <span id="event-owner"></span>
+                        </div>
                     </div>
                 </div>
             </div>
