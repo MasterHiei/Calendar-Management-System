@@ -67,6 +67,11 @@ $(function () {
     // 点击事件显示详细内容
     $('td').on('click', '.event-div', function () {
         $(this).addClass('shadow');
+
+        if ($(this).attr('class').indexOf('event-period') !== -1) {
+            var eventId = $(this).attr('eventId');
+            $('.event-div[eventId=' + eventId + ']').addClass('shadow');
+        }
         showEventDetail(this);
     });
 
@@ -262,8 +267,6 @@ function setEvent(eventList) {
                     eventMore.find('span').text('剩余 ' + (Number(eventMoreText.split(' ')[1]) + 1) + ' 项');
                 }
             }
-            targetTD.append('<div class="event-hidden event-remove" id="' + item['eventId'] + '">'
-                + JSON.stringify(item) + '</div>');
         }
     });
 }
@@ -314,6 +317,8 @@ function addEventInfo(eventDiv, eventItem) {
     } else {
         eventDiv.find('.event-info').text(eventItem['eventTitle']);
     }
+    eventDiv.append('<div class="event-hidden" id="' + eventItem['eventId'] + '">'
+        + JSON.stringify(eventItem) + '</div>');
 }
 
 // 重置event div宽度
@@ -331,10 +336,9 @@ function showEventDetail(elem) {
     var periodDIV = $('#period-c'),
         startDate = new Date(eventInfo['eventStartDate']);
 
-    periodDIV.html('<span id="event-date"></span>');
-
     if (typeof eventInfo['eventEndDate'] === 'undefined') {
         // 单日
+        periodDIV.html('<span id="event-date"></span>');
         periodDIV.append('<div><span id="event-time"></span></div>');
         $('#event-date').text(startDate.getFullYear() + '年 '
             + (startDate.getMonth() + 1) + '月 ' + startDate.getDate() + '日（'
@@ -345,19 +349,42 @@ function showEventDetail(elem) {
                 endTime = new Date(eventInfo['eventEndTime']);
             $('#event-time').text(formatToTimeStr(startTime) + ' ~ ' + formatToTimeStr(endTime));
         } else {
-            // 期间
             $('#event-time').text('全天');
         }
     } else {
-        $('#event-date').text();
+        // 期间
+        periodDIV.html('<span id="event-date-start"></span>');
+        periodDIV.append('<div><span id="event-date-end"></span></div>');
+
+        // 设置日期信息
+        var endDate = new Date(eventInfo['eventEndDate']),
+            startDateStr = '开始：' + startDate.getFullYear() + '年 '
+            + (startDate.getMonth() + 1) + '月 ' + startDate.getDate() + '日（'
+            + getNameByDayOfWeek(startDate.getDay()) + '）',
+            endDateStr = '结束：' + endDate.getFullYear() + '年 '
+                + (endDate.getMonth() + 1) + '月 ' + endDate.getDate() + '日（'
+                + getNameByDayOfWeek(endDate.getDay()) + '）';
+
+        if (typeof eventInfo['eventStartTime'] !== 'undefined') {
+            var startTime = new Date(eventInfo['eventStartTime']),
+                endTime = new Date(eventInfo['eventEndTime']);
+            startDateStr = startDateStr + ', ' + formatToTimeStr(startTime);
+            endDateStr = endDateStr + ', ' + formatToTimeStr(endTime);
+        } else {
+            startDateStr = startDateStr;
+        }
+
+        $('#event-date-start').text(startDateStr);
+        $('#event-date-end').text(endDateStr);
     }
 
+    // 设置其他信息
     $('#event-title').text(eventInfo['eventTitle']);
     $('#event-desc').text(eventInfo['eventContent']);
     $('#event-owner').text(eventInfo['eventOwnerName']);
 
     $('#event-modal-header').css('background-color', eventInfo['eventColor']);
-    // 显示事件详细模态框
+    // 显示模态框
     $('#eventInfoModal').modal('show');
 }
 

@@ -239,8 +239,14 @@ p {
 }
 
 .event-period {
+    height: 17px;
     position: relative;
     cursor: pointer;
+}
+
+.event-period > .event-info {
+    height: 19px;
+    line-height: 19px;
 }
 
 .text-hidden {
@@ -303,7 +309,7 @@ p {
 }
 
 #event-modal-title {
-    margin-top: 72px;
+    margin-top: 64px;
     padding: 0 26px 0 60px;
     color: #ffffff;
     font-size: 20px;
@@ -342,7 +348,7 @@ p {
 }
 
 #event-close:hover, #event-edit:hover {
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.2);
 }
 
 #modal-period {
@@ -389,6 +395,14 @@ p {
     border: none;
     resize: none;
     white-space: normal !important;
+}
+
+#modal-owner > .body-i {
+    left: 1.25% !important;
+}
+
+#modal-owner > .body-c {
+    margin-left: 26px !important;
 }
 
 .shadow {
