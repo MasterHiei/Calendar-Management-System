@@ -13,8 +13,6 @@ public class EventEntity implements Serializable {
     private Long eventId;
     /** 事件标题 */
     private String eventTitle;
-    /** 事件地点 */
-    private String eventLocation;
     /** 事件详细 */
     private String eventContent;
     /** 事件开始日期 */

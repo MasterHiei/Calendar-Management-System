@@ -44,7 +44,7 @@
         </div>
     </div>
     <%@include file="footer.jsp"%>
-    <%@include file="modal-alert.jsp"%>
 </div>
+<%@include file="modal-alert.jsp"%>
 </body>
 </html>

@@ -38,9 +38,8 @@ CREATE TABLE tbl_user(
 -- TABLE EVENT --
 CREATE TABLE tbl_event(
   event_id BIGINT AUTO_INCREMENT COMMENT '事件ID',
-  event_title VARCHAR (128) NOT NULL COMMENT '事件标题',
-  event_location VARCHAR(128) COMMENT '事件地点',
-  event_content VARCHAR(256) COMMENT '事件详细',
+  event_title VARCHAR (32) NOT NULL COMMENT '事件标题',
+  event_content VARCHAR(128) COMMENT '事件详细',
   event_start_date DATE NOT NULL COMMENT '事件开始日期',
   event_start_time TIME COMMENT '事件开始时间',
   event_end_date DATE COMMENT '事件结束日期',

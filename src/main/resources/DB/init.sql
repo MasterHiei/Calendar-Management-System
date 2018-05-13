@@ -23,46 +23,46 @@ VALUES (
 
 -- INIT TABLE EVENT --
 INSERT INTO tbl_event (
-  event_title, event_location, event_content, event_start_date, event_start_time, event_end_date, event_end_time, event_color, event_owner_id
+  event_title, event_content, event_start_date, event_start_time, event_end_date, event_end_time, event_color, event_owner_id
 )
 VALUES (
-  '测试标题1', '测试地点1', '测试内容1', '2018-05-23 ', '00:00', '2018-06-08', '13:00', 'ff0000', 10000001
+  '测试标题1', '测试内容1', '2018-05-23 ', '00:00', '2018-06-08', '13:00', 'ffa500', 10000001
 );
 INSERT INTO tbl_event (
-  event_title, event_location, event_content, event_start_date, event_start_time, event_end_date, event_end_time, event_color, event_owner_id
+  event_title, event_content, event_start_date, event_start_time, event_end_date, event_end_time, event_color, event_owner_id
 )
 VALUES (
-  '测试标题2', '测试地点2', '测试内容2', '2018-05-12 ', '10:00', null, '12:00', '1e90ff', 10000001
+  '测试标题2', '测试内容2', '2018-05-12 ', '10:00', null, '12:00', '1e90ff', 10000001
 );
 INSERT INTO tbl_event (
-  event_title, event_location, event_content, event_start_date, event_start_time, event_end_date, event_end_time, event_color, event_owner_id
+  event_title, event_content, event_start_date, event_start_time, event_end_date, event_end_time, event_color, event_owner_id
 )
 VALUES (
-  '测试标题22', '测试地点22', '测试内容22', '2018-05-12 ', '8:45', null, '10:00', 'ff0000', 10000001
+  '测试标题22', '测试内容22', '2018-05-12 ', '8:45', null, '10:00', 'ff0000', 10000001
 );
 INSERT INTO tbl_event (
-  event_title, event_location, event_content, event_start_date, event_start_time, event_end_date, event_end_time, event_color, event_owner_id
+  event_title, event_content, event_start_date, event_start_time, event_end_date, event_end_time, event_color, event_owner_id
 )
 VALUES (
-  '测试标题23', '测试地点23', '测试内容23', '2018-05-12 ', '10:45', null, '12:00', '1e90ff', 10000001
+  '测试标题23', '测试内容23', '2018-05-12 ', '10:45', null, '12:00', '1e90ff', 10000001
 );
 INSERT INTO tbl_event (
-  event_title, event_location, event_content, event_start_date, event_start_time, event_end_date, event_end_time, event_color, event_owner_id
+  event_title, event_content, event_start_date, event_start_time, event_end_date, event_end_time, event_color, event_owner_id
 )
 VALUES (
-  '测试标题24', '测试地点24', '测试内容24', '2018-05-12 ', '14:00', null, '15:00', '32cd32', 10000001
+  '测试标题24', '测试内容24', '2018-05-12 ', '14:00', null, '15:00', '32cd32', 10000001
 );
 INSERT INTO tbl_event (
-  event_title, event_location, event_content, event_start_date, event_start_time, event_end_date, event_end_time, event_color, event_owner_id
+  event_title, event_content, event_start_date, event_start_time, event_end_date, event_end_time, event_color, event_owner_id
 )
 VALUES (
-  '测试标题25', '测试地点25', '测试内容25', '2018-05-12 ', '16:15', null, '18:00', 'ff0000', 10000001
+  '测试标题25', '测试内容25', '2018-05-12 ', '16:15', null, '18:00', 'ff0000', 10000001
 );
 INSERT INTO tbl_event (
-  event_title, event_location, event_content, event_start_date, event_start_time, event_end_date, event_end_time, event_color, event_owner_id
+  event_title, event_content, event_start_date, event_start_time, event_end_date, event_end_time, event_color, event_owner_id
 )
 VALUES (
-  '测试标题3', '测试地点3', '测试内容3', '2018-06-02 ', '14:45', null, '10:00', '32cd32', 10000001
+  '测试标题3', '测试内容3', '2018-06-02 ', '14:45', null, '10:00', '32cd32', 10000001
 );
 
 -- INIT TABLE USER_EVENT --

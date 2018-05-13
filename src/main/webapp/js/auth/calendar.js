@@ -295,7 +295,9 @@ function addEventOfPeriod(startTD, endTD, eventItem) {
                 break;
             }
 
-            ergodicTD.append('<div class="event-div event-div-tmp event-remove"></div>');
+            if (j > 0) {
+                ergodicTD.append('<div class="event-div event-div-tmp event-remove"></div>');
+            }
             if (ergodicTD.attr('class').indexOf('sat') !== -1) break;
 
             ergodicTD = ergodicTD.next();
