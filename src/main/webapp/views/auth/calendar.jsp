@@ -114,48 +114,61 @@
         <i class="fa fa-spinner fa-spin"></i>
         <span>正在获取日程信息</span>
     </div>
-    <div class="modal fade" id="eventInfoModal" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header" id="event-modal-header">
-                    <div>
-                        <div class="modal-tool">
-                            <div id="event-close" data-toggle="tooltip" data-placement="bottom" title="关闭">
-                                <i class="fa fa-times"></i>
-                            </div>
-                        </div>
-                        <div class="modal-tool">
-                            <div id="event-edit" data-toggle="tooltip" data-placement="bottom" title="编辑">
-                                <i class="fa fa-edit"></i>
-                            </div>
+    <input type="hidden" id="date">
+</div>
+<div class="modal fade" id="eventInfoModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header" id="event-modal-header">
+                <div>
+                    <div class="modal-tool">
+                        <div id="event-close" data-toggle="tooltip" data-placement="bottom" title="关闭">
+                            <i class="fa fa-times"></i>
                         </div>
                     </div>
-                    <div class="modal-title" id="event-modal-title">
-                        <span id="event-title" class="text-hidden"></span>
+                    <div class="modal-tool">
+                        <div id="event-edit" data-toggle="tooltip" data-placement="bottom" title="编辑">
+                            <i class="fa fa-edit"></i>
+                        </div>
                     </div>
                 </div>
-                <div class="modal-body">
-                    <div id="modal-period">
-                        <div class="body-i" id="period-i"><i class="fa fa-calendar"></i></div>
-                        <div class="body-c" id="period-c"></div>
+                <div class="modal-title" id="event-modal-title">
+                    <span id="event-title" class="text-hidden"></span>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div id="modal-period">
+                    <div class="body-i" id="period-i"><i class="fa fa-calendar"></i></div>
+                    <div class="body-c" id="period-c"></div>
+                </div>
+                <div id="modal-desc">
+                    <div class="body-i"><i class="fa fa-file-text-o"></i></div>
+                    <div class="body-c">
+                        <textarea id="event-desc" class="text-hidden" disabled rows="2"></textarea>
                     </div>
-                    <div id="modal-desc">
-                        <div class="body-i"><i class="fa fa-file-text-o"></i></div>
-                        <div class="body-c">
-                            <textarea id="event-desc" class="text-hidden" disabled rows="2"></textarea>
-                        </div>
-                    </div>
-                    <div id="modal-owner">
-                        <div class="body-i"><i class="fa fa-user"></i></div>
-                        <div class="body-c">
-                            <span id="event-owner"></span>
-                        </div>
+                </div>
+                <div id="modal-owner">
+                    <div class="body-i"><i class="fa fa-user"></i></div>
+                    <div class="body-c">
+                        <span id="event-owner"></span>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <input type="hidden" id="date">
+</div>
+<div class="modal fade" id="eventMoreModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" id="more-content">
+            <div class="modal-body">
+                <div id="more-close" data-toggle="tooltip" data-placement="bottom" title="关闭">
+                    <i class="fa fa-times"></i>
+                </div>
+                <div id="more-date"><span></span></div>
+                <div id="more-event"></div>
+            </div>
+        </div>
+    </div>
 </div>
 </body>
 </html>

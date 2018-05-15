@@ -290,7 +290,8 @@ p {
 
 /* 事件详细模态框 */
 .modal-content, .modal-dialog {
-    height: 328px;
+    min-height: 328px;
+    max-height: 328px;
     width: 448px;
     margin-top: 10%;
     border: none;
@@ -357,10 +358,6 @@ p {
     margin: 10px 0 10px 0;
 }
 
-#modal-period > .body-i {
-    top: -30%;
-}
-
 .body-i {
     display: inline-block;
     font-size: 18px;
@@ -407,4 +404,32 @@ p {
 
 .shadow {
     box-shadow: 1px 1px 1px 1px #888888;
+}
+
+#more-content > .modal-body {
+    padding: 8px;
+}
+
+#more-content, #eventMoreModal > .modal-dialog {
+    width: 220px;
+    min-height: 212px;
+    margin-top: 18%;
+}
+
+#more-close > i {
+    position: relative;
+    top: 20%;
+    left: 28%;
+}
+
+#more-close {
+    float: right;
+    height: 26px;
+    width: 26px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+#more-close:hover {
+    background-color: #ddd;
 }

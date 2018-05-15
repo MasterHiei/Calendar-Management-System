@@ -85,6 +85,12 @@ $(function () {
         $('.shadow').removeClass('shadow');
     });
 
+    // 点击更多显示事件列表
+    $('td').on('click', '.event-more', function () {
+        $(this).addClass('shadow');
+        $('#eventMoreModal').modal('show');
+    });
+
     // 点击logo时重新获取事件列表
     $('.logo').find('strong').on('click', function () {
         getEventList(USE_SESSION_NO);
@@ -262,10 +268,13 @@ function setEvent(eventList) {
                 var eventMore = targetTD.find('.event-more');
                 if (eventMore.length === 0) {
                     targetTD.append('<div class="event-more event-remove"><span>剩余 1 项</span></div>');
+                    eventMore = targetTD.find('.event-more');
                 } else {
                     var eventMoreText = eventMore.find('span').text();
                     eventMore.find('span').text('剩余 ' + (Number(eventMoreText.split(' ')[1]) + 1) + ' 项');
                 }
+                eventMore.append('<div class="event-hidden" id="' + item['eventId'] + '">'
+                    + JSON.stringify(item) + '</div>');
             }
         }
     });
@@ -353,6 +362,7 @@ function showEventDetail(elem) {
         } else {
             $('#event-time').text('全天');
         }
+        $('#period-i').css('top', '-25%');
     } else {
         // 期间
         periodDIV.html('<span id="event-date-start"></span>');
@@ -375,6 +385,7 @@ function showEventDetail(elem) {
         } else {
             startDateStr = startDateStr;
         }
+        $('#period-i').css('top', '-30%');
 
         $('#event-date-start').text(startDateStr);
         $('#event-date-end').text(endDateStr);
