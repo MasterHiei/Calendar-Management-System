@@ -81,14 +81,19 @@ $(function () {
     });
 
     // 模态框关闭后取消选中阴影效果
-    $('#eventInfoModal').on('hidden.bs.modal', function () {
+    $('#eventInfoModal, #eventMoreModal').on('hidden.bs.modal', function () {
         $('.shadow').removeClass('shadow');
     });
 
     // 点击更多显示事件列表
     $('td').on('click', '.event-more', function () {
         $(this).addClass('shadow');
-        $('#eventMoreModal').modal('show');
+        showMoreEvent(this);
+    });
+
+    // 点击X关闭事件列表模态框
+    $('#more-close').on('click', function () {
+        $('#eventMoreModal').modal('hide');
     });
 
     // 点击logo时重新获取事件列表
@@ -399,6 +404,35 @@ function showEventDetail(elem) {
     $('#event-modal-header').css('background-color', eventInfo['eventColor']);
     // 显示模态框
     $('#eventInfoModal').modal('show');
+}
+
+// 显示更多事件
+function showMoreEvent(elem) {
+    var listDiv = $('#more-event');
+    listDiv.html($(elem).parent().html());
+    listDiv.find('.event-more, .date-line').remove();
+
+    // 添加日期
+    var moreEventList = $(elem).find('.event-hidden'),
+        eventInfo = $.parseJSON(moreEventList.first().text()),
+        date = new Date(eventInfo['eventStartDate']);
+    $('#more-date').html('<span id="more-day">' + date.getDate() + '</span>')
+        .append('<span id="more-weekday">' + getNameByDayOfWeek(date.getDay()) + '</span>');
+
+    // 添加事件列表
+    $.each(moreEventList, function () {
+        var item = $.parseJSON($(this).text());
+
+        listDiv.append('<div class="event-div event-remove" eventId="' + item['eventId'] + '">' +
+            '<div class="event-sign"></div><span class="event-info text-hidden"></span></div>');
+        var eventDiv = listDiv.find('[eventId=' + item['eventId'] + ']');
+        addEventInfo(eventDiv, item);
+        eventDiv.find('.event-sign').css('background-color', item['eventColor']);
+    })
+    listDiv.find('.event-div').addClass('event-more-div').removeClass('event-remove');
+
+    // 显示模态框
+    $('#eventMoreModal').modal('show');
 }
 
 // 根据星期数（0-6）返回对应class名

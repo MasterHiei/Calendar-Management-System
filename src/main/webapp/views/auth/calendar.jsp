@@ -164,7 +164,7 @@
                 <div id="more-close" data-toggle="tooltip" data-placement="bottom" title="关闭">
                     <i class="fa fa-times"></i>
                 </div>
-                <div id="more-date"><span></span></div>
+                <div id="more-date"></div>
                 <div id="more-event"></div>
             </div>
         </div>

@@ -238,6 +238,10 @@ p {
     cursor: pointer;
 }
 
+.event-div:hover {
+    background-color: #dedede;
+}
+
 .event-period {
     height: 17px;
     position: relative;
@@ -413,7 +417,7 @@ p {
 #more-content, #eventMoreModal > .modal-dialog {
     width: 220px;
     min-height: 212px;
-    margin-top: 18%;
+    margin-top: 15%;
 }
 
 #more-close > i {
@@ -427,9 +431,32 @@ p {
     height: 26px;
     width: 26px;
     border-radius: 50%;
+    color: #696969;
     cursor: pointer;
 }
 
 #more-close:hover {
     background-color: #ddd;
+}
+
+#more-date {
+    margin-left: 6px;
+}
+
+#more-event {
+    padding-bottom: 16px;
+    margin-left: 6px;
+}
+
+.event-more-div {
+    margin-top: 4px !important;
+}
+
+#more-day {
+    font-size: 42px;
+}
+
+#more-weekday {
+    margin-left: 10px;
+    color: #808080;
 }
