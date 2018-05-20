@@ -1,13 +1,13 @@
 # CalendarManagement
 + Help you and your team to manage the schedule.
-+ Developed for T.M.H.I.F.
++ Developed for T.M.H.I.F
 
 # Description
 + Base Framework
   + Spring + SpringMVC + Mybatis 
  
-+ DataBase
-  + MySQL v5.x
++ DB
+  + MySQL v5.x
   
 + Project Management
   + Apache Maven v3.5.0
