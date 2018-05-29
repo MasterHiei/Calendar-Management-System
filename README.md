@@ -13,6 +13,6 @@
   + Apache Maven v3.5.0
   
 + Front-End
-  + JQuery v3.3.1
+  + jQuery v3.3.1
   + Bootstrap v3.3.7
   + Font Awesome v4.7.0
