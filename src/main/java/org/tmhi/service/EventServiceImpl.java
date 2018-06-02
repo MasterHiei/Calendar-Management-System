@@ -52,9 +52,9 @@ public class EventServiceImpl implements EventService {
 
         if (date.getDayOfWeek().getValue() < 7) {
             startDate = date.minusMonths(1).withDayOfMonth(date.minusMonths(1).lengthOfMonth()).minusDays(date.getDayOfWeek().getValue() - 1);
-            endDate = endDate.plusDays((5 * 7) - date.getDayOfWeek().getValue() - date.lengthOfMonth());
+            endDate = endDate.plusDays((6 * 7) - date.getDayOfWeek().getValue() - date.lengthOfMonth());
         } else {
-            endDate = endDate.plusDays((5 * 7) - date.lengthOfMonth());
+            endDate = endDate.plusDays((6 * 7) - date.lengthOfMonth());
         }
 
         // 获取日程列表
