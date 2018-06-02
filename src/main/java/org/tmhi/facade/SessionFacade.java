@@ -32,6 +32,7 @@ public class SessionFacade {
         UserSessionDto userSessionDto = new UserSessionDto();
         userSessionDto.setUserId(user.getUserId());
         userSessionDto.setUserName(user.getUserName());
+        userSessionDto.setUserAvatar(user.getUserAvatar());
         request.getSession().setAttribute(USER_SESSION_NAME, userSessionDto);
     }
 

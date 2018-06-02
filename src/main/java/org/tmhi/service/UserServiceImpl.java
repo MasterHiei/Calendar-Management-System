@@ -60,7 +60,7 @@ public class UserServiceImpl implements UserService {
         params.setSessionId(request.getSession().getId());
         params.setCurrentLoginDatetime(Timestamp.valueOf(LocalDateTime.now()));
         params.setUserName(user.getUserName());
-        // 执行更新ww
+        // 执行更新
         if (userDao.updateUserByName(params) != 1) {
             // 更新失败，抛出异常并使事务回滚
             throw new RuntimeException("用户会话ID和登录时间更新失败。");

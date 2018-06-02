@@ -16,4 +16,6 @@ public class UserSessionDto implements Serializable {
     private Long userId;
     /** 用户名 */
     private String userName;
+    /** 用户头像 */
+    private String userAvatar;
 }

@@ -59,7 +59,7 @@
                         </ul>
                     </div>
                     <div class="navbar-item avatar-container">
-                        <img src="${pageContext.request.contextPath}/img/avatar/default/default-avatar.png" id="user-avatar" draggable="false">
+                        <img src="${pageContext.request.contextPath}/${user.userAvatar}" id="user-avatar" draggable="false">
                     </div>
                 </div>
             </div>

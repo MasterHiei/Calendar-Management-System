@@ -52,15 +52,19 @@ public class CalendarController {
     public ModelAndView initCalendar(HttpServletRequest request) {
 
         // 返回值
-        ModelAndView mv = new ModelAndView();
+        ModelAndView mav = new ModelAndView();
 
         // 获取request请求的IP地址
         String ip = RequestUtils.getIPAddress(request);
         // 输出日志
         LOGGER.info(ip + " - 显示日历");
 
-        mv.setViewName("auth/calendar");
-        return mv;
+        // 返回登录用户信息
+        UserSessionDto userSessionDto = SessionFacade.getUserSession(request);
+
+        mav.addObject("user", userSessionDto);
+        mav.setViewName("auth/calendar");
+        return mav;
     }
     
     /**
