@@ -127,10 +127,11 @@ p {
     line-height: 42px;
 }
 
-.avatar-container {
+#avatar-container {
     height: 42px;
     width: 42px;
     margin-left: 36px;
+    cursor: pointer;
 }
 
 #user-avatar {

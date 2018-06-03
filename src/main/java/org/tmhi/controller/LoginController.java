@@ -7,10 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.tmhi.model.form.LoginForm;
 import org.tmhi.service.UserService;
@@ -46,7 +43,7 @@ public class LoginController {
      *
      * @return ModelAndView
      */
-    @RequestMapping(value = "login.html", method = {RequestMethod.POST, RequestMethod.GET})
+    @GetMapping(value = "login.html")
     public ModelAndView initLogin() {
 
         // 初始化登录界面
@@ -64,7 +61,7 @@ public class LoginController {
      * @return 客户端响应信息（Map格式）
      * @throws Exception 异常
      */
-    @RequestMapping(value = "doLogin.html", method = RequestMethod.POST)
+    @PostMapping(value = "doLogin.html")
     @ResponseBody
     public Map doLogin(HttpServletRequest request, @RequestBody @Validated LoginForm input, BindingResult result) 
             throws Exception {

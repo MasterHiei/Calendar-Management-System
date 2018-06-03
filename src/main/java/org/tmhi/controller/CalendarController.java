@@ -5,10 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.tmhi.facade.SessionFacade;
 import org.tmhi.model.dto.UserSessionDto;
@@ -48,7 +45,7 @@ public class CalendarController {
      * @param request HttpServletRequest
      * @return ModelAndView
      */
-    @RequestMapping(value = "calendar.html", method = {RequestMethod.GET})
+    @GetMapping(value = "calendar.html")
     public ModelAndView initCalendar(HttpServletRequest request) {
 
         // 返回值
@@ -75,7 +72,7 @@ public class CalendarController {
      * @return Map对象
      * @throws Exception 异常
      */
-    @RequestMapping(value = "getEventList.html", method = {RequestMethod.POST})
+    @PostMapping(value = "getEventList.html")
     @ResponseBody
     public Map setCalendar(HttpServletRequest request, @RequestBody CalendarForm input)
             throws Exception {

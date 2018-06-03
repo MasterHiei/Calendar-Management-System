@@ -58,7 +58,7 @@
                             <li id="periods-list"><a><i class="fa fa-list-alt fa-fw fa-fw-nm"></i><span class="menu-text">&nbsp;列表</span></a></li>
                         </ul>
                     </div>
-                    <div class="navbar-item avatar-container">
+                    <div class="navbar-item" id="avatar-container">
                         <img src="${pageContext.request.contextPath}/${user.userAvatar}" id="user-avatar" draggable="false">
                     </div>
                 </div>

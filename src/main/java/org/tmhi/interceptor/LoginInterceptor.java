@@ -84,7 +84,7 @@ public class LoginInterceptor implements HandlerInterceptor {
                         response.getWriter().print(JSONObject.toJSONString(jsonMap));
                     } else {
                         // 重定向至重复登录错误页面
-                        response.sendRedirect("error/multiLoginError.html");
+                        response.sendRedirect("multiLoginError.html");
                     }
                     return false;
                 }
