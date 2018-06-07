@@ -51,7 +51,7 @@ public class LoginInterceptor implements HandlerInterceptor {
         
         // 获取请求的地址
         String requestURL = request.getRequestURL().toString();
-        // 获取当前session
+
         HttpSession session = request.getSession(false);
         // 判断请求类型
         if (requestURL.contains(LOGIN_PAGE_URL) || requestURL.contains(USE_LOGIN_URL)) {
@@ -60,10 +60,8 @@ public class LoginInterceptor implements HandlerInterceptor {
         } else {
             // 非登录相关请求，需要验证session中的用户信息
             UserSessionDto userSession = SessionFacade.getUserSession(request);
-            
-            // 创建Map对象
+
             Map<String, String> jsonMap = new HashMap<>();
-            
             if (Objects.nonNull(userSession)) {
                 // session存在，获取用户信息
                 UserEntity user = userService.queryUserByName(userSession.getUserName());
@@ -75,15 +73,12 @@ public class LoginInterceptor implements HandlerInterceptor {
                 
                 // 验证SessionID
                 if (!session.getId().equals(user.getSessionId())) {
-                    // 验证失败，判断是否为Ajax请求
+                    // 验证失败，根据请求类型返回错误页面
                     if (RequestUtils.isAjaxRequest(request)) {
-                        // 创建返回值
                         jsonMap.put("type", "error");
                         jsonMap.put("url", "multiLoginError.html");
-                        // 转换为JSON字符串并返回客户端
                         response.getWriter().print(JSONObject.toJSONString(jsonMap));
                     } else {
-                        // 重定向至重复登录错误页面
                         response.sendRedirect("multiLoginError.html");
                     }
                     return false;
@@ -92,15 +87,11 @@ public class LoginInterceptor implements HandlerInterceptor {
                 return true;
             } else {
                 // 用户Session不存在，返回登录页面
-                // 判断是否为Ajax请求
                 if (RequestUtils.isAjaxRequest(request)) {
-                    // 创建返回值
                     jsonMap.put("type", "transition");
                     jsonMap.put("url", "login.html");
-                    // 转换为JSON字符串并返回客户端
                     response.getWriter().print(JSONObject.toJSONString(jsonMap));
                 } else {
-                    // 重定向至登录页面
                     response.sendRedirect("login.html");
                 }
                 return false;
