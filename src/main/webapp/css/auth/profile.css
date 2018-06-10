@@ -1,0 +1,100 @@
+/* Container */
+.container, .table, nav {
+    padding: 0;
+    margin: 0;
+    height: 100%;
+    width: 100%;
+}
+
+.header {
+    height: 75px;
+}
+
+.body {
+    height: calc(100% - 75px);
+    height: -moz-calc(100% - 75px);
+    height: -webkit-calc(100% - 75px);
+    margin: 0 20% 0 20%;
+    font-size: 20px;
+}
+
+/* other */
+body {
+    font-family: 'Microsoft YaHei', Helvetica, Arial, sans-serif;
+}
+
+.container-fluid, .navbar-header {
+    height: 100%;
+}
+
+.line-center {
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+@media (min-width: 768px) {
+    .logo {
+        font-size: 24px
+    }
+}
+
+@media (min-width: 992px) {
+    .logo {
+        font-size: 28px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .logo {
+        font-size: 36px;
+    }
+}
+
+.logo > strong {
+    cursor: pointer;
+}
+
+.logo-site {
+    font-size: 45%;
+    padding-left: 5px;
+}
+
+.navbar-nav {
+    height: 48px;
+}
+
+.navbar-item > .btn {
+    background-color: transparent;
+    border: none;
+}
+
+.nav-right-container {
+    margin-right: 42px;
+}
+
+.navbar-item {
+    margin-left: 24px;
+    float: left;
+}
+
+.navbar-item > a:hover {
+    background-color: #cccaca !important;
+}
+
+#avatar-container {
+    height: 42px;
+    width: 42px;
+    margin-left: 36px;
+    cursor: pointer;
+}
+
+#user-avatar {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+}
+
+.inline-group {
+    display: inline-block;
+}

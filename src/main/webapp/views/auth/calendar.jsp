@@ -22,7 +22,7 @@
 </head>
 <body>
 <div class="container">
-    <div class="header">
+    <header class="header">
         <nav class="navbar navbar-default" role="navigation">
             <div class="container-fluid">
                 <div class="navbar-header">
@@ -52,11 +52,9 @@
                 </div>
                 <div class="nav navbar-nav navbar-right line-center nav-right-container">
                     <div class="btn-group navbar-item">
-                        <a class="btn btn-default" id="periods-selected" data-toggle="dropdown"><i class="fa fa-calendar fa-fw fa-fw-nm"></i><span>&nbsp;月份</span></a>
-                        <ul class="dropdown-menu">
-                            <li id="periods-month"><a><i class="fa fa-calendar fa-fw-nm"></i><span class="menu-text">&nbsp;&nbsp;日历</span></a></li>
-                            <li id="periods-list"><a><i class="fa fa-list-alt fa-fw fa-fw-nm"></i><span class="menu-text">&nbsp;列表</span></a></li>
-                        </ul>
+                        <a class="btn btn-default" id="user-message">
+                            <i class="fa fa-bell"></i>
+                        </a>
                     </div>
                     <div class="navbar-item" id="avatar-container">
                         <img src="${pageContext.request.contextPath}/${user.userAvatar}" id="user-avatar" draggable="false">
@@ -64,7 +62,7 @@
                 </div>
             </div>
         </nav>
-    </div>
+    </header>
     <div class="table-container">
         <table class="table table-bordered">
             <thead>

@@ -122,11 +122,6 @@ p {
     background-color: #cccaca !important;
 }
 
-#periods-selected,  #periods-selected-toggle, .dropdown-toggle {
-    height: 48px;
-    line-height: 42px;
-}
-
 #avatar-container {
     height: 42px;
     width: 42px;
