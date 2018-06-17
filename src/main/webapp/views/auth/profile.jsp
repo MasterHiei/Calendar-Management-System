@@ -39,28 +39,37 @@
     </header>
     <div class="body">
         <div class="user-info">
-            <div class="user-name">
-                <div class="inline-group">
-                    <span class="info-label">用户名</span>
+            <div class="section">
+                <div class="inline-group label-group">
+                    <span class="info-label info-group">用户名</span>
                 </div>
-                <div class="inline-group">
-                    <span class="info-input" id="user-name">${profile.userName}</span>
+                <div class="inline-group input-group">
+                    <span class="info-input info-group" id="user-name">${profile.userName}</span>
                 </div>
-            </div>
-            <div class="user-mail">
-                <div class="inline-group">
-                    <span class="info-label">用户邮箱</span>
-                </div>
-                <div class="inline-group">
-                    <span class="info-input" id="user-mail">${profile.mailAddress}</span>
+                <div class="inline-group arrow-group">
+                    <i class="fa fa-chevron-right"></i>
                 </div>
             </div>
-            <div class="user-action">
-                <div class="inline-group">
-                    <span class="info-label">个人状态</span>
+            <div class="section">
+                <div class="inline-group label-group">
+                    <span class="info-label info-group">用户邮箱</span>
                 </div>
-                <div class="inline-group">
-                    <span class="info-input" id="user-action">${profile.nowAction}</span>
+                <div class="inline-group input-group">
+                    <span class="info-input info-group" id="user-mail">${profile.mailAddress}</span>
+                </div>
+                <div class="inline-group arrow-group">
+                    <i class="fa fa-chevron-right"></i>
+                </div>
+            </div>
+            <div class="section">
+                <div class="inline-group label-group">
+                    <span class="info-label info-group">个人状态</span>
+                </div>
+                <div class="inline-group input-group">
+                    <span class="info-input info-group" id="user-action">${profile.nowAction}</span>
+                </div>
+                <div class="inline-group arrow-group">
+                    <i class="fa fa-chevron-right"></i>
                 </div>
             </div>
         </div>
