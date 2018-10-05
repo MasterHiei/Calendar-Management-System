@@ -1,18 +1,34 @@
-# CalendarManagement
-+ Help you and your team to manage the schedule.
-+ Developed for T.M.H.I.F
+# Summary
++ A simple Java web application practice based on SSM Framework
++ Developed for T.M.H.I
 
-# Description
-+ Base Framework
-  + Spring + SpringMVC + Mybatis 
- 
-+ DB
-  + MySQL v5.x
-  
+# Devolopment Environment
++ JDK
+  + Java 1.8
+
 + Project Management
   + Apache Maven v3.5.0
+
++ Base Framework
+  + Spring + SpringMVC + Mybatis
   
-+ Front-End
++ ~~Security~~
+  + ~~Apache Shiro~~
+
++ DB
+  + MySQL v5.x
+
++ UI
   + jQuery v3.3.1
   + Bootstrap v3.3.7
   + Font Awesome v4.7.0
+
++ Server
+  + Jetty 9.4.9.v20180320
+
+# Comment
++ Javaは重すぎ、PHPやRubyなどの動的言語を使うべき（少なくともSpring Boot）。
++ フロントエンドフレームワークを導入した方がいいかも（React？？？）。
++ 最初からレスポンシブ対応（スマホ対応）を意識し開発する。
++ 非推奨（古くさい）の文法・メソッドを利用しない（例：Ajax処理はjQueryのDeferredで書く）。
++ とりあえず作ってみる -> ある程度慣れた -> 便利なライブラリを導入 -> ある程度慣れた -> 車輪の再発明 -> 繰り返す
