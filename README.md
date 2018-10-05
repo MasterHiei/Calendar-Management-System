@@ -3,7 +3,7 @@
 + Developing for T.M.H.I
 
 # Demo version
-+ This application is still in development phase but you can preview it by this [Demo](https://tmhi-demo.herokuapp.com/)
++ This application is still in development phase but you can preview it by this [Demo](https://tmhi-demo.herokuapp.com/)(language: Simple Chinese)
 + Account: test1234
 + Password: aaaaaa
 
