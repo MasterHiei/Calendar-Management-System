@@ -397,6 +397,7 @@ p {
     border: none;
     resize: none;
     white-space: normal !important;
+    background-color: #ffffff;
 }
 
 #modal-owner > .body-i {
