@@ -1,6 +1,7 @@
 # Summary
-+ A simple Java web application practice based on SSM Framework
-+ Developed for T.M.H.I
++ A simple Java web application based on SSM Framework
+This application is still in development phase but you can use this ([demo](https://tmhi-demo.herokuapp.com/) to preview it).
++ Developing for T.M.H.I
 
 # Devolopment Environment
 + JDK
