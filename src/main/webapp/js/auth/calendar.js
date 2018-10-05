@@ -299,6 +299,7 @@ function addEventOfPeriod(startTD, endTD, eventItem) {
         startLineNo = Number(startTD.parents('tr').attr('lineNo')),
         endLineNo = Number(endTD.parents('tr').attr('lineNo'));
 
+    $('[isEnd]').removeAttr();
     endTD.attr('isEnd', '1');
 
     for (var i = startLineNo; i <= endLineNo; i++) {
