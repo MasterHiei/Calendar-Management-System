@@ -1,7 +1,11 @@
 # Summary
 + A simple Java web application based on SSM Framework
-+ This application is still in development phase but you can use this ([demo](https://tmhi-demo.herokuapp.com/) to preview it).
 + Developing for T.M.H.I
+
+# Demo version
++ This application is still in development phase but you can use this ([demo](https://tmhi-demo.herokuapp.com/) to preview.
++ Account: test1234
++ Password: aaaaaa
 
 # Devolopment Environment
 + JDK
