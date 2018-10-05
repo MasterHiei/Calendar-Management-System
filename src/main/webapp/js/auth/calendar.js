@@ -18,7 +18,8 @@ $(function () {
 
     // 用户信息页面跳转
     $('#avatar-container').on('click', function () {
-        window.location.href = 'profile.html';
+        // TODO when user-profile page is done is done
+        // window.location.href = 'profile.html';
     });
     
     // 显示日期选择控件
