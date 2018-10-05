@@ -240,6 +240,8 @@ function setEvent(eventList) {
             if (eventEndDate > lastDay) {
                 eventEndDate = lastDay;
             }
+            eventStartDate.setHours(0);
+            eventEndDate.setHours(0);
 
             var intervalDayStart = Math.ceil((eventStartDate - firstDay) / MS_OF_DAY),
                 intervalDayBTW = (eventEndDate - eventStartDate) / MS_OF_DAY,
